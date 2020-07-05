@@ -4,7 +4,7 @@ library(magrittr) # needs to be run every time you start R and want to use %>%
 library(dplyr)    # alternatively, this also loads %>%
 library("tidyverse")
 source("C:/Users/omidg/OneDrive/Desktop/BCCCDC R shiny Project/BCCCDC-Project/data manipulation.R")
-s <- 66
+dat <- readRDS("05_22.rds")
 
 
 
@@ -23,8 +23,7 @@ server <- function(input, output, session) {
     # write your code here:
     # ==========================================
     output$plotLoad <- renderPlot({
-      dat <- readRDS("05_22.rds")
-      dat <<- dat + 1
+      
       x <- runif(300)
       y <- runif(300)
       df <- data.frame(c("X","Y"),x,y)
