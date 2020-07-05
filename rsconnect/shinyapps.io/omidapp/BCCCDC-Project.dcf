@@ -1,0 +1,12 @@
+name: BCCCDC-Project
+title: BCCCDC-Project
+username:
+account: omidapp
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 2538648
+bundleId: 3355206
+url: https://omidapp.shinyapps.io/BCCCDC-Project/
+when: 1593979562.21032
+asMultiple: FALSE
+asStatic: FALSE
