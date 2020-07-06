@@ -1,0 +1,12 @@
+name: newone
+title: R Shinny example
+username:
+account: omidapp
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 2537420
+bundleId: 3353218
+url: https://omidapp.shinyapps.io/NewOne/
+when: 1593923232.52505
+asMultiple: FALSE
+asStatic: FALSE

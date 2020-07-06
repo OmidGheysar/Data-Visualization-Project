@@ -1,15 +1,7 @@
 # install.packages("shinydashboard")
-library(shiny)
-library("ggplot2")
-library(magrittr) # needs to be run every time you start R and want to use %>%
-library(dplyr)    # alternatively, this also loads %>%
 library("tidyverse")
+library(shiny)
 library(shinydashboard)
-source("C:/Users/omidg/OneDrive/Desktop/BCCCDC R shiny Project/BCCCDC-Project/data manipulation.R")
-source("C:/Users/omidg/OneDrive/Desktop/BCCCDC R shiny Project/BCCCDC-Project/PlotMaker.R")
-dat <- readRDS("05_22.rds")
-
-
 
 ui <- dashboardPage(
   dashboardHeader(),
@@ -17,8 +9,8 @@ ui <- dashboardPage(
   dashboardBody(
     
     # Action bar is located here=======================
-    
-    
+    actionButton("do", "Click Me"),
+    plotOutput("plot"),
     # =================================================
     
     # App title ----
@@ -67,9 +59,8 @@ ui <- dashboardPage(
       
       # Main panel for displaying outputs ----
       mainPanel(
-        plotOutput("plot"),
+        
         # Output: Table summarizing the values entered ----
-        actionButton("do", "Click Me"),
         tableOutput("values")
         
       )
@@ -84,13 +75,13 @@ server <- function(input, output) {
   sliderValues <- reactive({
     
     data.frame(
-      Name = c("R0 value",
-               "p.trace value",
-               "p.trace_app value",
-               "p.symp value",
-               "iso_delay_traced_max value",
-               "iso_delay_untraced_sd_max value",
-               "sd_contact_rate1 value",
+      Name = c("R0",
+               "p.trace",
+               "p.trace_app",
+               "p.symp",
+               "iso_delay_traced_max",
+               "iso_delay_untraced_sd_max",
+               "sd_contact_rate1",
                "days"),
       Value = as.character(c(input$R0,
                              input$p.trace,
@@ -101,9 +92,6 @@ server <- function(input, output) {
                              input$sd_contact_rate1,
                              input$day)),
       stringsAsFactors = FALSE)
-    
-
-    
     
   })
   
@@ -118,18 +106,14 @@ server <- function(input, output) {
     
     # write your code here:
     # ==========================================
+    v <- reactiveValues(data = NULL)
+    v$data <- runif(100)
     output$plot <- renderPlot({
+      x <- runif(100)
+      y <- runif(100)
+      df <- data.frame(c("X","Y"),x,y)
+      ggplot(data=df, aes(x,y))+geom_line()
       
-      # display shape ===========================================================
-      
-      output<- returnPlot(dat,input$R0,
-                          input$p.trace,
-                          input$p.trace_app,
-                          input$p.symp,
-                          input$iso_delay_traced_max,
-                          input$iso_delay_untraced_sd_max,
-                          input$sd_contact_rate1)
-      output
     })
     # ==========================================
     
