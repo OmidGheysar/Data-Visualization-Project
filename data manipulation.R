@@ -1,7 +1,15 @@
+library(magrittr) # needs to be run every time you start R and want to use %>%
+library(dplyr)    # alternatively, this also loads %>%
+library("tidyverse")
 
-
-select100Scenarios <- function(dat, R,p.tr,p.trace_ap,p.sym,iso_delay_traced,
-                               iso_delay_untraced,sd_contact) {
+select100Scenarios <- function(dat,
+                               R,
+                               p.tr,
+                               p.trace_ap,
+                               p.sym,
+                               iso_delay_traced,
+                               iso_delay_untraced,
+                               sd_contact) {
   
   scenarios100<-dat %>% filter(R0==R &
                                  p.trace==p.tr&
@@ -14,6 +22,8 @@ select100Scenarios <- function(dat, R,p.tr,p.trace_ap,p.sym,iso_delay_traced,
 }
 
 
+
+# output<- select100Scenarios(dat, 2,.5,.5,.7,2,1,.3)
 # output<- select100Scenarios(dat,2,0,0,.8,1,5,.8)
 # 
 # 

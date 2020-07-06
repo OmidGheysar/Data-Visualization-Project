@@ -82,13 +82,13 @@ server <- function(input, output) {
   sliderValues <- reactive({
     
     data.frame(
-      Name = c("R0",
-               "p.trace",
-               "p.trace_app",
-               "p.symp",
-               "iso_delay_traced_max",
-               "iso_delay_untraced_sd_max",
-               "sd_contact_rate1",
+      Name = c("R0 value",
+               "p.trace value",
+               "p.trace_app value",
+               "p.symp value",
+               "iso_delay_traced_max value",
+               "iso_delay_untraced_sd_max value",
+               "sd_contact_rate1 value",
                "days"),
       Value = as.character(c(input$R0,
                              input$p.trace,
