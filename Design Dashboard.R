@@ -6,6 +6,7 @@ library(dplyr)    # alternatively, this also loads %>%
 library("tidyverse")
 library(shinydashboard)
 source("C:/Users/omidg/OneDrive/Desktop/BCCCDC R shiny Project/BCCCDC-Project/data manipulation.R")
+source("C:/Users/omidg/OneDrive/Desktop/BCCCDC R shiny Project/BCCCDC-Project/PlotMaker.R")
 dat <- readRDS("05_22.rds")
 
 
@@ -120,7 +121,14 @@ server <- function(input, output) {
       
       # display shape ===========================================================
       
-      output<- select100Scenarios(dat,2,0,0,.8,1,5,.8)
+      output<- returnPlot(dat,input$R0,
+                          input$p.trace,
+                          input$p.trace_app,
+                          input$p.symp,
+                          input$iso_delay_traced_max,
+                          input$iso_delay_untraced_sd_max,
+                          input$sd_contact_rate1)
+      output
     
       
       
