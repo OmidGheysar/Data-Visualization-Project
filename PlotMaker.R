@@ -5,8 +5,8 @@ library(dplyr)    # alternatively, this also loads %>%
 library("tidyverse")
 source("C:/Users/omidg/OneDrive/Desktop/BCCCDC R shiny Project/BCCCDC-Project/data manipulation.R")
 
-dat <- readRDS("05_22.rds")
-returnPlot <- function(datOutput,
+# dat <- readRDS("05_22.rds")
+returnPlot <- function(dat,
                        R0,
                        p.trace,
                        p.trace_app,
@@ -48,8 +48,8 @@ returnPlot <- function(datOutput,
 
   return(plotOut)
 }
-myPlot<- returnPlot(dat, 2.5,.5,.5,.7,2,1,.3)
-myPlot
+# myPlot<- returnPlot(dat, 2.5,.5,.5,.7,2,1,.3)
+# myPlot
 
 
 
