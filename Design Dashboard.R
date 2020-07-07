@@ -12,8 +12,15 @@ dat <- readRDS("05_22.rds")
 
 
 ui <- dashboardPage(
-  dashboardHeader(),
-  dashboardSidebar(),
+  dashboardHeader(title = "COVID 19 Simulatoin"),
+  dashboardSidebar(  
+    # =============================================
+    sidebarMenu(
+    menuItem("Dashboard", tabName = "dashboard", icon = icon("dashboard")),
+    menuItem("Widgets", tabName = "widgets", icon = icon("th"))
+    # =============================================
+  )
+  ),
   dashboardBody(
     
     # Action bar is located here=======================
@@ -70,7 +77,15 @@ ui <- dashboardPage(
         plotOutput("plot"),
         # Output: Table summarizing the values entered ----
         actionButton("do", "Click Me"),
-        tableOutput("values")
+        tableOutput("values"),
+        # =============================================
+        radioButtons("radio", label = h3("Radio buttons"),
+                     choices = list("Choice 1" = 1, "Choice 2" = 2, "Choice 3" = 3), 
+                     selected = 1),
+        
+        hr(),
+        fluidRow(column(3, verbatimTextOutput("value")))
+          # =============================================
         
       )
     )

@@ -26,9 +26,11 @@ returnPlot <- function(dat,
   
   dB <- data.frame(RQ2=double(),RQ3=double(),RQ4=double(), stringsAsFactors=FALSE)
   for (i in 0:31){
+    
     myResult<- output %>% filter(day==i) %>% select("day","Rt")
     Q <-  quantile(myResult$Rt,na.rm = TRUE)
     dB[nrow(dB) + 1,] = c(Q[c(2,3,4)])
+    
   }
 
   myDay <- (0:31)
