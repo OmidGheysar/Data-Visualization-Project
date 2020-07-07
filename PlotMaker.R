@@ -23,6 +23,7 @@ returnPlot <- function(dat,
                               iso_delay_untraced_sd_max,
                               sd_contact_rate1)
   
+  # output<- select100Scenarios(dat, 2.5,.5,.5,.7,2,1,.3)
   
   dB <- data.frame(RQ2=double(),RQ3=double(),RQ4=double(), stringsAsFactors=FALSE)
   for (i in 0:31){
@@ -38,6 +39,9 @@ returnPlot <- function(dat,
   Q3 <- dB$RQ3
   Q4 <- dB$RQ4
   kB <- tibble(myDay,Q2, Q3, Q4)
+  
+
+
   kB <- kB %>% pivot_longer(cols = c(Q2, Q3, Q4),
                             names_to = "Activity")
 
@@ -45,9 +49,14 @@ returnPlot <- function(dat,
                 y = value,
                 col = Activity,
                 group = Activity)) +
+    
     geom_line() +
-    geom_point() +ylim(0,2.8)
-
+    geom_point() +ylim(0,2.8)+
+    geom_hline(yintercept=1, linetype="twodash", 
+               color = "red", size=.6)+
+    geom_ribbon(aes(x=myDay, ymax=rep(Q4, each = 3), ymin=rep(Q2, each = 3)), fill="pink", alpha=.2)+
+    geom_point(stroke = 1)
+    
   return(plotOut)
 }
 # myPlot<- returnPlot(dat, 2.5,.5,.5,.7,2,1,.3)
