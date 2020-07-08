@@ -27,7 +27,7 @@ ui <- dashboardPage(
     
     # Action bar is located here=======================
     
-    
+
     # =================================================
     
     # App title ----
@@ -78,17 +78,24 @@ ui <- dashboardPage(
       mainPanel(
         plotOutput("plot"),
         # Output: Table summarizing the values entered ----
-        actionButton("do", "Click Me"),
-        tableOutput("values"),
-        # =============================================
-        radioButtons("radio", label = h3("Radio buttons"),
-                     choices = list("Choice 1" = "Rt", "Choice 2" = "n.active", "Choice 3" = 3), 
-                     selected = 1),
+        actionButton("do", "Run the simulation"),
         
-        hr(),
-        fluidRow(column(3, verbatimTextOutput("value")))
-          # =============================================
+        # start below Plot==================================================
+        fluidRow(
+          column(3,
+                 selectInput('x', 'X', c("day")),
+                 tableOutput("values"),
+          ),
+          column(5, offset = 4,
+                 # selectInput('y', 'Y', c("Rt","n.active")),
+                 radioButtons("radio", label = "Y",
+                              choices = list("Rt" = "Rt", "n.active" = "n.active", "Choice 3" = 3), 
+                              selected = 1),
+                 selectInput('color', 'Color', c('None'))
+          )
+        )
         
+        # end the below plot================================================
       )
     )
   ),
@@ -138,7 +145,6 @@ server <- function(input, output) {
     output$plot <- renderPlot({
       
       # display shape ===========================================================
-      output$value <- renderPrint({ input$radio })
       outputColumn <- input$radio
       output<- returnPlot(dat,outputColumn,
                           input$R0,
