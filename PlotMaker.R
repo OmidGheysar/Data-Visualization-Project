@@ -4,9 +4,10 @@ library(magrittr) # needs to be run every time you start R and want to use %>%
 library(dplyr)    # alternatively, this also loads %>%
 library("tidyverse")
 source("C:/Users/omidg/OneDrive/Desktop/BCCCDC R shiny Project/BCCCDC-Project/data manipulation.R")
+source("C:/Users/omidg/OneDrive/Desktop/BCCCDC R shiny Project/BCCCDC-Project/SpecificPlotSetting.R")
 
-# dat <- readRDS("05_22.rds")
 returnPlot <- function(dat,
+                       ouptColumn,
                        R0,
                        p.trace,
                        p.trace_app,
@@ -22,14 +23,13 @@ returnPlot <- function(dat,
                               iso_delay_traced_max,
                               iso_delay_untraced_sd_max,
                               sd_contact_rate1)
-  
-  # output<- select100Scenarios(dat, 2.5,.5,.5,.7,2,1,.3)
-  
+
+  nameOfcolumn <- ouptColumn
   dB <- data.frame(RQ2=double(),RQ3=double(),RQ4=double(), stringsAsFactors=FALSE)
   for (i in 0:31){
     
-    myResult<- output %>% filter(day==i) %>% select("day","Rt")
-    Q <-  quantile(myResult$Rt,na.rm = TRUE)
+    myResult<- output %>% filter(day==i) %>% select("day",ouptColumn)
+    Q <-  quantile(myResult[,2],na.rm = TRUE)
     dB[nrow(dB) + 1,] = c(Q[c(2,3,4)])
     
   }
@@ -51,12 +51,11 @@ returnPlot <- function(dat,
                 group = Activity)) +
     
     geom_line() +
-    geom_point() +ylim(0,2.8)+
-    geom_hline(yintercept=1, linetype="twodash", 
-               color = "red", size=.6)+
+    geom_point() +
     geom_ribbon(aes(x=myDay, ymax=rep(Q4, each = 3), ymin=rep(Q2, each = 3)), fill="pink", alpha=.2)+
     geom_point(stroke = 1)
     
+  plotOut <- SpecificSettingOfPlotDays(nameOfcolumn,plotOut)
   return(plotOut)
 }
 # myPlot<- returnPlot(dat, 2.5,.5,.5,.7,2,1,.3)

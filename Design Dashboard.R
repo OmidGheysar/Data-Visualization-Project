@@ -8,9 +8,10 @@ library("tidyverse")
 library(shinydashboard)
 source("C:/Users/omidg/OneDrive/Desktop/BCCCDC R shiny Project/BCCCDC-Project/data manipulation.R")
 source("C:/Users/omidg/OneDrive/Desktop/BCCCDC R shiny Project/BCCCDC-Project/PlotMaker.R")
+
+
+
 dat <- readRDS("05_22.rds")
-
-
 
 ui <- dashboardPage(
   dashboardHeader(title = "COVID 19 Simulatoin"),
@@ -81,7 +82,7 @@ ui <- dashboardPage(
         tableOutput("values"),
         # =============================================
         radioButtons("radio", label = h3("Radio buttons"),
-                     choices = list("Choice 1" = 1, "Choice 2" = 2, "Choice 3" = 3), 
+                     choices = list("Choice 1" = "Rt", "Choice 2" = "n.active", "Choice 3" = 3), 
                      selected = 1),
         
         hr(),
@@ -137,8 +138,10 @@ server <- function(input, output) {
     output$plot <- renderPlot({
       
       # display shape ===========================================================
-      
-      output<- returnPlot(dat,input$R0,
+      output$value <- renderPrint({ input$radio })
+      outputColumn <- input$radio
+      output<- returnPlot(dat,outputColumn,
+                          input$R0,
                           input$p.trace,
                           input$p.trace_app,
                           input$p.symp,
