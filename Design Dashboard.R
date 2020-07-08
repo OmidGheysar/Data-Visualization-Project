@@ -64,9 +64,12 @@ ui <- dashboardPage(
                     min = 1, max = 5,
                     value = 1, step = 4),
         
-        sliderInput("sd_contact_rate1", "sd_contact_rate1",
-                    min = 0.3, max = 0.8,
-                    value = 0,3, , step = .5),
+        # sliderInput("sd_contact_rate1", "sd_contact_rate1",
+        #             min = 0.3, max = 0.8,
+        #             value = 0,3, , step = .5),
+        shinyWidgets::sliderTextInput("sd_contact_rate1","sd_contact_rate1:",
+                                      choices=c(0.3, 0.6, 0.8),
+                                      selected=0.3, grid = T),
         
         sliderInput("day", "day",
                     min = 0, max = 31,
@@ -79,18 +82,21 @@ ui <- dashboardPage(
         plotOutput("plot"),
         # Output: Table summarizing the values entered ----
         actionButton("do", "Run the simulation"),
-        
         # start below Plot==================================================
         fluidRow(
-          column(3,
-                 selectInput('x', 'X', c("day")),
+          column(4,
+                 # selectInput('x', 'X', c("day")),
+                 radioButtons("radioX", label = "X",
+                              choices = list("day" = "days"), 
+                              selected = "days"),
+                 hr(),
                  tableOutput("values"),
           ),
-          column(5, offset = 4,
+          column(4, offset = 2,
                  # selectInput('y', 'Y', c("Rt","n.active")),
-                 radioButtons("radio", label = "Y",
-                              choices = list("Rt" = "Rt", "n.active" = "n.active", "Choice 3" = 3), 
-                              selected = 1),
+                 radioButtons("radioY", label = "Y",
+                              choices = list("Rt" = "Rt", "n.active" = "n.active", "Deafult" = 3), 
+                              selected = "Rt" ),
                  selectInput('color', 'Color', c('None'))
           )
         )
@@ -145,7 +151,7 @@ server <- function(input, output) {
     output$plot <- renderPlot({
       
       # display shape ===========================================================
-      outputColumn <- input$radio
+      outputColumn <- input$radioY
       output<- returnPlot(dat,outputColumn,
                           input$R0,
                           input$p.trace,
