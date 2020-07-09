@@ -34,25 +34,25 @@ returnPlot <- function(dat,
     
   }
 
-  myDay <- (0:31)
+  days <- (0:31)
   Q2 <- dB$RQ2
   Q3 <- dB$RQ3
   Q4 <- dB$RQ4
-  kB <- tibble(myDay,Q2, Q3, Q4)
+  kB <- tibble(days,Q2, Q3, Q4)
   
 
 
   kB <- kB %>% pivot_longer(cols = c(Q2, Q3, Q4),
-                            names_to = "Activity")
+                            names_to = "Quantiles")
 
-  plotOut <- ggplot(kB,aes(x = myDay,
+  plotOut <- ggplot(kB,aes(x = days,
                 y = value,
-                col = Activity,
-                group = Activity)) +
+                col = Quantiles,
+                group = Quantiles)) +
     
     geom_line() +
     geom_point() +
-    geom_ribbon(aes(x=myDay, ymax=rep(Q4, each = 3), ymin=rep(Q2, each = 3)), fill="pink", alpha=.2)+
+    geom_ribbon(aes(x=days, ymax=rep(Q4, each = 3), ymin=rep(Q2, each = 3)), fill="pink", alpha=.2)+
     geom_point(stroke = 1)
     
   plotOut <- SpecificSettingOfPlotDays(nameOfcolumn,plotOut)
