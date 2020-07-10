@@ -10,7 +10,7 @@ source("C:/Users/omidg/OneDrive/Desktop/BCCCDC R shiny Project/BCCCDC-Project/da
 source("C:/Users/omidg/OneDrive/Desktop/BCCCDC R shiny Project/BCCCDC-Project/PlotMaker.R")
 
 
-# dat <- readRDS("05_22.rds")
+dat <- readRDS("05_22.rds")
 
 ui <- dashboardPage(
   dashboardHeader(title = "COVID 19 Simulatoin"),
