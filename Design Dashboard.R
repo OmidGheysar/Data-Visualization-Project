@@ -10,7 +10,7 @@ source("C:/Users/omidg/OneDrive/Desktop/BCCCDC R shiny Project/BCCCDC-Project/da
 source("C:/Users/omidg/OneDrive/Desktop/BCCCDC R shiny Project/BCCCDC-Project/PlotMaker.R")
 
 
-dat <- readRDS("05_22.rds")
+# dat <- readRDS("05_22.rds")
 
 ui <- dashboardPage(
   dashboardHeader(title = "COVID 19 Simulatoin"),
@@ -78,12 +78,12 @@ ui <- dashboardPage(
       
       # Main panel for displaying outputs ----
       mainPanel(
+        actionButton("do", "Run the simulation"),
         plotOutput("plot"),
         # Output: Table summarizing the values entered ----
-        actionButton("do", "Run the simulation"),
         # start below Plot==================================================
         fluidRow(
-          column(4,
+          column(2,
                  # selectInput('x', 'X', c("day")),
                  radioButtons("radioX", label = "X",
                               choices = list("day" = "days"), 
@@ -91,7 +91,7 @@ ui <- dashboardPage(
                  hr(),
                  tableOutput("values"),
           ),
-          column(4, offset = 2,
+          column(2, offset = 2,
                  # selectInput('y', 'Y', c("Rt","n.active")),
                  radioButtons("radioY", label = "Y",
                               choices = list("Rt" = "Rt", "n.active" = "n.active", "Deafult" = 3), 
