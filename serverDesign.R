@@ -1,8 +1,8 @@
 
-serverDesign <- function(dat,input) {
+serverDesign <- function(dat,columnn,input) {
 
   
-  output<- returnPlot(dat,input$radioY,
+  output<- returnPlot(dat,columnn,
                       input$R0,
                       input$p.trace,
                       input$p.trace_app,
