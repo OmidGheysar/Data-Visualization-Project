@@ -42,16 +42,23 @@ server <- function(input, output) {
     })
     sliderValues()
   })
-  
   # action button
+
+  
   observeEvent(input$do, {
-    output$plot <- renderPlot({
-      output <- serverDesign(dat,input)
+    output$plot1 <- renderPlot({
+      output <- serverDesign(dat,"Rt",input)
       output
+
     })
+    
+    output$plot2 <- renderPlot({
+      output <- serverDesign(dat,"n.active",input)
+      output
+      
+    })
+    
   })
- 
-   
 }
 
 shinyApp(ui, server)

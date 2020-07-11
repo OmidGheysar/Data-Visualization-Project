@@ -46,7 +46,8 @@ UiDesign <- function(previousUi) {
     # Main panel for displaying outputs ----
     mainPanel(
       actionButton("do", "Run the simulation"),
-      plotOutput("plot"),
+      plotOutput("plot1"),
+      plotOutput("plot2"),
       fluidRow(
         column(2,
                selectInput('x', 'X', c("day")),
