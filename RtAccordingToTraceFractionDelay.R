@@ -20,7 +20,7 @@ select64000Scenarios <- function(dat,
                                  # iso_delay_traced_max==iso_delay_traced&
                                  iso_delay_untraced_sd_max==iso_delay_untraced&
                                  sd_contact_rate1==sd_contact) %>% 
-                                 select(p.trace,iso_delay_traced_max,"day":"Rt")
+                                 select(p.trace,iso_delay_traced_max,"day":"Rt") %>% filter(day==31)
   return(scenarios64000)
 }
 
