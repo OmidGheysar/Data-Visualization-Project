@@ -25,7 +25,7 @@ ui <- fluidPage(
       sliderInput("days",
                   "days:",
                   min = 0,  max = 30,  value = 20),
-
+      
     ),
     
     # Show Word Cloud
@@ -37,13 +37,13 @@ ui <- fluidPage(
 
 server <- function(input, output, session) {
   output$plot <- renderPlot({
-    myPlot <- RtBasedonManualTrace(dat,
+    myPlot <- RtBasedonAppTrace(dat,
                                    day = input$days,
                                    R = input$R0,
-                                   p.tr = 100,
-                                   p.trace_ap = 0,
+                                   p.tr = 0,
+                                   p.trace_ap = 100,
                                    p.sym = input$p.sym,
-                                   iso_delay_traced=100,
+                                   iso_delay_traced=1,
                                    iso_delay_untraced= input$iso_delay_untraced,
                                    sd_contact = input$sd_contact)
     myPlot

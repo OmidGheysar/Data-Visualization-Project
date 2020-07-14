@@ -1,3 +1,4 @@
+
 # uploadRequiredLibraries()
 
 ui <- fluidPage(
@@ -14,6 +15,12 @@ ui <- fluidPage(
       sliderInput("p.sym",
                   "p.sym:",
                   min = .6,  max = .8, value = .6, step = .1),
+      
+      sliderInput("iso_delay_traceced",
+                  "iso_delay_traceced:",
+                  min = 1,  max = 4, value = 1, step = 1),
+      
+      
       sliderInput("iso_delay_untraced",
                   "iso_delay_untraced:",
                   min = 1,  max = 5, value = 1, step = 4),
@@ -25,7 +32,7 @@ ui <- fluidPage(
       sliderInput("days",
                   "days:",
                   min = 0,  max = 30,  value = 20),
-
+      
     ),
     
     # Show Word Cloud
@@ -37,13 +44,13 @@ ui <- fluidPage(
 
 server <- function(input, output, session) {
   output$plot <- renderPlot({
-    myPlot <- RtBasedonManualTrace(dat,
+    myPlot <- RtBasedonAppAndManual(dat,
                                    day = input$days,
                                    R = input$R0,
                                    p.tr = 100,
-                                   p.trace_ap = 0,
+                                   p.trace_ap = 100,
                                    p.sym = input$p.sym,
-                                   iso_delay_traced=100,
+                                   iso_delay_traced=input$iso_delay_traceced,
                                    iso_delay_untraced= input$iso_delay_untraced,
                                    sd_contact = input$sd_contact)
     myPlot
@@ -52,4 +59,3 @@ server <- function(input, output, session) {
 }
 
 shinyApp(ui, server)
-

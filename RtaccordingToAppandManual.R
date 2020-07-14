@@ -1,11 +1,22 @@
+# 
+# source("C:/Users/omidg/OneDrive/Desktop/BCCCDC R shiny Project/BCCCDC-Project/uploadRequiredLibraries.R")
+# uploadRequiredLibraries()
+# 
+# dat <- readRDS("05_22.rds")
 
-source("C:/Users/omidg/OneDrive/Desktop/BCCCDC R shiny Project/BCCCDC-Project/uploadRequiredLibraries.R")
-uploadRequiredLibraries()
-
-dat <- readRDS("05_22.rds")
+RtBasedonAppAndManual <- function(dat,
+                                 days,
+                                 R,
+                                 p.tr = 100,
+                                 p.trace_ap = 100,
+                                 p.sym,
+                                 iso_delay_traced,
+                                 iso_delay_untraced,
+                                 sd_contact){
 
 
 select64000Scenarios <- function(dat,
+                                 days,
                                  R,
                                  p.tr,
                                  p.trace_ap,
@@ -21,7 +32,7 @@ select64000Scenarios <- function(dat,
                                    iso_delay_traced_max==iso_delay_traced&
                                    iso_delay_untraced_sd_max==iso_delay_untraced&
                                    sd_contact_rate1==sd_contact) %>% 
-    select(p.trace,p.trace_app,"day":"Rt") %>% filter(day==20)
+    select(p.trace,p.trace_app,"day":"Rt") %>% filter(day==days)
   return(scenarios64000)
 }
 
@@ -31,7 +42,9 @@ aes_y <- "Rt"
 aes_col <- "p.trace"
 aes_grp <- "p.trace"
 
-results<- select64000Scenarios(dat, 2.5,.5,.5,.7,2,5,.3)
+# results<- select64000Scenarios(dat, 1, 2.5,.5,.5,.7,2,5,.3)
+results<- select64000Scenarios(dat, days, R, p.tr, p.trace_ap, p.sym,
+                               iso_delay_traced, iso_delay_untraced, sd_contact) 
 
 p <- ggplot(results,
             aes(x=eval(as.name(aes_x)),
@@ -50,3 +63,5 @@ p <- p + geom_hline(yintercept=1,
                     alpha=0.6)
 
 p
+
+}
