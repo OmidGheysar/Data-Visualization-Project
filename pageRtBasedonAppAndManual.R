@@ -1,6 +1,7 @@
 
 # uploadRequiredLibraries()
 
+UiRt-App-Manual <- function(){
 ui <- fluidPage(
   # Application title
   titlePanel("Parameters of Scenarios"),
@@ -42,6 +43,9 @@ ui <- fluidPage(
   )
 )
 
+ return (ui)
+}
+
 server <- function(input, output, session) {
   output$plot <- renderPlot({
     myPlot <- RtBasedonAppAndManual(dat,
@@ -59,3 +63,6 @@ server <- function(input, output, session) {
 }
 
 shinyApp(ui, server)
+
+
+

@@ -15,7 +15,7 @@ uploadRequiredLibraries <- function(){
   source("C:/Users/omidg/OneDrive/Desktop/BCCCDC R shiny Project/BCCCDC-Project/CreateDataFrame.R")
   source("C:/Users/omidg/OneDrive/Desktop/BCCCDC R shiny Project/BCCCDC-Project/RtAccordingtoTraceFractionDelay.R")
   source("C:/Users/omidg/OneDrive/Desktop/BCCCDC R shiny Project/BCCCDC-Project/RtAccordingtoTraceApp.R")
-  source("C:/Users/omidg/OneDrive/Desktop/BCCCDC R shiny Project/BCCCDC-Project/RtBasedonAppAndManual")
+  source("C:/Users/omidg/OneDrive/Desktop/BCCCDC R shiny Project/BCCCDC-Project/RtaccordingToAppAndManual.R")
   
-  # dat <- readRDS("05_22.rds")
+ # dat <- readRDS("05_22.rds")
 }
