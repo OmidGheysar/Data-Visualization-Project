@@ -1,31 +1,87 @@
-source("C:/Users/omidg/OneDrive/Desktop/BCCCDC R shiny Project/BCCCDC-Project/uploadRequiredLibraries.R")
-uploadRequiredLibraries()
+# source("C:/Users/omidg/OneDrive/Desktop/BCCCDC R shiny Project/BCCCDC-Project/uploadRequiredLibraries.R")
+# uploadRequiredLibraries()
 
 # dat <- readRDS("05_22.rds")
 
-ui <- dashboardPage(
-  dashboardHeader(title = "COVID 19 Simulatoin"),
-  dashboardSidebar(  
-    # =============================================
-    sidebarMenu(
-      menuItem("Dashboard", tabName = "dashboard", icon = icon("dashboard")),
-      menuItem("Widgets", tabName = "widgets", icon = icon("th"))
-      # =============================================
-    )
-  ),
-  dashboardBody(
-    # UiDesign(ui),
-    UiRt_Only_Manual()
-  ),
-  
+header <- dashboardHeader(title = "Your Dashboard")
+
+sidebar <- dashboardSidebar(
+  sidebarMenu(id = "sbMenu",
+              menuItem("Dashboard", tabName = "dashboard", icon = icon("dashboard")),
+              menuItem("Widgets", icon = icon("th"), tabName = "widgets",
+                       badgeLabel = "new", badgeColor = "green")
+  )
 )
 
 
-# server1 <- ServerDesingOver()
+body <- dashboardBody(
+  ui <- UiDesign(),
+  tabItems(
+    tabItem(tabName = "dashboard",
+            h2("Dashboard tab content"),
+            # ui <- UiRt_Only_Manual()
+            # ui <- UiDesign()
+    ),
 
-# ui <- UiRt_Only_Manual()
-server <- ServerRt_Only_Manual()
+    tabItem(tabName = "widgets",
+            h2("Widgets tab content"),
+            ui <- UiDesign()
 
+    )
+  )
+)
+
+
+ui <- dashboardPage(header, sidebar, body)
+
+
+
+
+server <- function (input, output, session){
+  
+  # observe({
+    # if (input$sbMenu == 'widgets') {
+
+      # sendSweetAlert(
+      #   session = session,
+      #   title = "Done!",
+      #   text = "Affect Triggered.",
+      #   type = "success"
+      # )
+      output$plot1 <- renderPlot({
+        output<- returnPlot(dat,"Rt",
+                            input$R0,
+                            input$p.trace,
+                            input$p.trace_app,
+                            input$p.symp,
+                            input$iso_delay_traced_max,
+                            input$iso_delay_untraced_sd_max,
+                            input$sd_contact_rate1)
+        
+        output
+        
+      })
+      
+      output$plot2 <- renderPlot({
+        output<- returnPlot(dat,"n.active",
+                            input$R0,
+                            input$p.trace,
+                            input$p.trace_app,
+                            input$p.symp,
+                            input$iso_delay_traced_max,
+                            input$iso_delay_untraced_sd_max,
+                            input$sd_contact_rate1)
+        
+        output
+        
+      })
+      
+      
+    # }
+  # })
+  
+  
+}
 
 shinyApp(ui, server)
 
