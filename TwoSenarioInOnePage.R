@@ -12,7 +12,7 @@ source("C:/Users/omidg/OneDrive/Desktop/BCCCDC R shiny Project/BCCCDC-Project/Cr
 
 
 source("C:/Users/omidg/OneDrive/Desktop/BCCCDC R shiny Project/BCCCDC-Project/slidebar1For2.R")
-dat <- readRDS("05_22.rds")
+# dat <- readRDS("05_22.rds")
 ui <- fluidPage(
   fluidRow(
     column(3,
@@ -20,7 +20,7 @@ ui <- fluidPage(
            # Copy the line below to make a slider bar
            # sliderInput("slider1", label = h3("Slider"), min = 0,
            #             max = 100, value = 50)
-           slidebar1For2(ui)
+           slidebar1For2()
     ),
     column(6,
            
@@ -34,7 +34,7 @@ ui <- fluidPage(
            # Copy the line below to make a slider range 
            # sliderInput("slider2", label = h3("Slider Range"), min = 0, 
            #             max = 100, value = c(40, 60))
-           slidebar1For2(ui)
+           slidebar1For2()
     )
     
   ),
@@ -42,7 +42,7 @@ ui <- fluidPage(
   
   
   hr(),
-  
+
   fluidRow(
     column(4, verbatimTextOutput("value")),
     column(4, verbatimTextOutput("range"))
@@ -55,22 +55,19 @@ ui <- fluidPage(
 server <- function(input, output) {
   
   # You can access the value of the widget with input$slider1, e.g.
-  output$value <- renderPrint({ input$day })
-  
-  # You can access the values of the second widget with input$slider2, e.g.
-  output$range <- renderPrint({ input$day })
-  
-  output$plot <- renderPlot({
-    output1 <- serverDesign(dat,"Rt",input)
-    output2 <- serverDesign(dat,"n.active",input)
-    output1 <- output1+output2
-    output
-  })
-  
-  output$plot1 <- renderPlot({
-    output <- serverDesign(dat,"n.active",input)
-    output
-  })
+  # output$value <- renderPrint({ input$day })
+  # 
+  # # You can access the values of the second widget with input$slider2, e.g.
+  # output$range <- renderPrint({ input$day })
+  # 
+  # output$plot <- renderPlot({
+  #   output1 <- serverDesign(dat,"Rt",input)
+  # })
+  # 
+  # output$plot1 <- renderPlot({
+  #   output <- serverDesign(dat,"n.active",input)
+  #   output
+  # })
 }
 
 

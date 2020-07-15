@@ -15,12 +15,9 @@ sidebar <- dashboardSidebar(
 
 
 body <- dashboardBody(
-  ui <- UiDesign(),
   tabItems(
     tabItem(tabName = "dashboard",
-            h2("Dashboard tab content"),
-            # ui <- UiRt_Only_Manual()
-            # ui <- UiDesign()
+            h2("Dashboard tab content")
     ),
 
     tabItem(tabName = "widgets",
@@ -39,15 +36,6 @@ ui <- dashboardPage(header, sidebar, body)
 
 server <- function (input, output, session){
   
-  # observe({
-    # if (input$sbMenu == 'widgets') {
-
-      # sendSweetAlert(
-      #   session = session,
-      #   title = "Done!",
-      #   text = "Affect Triggered.",
-      #   type = "success"
-      # )
       output$plot1 <- renderPlot({
         output<- returnPlot(dat,"Rt",
                             input$R0,
@@ -75,13 +63,13 @@ server <- function (input, output, session){
         output
         
       })
-      
-      
-    # }
-  # })
-  
-  
+ 
 }
+
+# 
+# ui <- UiRt_Only_App()
+# server <- ServerRt_Only_App()
+
 
 shinyApp(ui, server)
 
