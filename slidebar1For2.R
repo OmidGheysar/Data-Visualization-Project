@@ -1,4 +1,4 @@
-slidebar1For2 <- function(previousUi) {
+slidebar1For2 <- function() {
   
   ui <- fluidPage(
 
