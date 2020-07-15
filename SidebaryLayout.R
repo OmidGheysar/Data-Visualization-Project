@@ -45,31 +45,47 @@ UiDesign <- function(previousUi) {
     
     # Main panel for displaying outputs ----
     mainPanel(
-      actionButton("do", "Run the simulation"),
       plotOutput("plot1"),
       plotOutput("plot2"),
-      fluidRow(
-        column(2,
-               selectInput('x', 'X', c("day")),
-               radioButtons("radioX", label = "X",
-                            choices = list("day" = "days"),
-                            selected = "days"),
-               hr(),
-               tableOutput("values"),
-        ),
-        column(2, offset = 2,
-               selectInput('y', 'Y', c("Rt","n.active")),
-               radioButtons("radioY", label = "Y",
-                            choices = list("Rt" = "Rt", "n.active" = "n.active", "Deafult" = 3),
-                            selected = "Rt" ),
-               selectInput('color', 'Color', c('None'))
-        )
-      )
     )
   )
   return(ui)
 }
 
+ServerDesingOver <- function(){
+  
+  server <- function(input, output, session) {
+    output$plot1 <- renderPlot({
+      output<- returnPlot(dat,"Rt",
+                          input$R0,
+                          input$p.trace,
+                          input$p.trace_app,
+                          input$p.symp,
+                          input$iso_delay_traced_max,
+                          input$iso_delay_untraced_sd_max,
+                          input$sd_contact_rate1)
+
+      output
+      
+    })
+    
+    output$plot2 <- renderPlot({
+      output<- returnPlot(dat,"n.active",
+                          input$R0,
+                          input$p.trace,
+                          input$p.trace_app,
+                          input$p.symp,
+                          input$iso_delay_traced_max,
+                          input$iso_delay_untraced_sd_max,
+                          input$sd_contact_rate1)
+      
+      output
+      
+    })
+  }
+  
+  return(server)
+}
 
 
 

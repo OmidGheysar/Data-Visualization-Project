@@ -120,8 +120,8 @@ ServerRt_Only_Manual <- function(){
   return(server)
 }
 
-ui <- UiRt_Only_Manual()
-server <- ServerRt_Only_Manual()
+# ui <- UiRt_Only_Manual()
+# server <- ServerRt_Only_Manual()
 
 
 

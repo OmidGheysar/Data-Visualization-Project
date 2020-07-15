@@ -1,7 +1,7 @@
 source("C:/Users/omidg/OneDrive/Desktop/BCCCDC R shiny Project/BCCCDC-Project/uploadRequiredLibraries.R")
 uploadRequiredLibraries()
 
-dat <- readRDS("05_22.rds")
+# dat <- readRDS("05_22.rds")
 
 ui <- dashboardPage(
   dashboardHeader(title = "COVID 19 Simulatoin"),
@@ -14,39 +14,18 @@ ui <- dashboardPage(
     )
   ),
   dashboardBody(
-    UiDesign(ui)
+    # UiDesign(ui),
+    UiRt_Only_Manual()
   ),
   
 )
 
 
-server <- function(input, output) {
+# server1 <- ServerDesingOver()
 
-  # Show the values in an HTML table ----
-  output$values <- renderTable({
-    # Reactive expression to create data frame of all input values ----
-    sliderValues <- reactive({
-      createDataFrame(input)
-    })
-    sliderValues()
-  })
-  # action button
+# ui <- UiRt_Only_Manual()
+server <- ServerRt_Only_Manual()
 
-  
-  observeEvent(input$do, {
-    output$plot1 <- renderPlot({
-      output <- serverDesign(dat,"Rt",input)
-      output
-
-    })
-    
-    output$plot2 <- renderPlot({
-      output <- serverDesign(dat,"n.active",input)
-      output
-      
-    })
-    
-  })
-}
 
 shinyApp(ui, server)
+
