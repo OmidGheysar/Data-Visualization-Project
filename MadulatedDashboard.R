@@ -3,13 +3,15 @@
 
 # dat <- readRDS("05_22.rds")
 
-header <- dashboardHeader(title = "Your Dashboard")
+header <- dashboardHeader(title = "COVID-19 Simulation Dashboard")
 
 sidebar <- dashboardSidebar(
   sidebarMenu(id = "sbMenu",
               menuItem("Dashboard", tabName = "dashboard", icon = icon("dashboard")),
-              menuItem("Widgets", icon = icon("th"), tabName = "widgets",
-                       badgeLabel = "new", badgeColor = "green")
+              menuItem(h5(HTML("Reproductive Number<br/>Time Series")), icon = icon(""), tabName = "second"),
+              menuItem(h5(HTML("Reproductive Number<br/>Only App tracing")), tabName = "third"),
+              menuItem(h5(HTML("Reproductive Number<br/>Only Manual tracing")), tabName = "fourth"),
+              menuItem(h5(HTML("Reproductive Number<br/>App and Manual tracing")), tabName = "fifth")
   )
 )
 
@@ -17,13 +19,24 @@ sidebar <- dashboardSidebar(
 body <- dashboardBody(
   tabItems(
     tabItem(tabName = "dashboard",
-            h2("Dashboard tab content")
+            h2("Dashboard Main Page")
     ),
 
-    tabItem(tabName = "widgets",
-            h2("Widgets tab content"),
+    tabItem(tabName = "second",
             ui <- UiDesign()
 
+    ),
+    tabItem(tabName = "third",
+            ui <- UiRt_Only_App()
+            
+    ),
+    tabItem(tabName = "fourth",
+            ui <- UiRt_Only_Manual()
+            
+    ),
+    tabItem(tabName = "fifth",
+            ui <- UiRt_App_Manual()
+            
     )
   )
 )
@@ -36,31 +49,28 @@ ui <- dashboardPage(header, sidebar, body)
 
 server <- function (input, output, session){
   
-      output$plot1 <- renderPlot({
-        output<- returnPlot(dat,"Rt",
-                            input$R0,
-                            input$p.trace,
-                            input$p.trace_app,
-                            input$p.symp,
-                            input$iso_delay_traced_max,
-                            input$iso_delay_untraced_sd_max,
-                            input$sd_contact_rate1)
-        
-        output
+      output$plotRtTime <- renderPlot({
+        plotRtTime(input)
         
       })
       
-      output$plot2 <- renderPlot({
-        output<- returnPlot(dat,"n.active",
-                            input$R0,
-                            input$p.trace,
-                            input$p.trace_app,
-                            input$p.symp,
-                            input$iso_delay_traced_max,
-                            input$iso_delay_untraced_sd_max,
-                            input$sd_contact_rate1)
+      output$plotRtNactive <- renderPlot({
+        plotRtNactive(input)
         
-        output
+      })
+      
+      output$plotRt_Only_App <- renderPlot({
+        plotRt_Only_App(input)
+
+      })
+      
+      output$plotRt_Only_Manual <- renderPlot({
+        plotRt_Only_Manual(input)
+        
+      })
+      
+      output$plotRt_App_Manual <- renderPlot({
+        plotRt_App_Manual(input)
         
       })
  

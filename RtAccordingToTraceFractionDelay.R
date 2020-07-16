@@ -69,22 +69,22 @@ UiRt_Only_Manual <- function(){
     sidebarLayout(
       # Sidebar with a slider and selection inputs
       sidebarPanel(
-        sliderInput("R0",
+        sliderInput("R0forManual",
                     "R0:",
                     min = 2,  max = 3, value = 2, step = .5),
         
-        sliderInput("p.sym",
+        sliderInput("p.symforManual",
                     "p.sym:",
                     min = .6,  max = .8, value = .6, step = .1),
-        sliderInput("iso_delay_untraced",
+        sliderInput("iso_delay_untracedforManual",
                     "iso_delay_untraced:",
                     min = 1,  max = 5, value = 1, step = 4),
         
-        sliderInput("sd_contact",
+        sliderInput("sd_contactforManual",
                     "sd_contact:",
                     min = .3,  max = .8, value = .3, step = .5),
         
-        sliderInput("days",
+        sliderInput("daysforManual",
                     "days:",
                     min = 0,  max = 30,  value = 20),
         
@@ -92,32 +92,25 @@ UiRt_Only_Manual <- function(){
       
       # Show Word Cloud
       mainPanel(
-        plotOutput("plot")
+        plotOutput("plotRt_Only_Manual")
       )
     )
   )
   return(ui)
 }
 
-ServerRt_Only_Manual <- function(){
+plotRt_Only_Manual <- function(input){
   
-  server <- function(input, output, session) {
-    output$plot <- renderPlot({
-      myPlot <- RtBasedonManualTrace(dat,
-                                     day = input$days,
-                                     R = input$R0,
-                                     p.tr = 100,
-                                     p.trace_ap = 0,
-                                     p.sym = input$p.sym,
-                                     iso_delay_traced=100,
-                                     iso_delay_untraced= input$iso_delay_untraced,
-                                     sd_contact = input$sd_contact)
-      myPlot
-      
-    })
-  }
-  
-  return(server)
+  myPlot <- RtBasedonManualTrace(dat,
+                                 day = input$daysforManual,
+                                 R = input$R0forManual,
+                                 p.tr = 100,
+                                 p.trace_ap = 0,
+                                 p.sym = input$p.symforManual,
+                                 iso_delay_traced=100,
+                                 iso_delay_untraced= input$iso_delay_untracedforManual,
+                                 sd_contact = input$sd_contactforManual)
+  return (myPlot)
 }
 
 # ui <- UiRt_Only_Manual()

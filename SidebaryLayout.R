@@ -45,49 +45,38 @@ UiDesign <- function() {
     
     # Main panel for displaying outputs ----
     mainPanel(
-      plotOutput("plot1"),
-      plotOutput("plot2"),
+      plotOutput("plotRtTime"),
+      plotOutput("plotRtNactive"),
     )
   )
   return(ui)
 }
 
-# ServerDesingOver <- function(){
-#   
-#   server <- function(input, output, session) {
-#     output$plot1 <- renderPlot({
-#       output<- returnPlot(dat,"Rt",
-#                           input$R0,
-#                           input$p.trace,
-#                           input$p.trace_app,
-#                           input$p.symp,
-#                           input$iso_delay_traced_max,
-#                           input$iso_delay_untraced_sd_max,
-#                           input$sd_contact_rate1)
-# 
-#       output
-#       
-#     })
-#     
-#     output$plot2 <- renderPlot({
-#       output<- returnPlot(dat,"n.active",
-#                           input$R0,
-#                           input$p.trace,
-#                           input$p.trace_app,
-#                           input$p.symp,
-#                           input$iso_delay_traced_max,
-#                           input$iso_delay_untraced_sd_max,
-#                           input$sd_contact_rate1)
-#       
-#       output
-#       
-#     })
-#   }
-#   
-#   return(server)
-# }
-
-
+plotRtTime <- function(input){
+  outputPlot<- returnPlot(dat,"Rt",
+                      input$R0,
+                      input$p.trace,
+                      input$p.trace_app,
+                      input$p.symp,
+                      input$iso_delay_traced_max,
+                      input$iso_delay_untraced_sd_max,
+                      input$sd_contact_rate1)
+  
+  return(outputPlot)
+}
+  
+plotRtNactive <- function(input){
+  outputPlot<- returnPlot(dat,"n.active",
+                          input$R0,
+                          input$p.trace,
+                          input$p.trace_app,
+                          input$p.symp,
+                          input$iso_delay_traced_max,
+                          input$iso_delay_untraced_sd_max,
+                          input$sd_contact_rate1)
+  
+  return(outputPlot)
+}
 
   
   

@@ -70,28 +70,28 @@ UiRt_App_Manual <- function(){
     sidebarLayout(
       # Sidebar with a slider and selection inputs
       sidebarPanel(
-        sliderInput("R0",
+        sliderInput("R0forAppManual",
                     "R0:",
                     min = 2,  max = 3, value = 2, step = .5),
         
-        sliderInput("p.sym",
+        sliderInput("p.symforAppManual",
                     "p.sym:",
                     min = .6,  max = .8, value = .6, step = .1),
         
-        sliderInput("iso_delay_traceced",
+        sliderInput("iso_delay_tracecedforAppManual",
                     "iso_delay_traceced:",
                     min = 1,  max = 4, value = 1, step = 1),
         
         
-        sliderInput("iso_delay_untraced",
+        sliderInput("iso_delay_untracedforAppManaual",
                     "iso_delay_untraced:",
                     min = 1,  max = 5, value = 1, step = 4),
         
-        sliderInput("sd_contact",
+        sliderInput("sd_contactforAppManual",
                     "sd_contact:",
                     min = .3,  max = .8, value = .3, step = .5),
         
-        sliderInput("days",
+        sliderInput("daysforAppManual",
                     "days:",
                     min = 0,  max = 30,  value = 20),
         
@@ -99,7 +99,7 @@ UiRt_App_Manual <- function(){
       
       # Show Word Cloud
       mainPanel(
-        plotOutput("plot")
+        plotOutput("plotRt_App_Manual")
       )
     )
   )
@@ -109,24 +109,17 @@ UiRt_App_Manual <- function(){
 
 
 
-ServerRt_App_Manual <- function(){
-  server <- function(input, output, session) {
-    output$plot <- renderPlot({
+plotRt_App_Manual <- function(input){
       myPlot <- RtBasedonAppAndManual(dat,
-                                      day = input$days,
-                                      R = input$R0,
+                                      day = input$daysforAppManual,
+                                      R = input$R0forAppManual,
                                       p.tr = 100,
                                       p.trace_ap = 100,
-                                      p.sym = input$p.sym,
-                                      iso_delay_traced=input$iso_delay_traceced,
-                                      iso_delay_untraced= input$iso_delay_untraced,
-                                      sd_contact = input$sd_contact)
-      myPlot
-      
-    })
-  }
-  
-  return(server)
+                                      p.sym = input$p.symforAppManual,
+                                      iso_delay_traced=input$iso_delay_tracecedforAppManual,
+                                      iso_delay_untraced= input$iso_delay_untracedforAppManaual,
+                                      sd_contact = input$sd_contactforAppManual)
+      return(myPlot)
 }
 
 # ui <- UiRt_App_Manual()
