@@ -26,13 +26,10 @@ returnPlot <- function(dat,
                               iso_delay_traced_max,
                               iso_delay_untraced_sd_max,
                               sd_contact_rate1)
-  
-  
-  
+
   # output<- select100Scenarios(dat, 2.5,.5,.5,.7,2,1,.3)
   # # ouptColumn <- "Rt"
   # yAxsis <- "n.incub"
-  
   
    yAxsis <- ouptColumn
    results <- output%>% 
@@ -50,68 +47,69 @@ returnPlot <- function(dat,
    caption=NULL
    subtitle=NULL
    ylim=NULL
-   title='Reproductive number Rt'
+   
+   if(ouptColumn == "Rt"){num <- 7}else {num <- 1}
+   
    paired.cols <- RColorBrewer::brewer.pal(12, "Paired")
    p <- ggplot2::ggplot(results, ggplot2::aes(x=day)) +
      ggplot2::geom_ribbon(
        ggplot2::aes(y=Rt_median,
                     ymin=Q_05,
                     ymax=Q_90),
-       fill=paired.cols[7],
+       fill=paired.cols[num],
        alpha=0.8
      ) +
      ggplot2::geom_ribbon(
        ggplot2::aes(y=Rt_median,
                     ymin=Q_25,
                     ymax=Q_75),
-       fill=paired.cols[8],
+       fill=paired.cols[num+1],
        alpha=0.5
      ) +
      ggplot2::geom_line(
        ggplot2::aes(y=Rt_median),
-       color=paired.cols[8],
+       color=paired.cols[num+1],
        size=1.2
      ) +
      ggplot2::geom_point(
        ggplot2::aes(y=Rt_median),
-       color=paired.cols[8],
+       color=paired.cols[num+1],
        size=3
      ) +
-     # ggplot2::geom_hline(
-     #   yintercept=1,
-     #   linetype='dotdash'
-     # ) +
-     ggplot2::labs(x="Day", y=NULL) +
+     
      ggplot2::scale_y_continuous(labels = scales::comma) 
      # ggplot2::theme_classic(base_size=16)
    
    # Add optional titles and labels
-   if (!is.null(title)){
-     p <- p + ggplot2::labs(title=title)
-   }
-   if (!is.null(subtitle)){
-     p <- p + ggplot2::labs(subtitle=subtitle)
-   }
-   if (!is.null(caption)){
-     p <- p + ggplot2::labs(caption=caption)
-   }
+   # if (!is.null(title)){
+   #   p <- p + ggplot2::labs(title=title)
+   # }
+   # if (!is.null(subtitle)){
+   #   p <- p + ggplot2::labs(subtitle=subtitle)
+   # }
+   # if (!is.null(caption)){
+   #   p <- p + ggplot2::labs(caption=caption)
+   # }
    
    # Use a user-defined max y value (for comparison across models)
-   if (!is.null(ylim)){
-     p <- p + ggplot2::coord_cartesian(ylim = ylim)
+   if (ouptColumn=="Rt"){
+      p <- p + labs(title='Reproductive number Rt')
+      p <- p + labs(x="Day", y="Reproductive Number")
+      # p <- p + ylim(0,2)
+      p <- p + geom_hline(
+        yintercept=1,
+        linetype='dotdash'
+      ) 
+   }else {
+      p <- p + labs(title='Number of active cases')
+      p <- p + labs(x="Day", y="Number of active cases")
    }
-   
-  
-   # p
-   
-  
-   
-  # plotOut <- SpecificSettingOfPlotDays(nameOfcolumn,plotOut)
+
   return(p)
 }
 
 
-# myPlot<- returnPlot(dat, 2.5,.5,.5,.7,2,1,.3)
+# myPlot<- returnPlot(dat,"Rt" ,2.5,.5,.5,.7,2,1,.3)
 # myPlot
 
 

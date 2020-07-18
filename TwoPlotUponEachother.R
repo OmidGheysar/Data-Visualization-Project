@@ -114,32 +114,3 @@ p <- p+ geom_ribbon(aes(y=results2$Rt_median,
   )
 p
 
-
-# p <- p+ggplot2::ggplot(results2, ggplot2::aes(x=day)) +
-#   ggplot2::geom_ribbon(
-#     ggplot2::aes(y=Rt_median,
-#                  ymin=Q_05,
-#                  ymax=Q_90),
-#     fill=paired.cols[7],
-#     alpha=0.8
-#   ) +
-#   ggplot2::geom_ribbon(
-#     ggplot2::aes(y=Rt_median,
-#                  ymin=Q_25,
-#                  ymax=Q_75),
-#     fill=paired.cols[8],
-#     alpha=0.5
-#   ) +
-#   ggplot2::geom_line(
-#     ggplot2::aes(y=Rt_median),
-#     color=paired.cols[8],
-#     size=1.2
-#   ) +
-#   ggplot2::geom_point(
-#     ggplot2::aes(y=Rt_median),
-#     color=paired.cols[8],
-#     size=3
-#   ) 
-
-
-

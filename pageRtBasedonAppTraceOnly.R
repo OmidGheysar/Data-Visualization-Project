@@ -16,9 +16,9 @@ ui <- fluidPage(
       sliderInput("p.sym",
                   "p.sym:",
                   min = .6,  max = .8, value = .6, step = .1),
-      sliderInput("iso_delay_untraced",
-                  "iso_delay_untraced:",
-                  min = 1,  max = 5, value = 1, step = 4),
+      # sliderInput("iso_delay_untraced",
+      #             "iso_delay_untraced:",
+      #             min = 1,  max = 5, value = 1, step = 4),
       
       sliderInput("sd_contact",
                   "sd_contact:",

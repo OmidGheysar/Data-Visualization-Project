@@ -52,7 +52,8 @@ p <- ggplot(results,
                fun.ymax = function(x) quantile(x, .75),size=1) +
   stat_summary(geom="line",
                fun.y = "median",size=1)+ylim(0,1.5)+
-  labs(y="y_label", x="x_label", color="c_label")
+  labs(y="Reproductive Number", x="Fraction of people using contact tracing app", 
+       color="Fraction of cases manually traced")
 p <- p + geom_hline(yintercept=1,
                     linetype='dotdash',
                     alpha=0.6)
@@ -75,21 +76,25 @@ UiRt_App_Manual <- function(){
                     min = 2,  max = 3, value = 2, step = .5),
         
         sliderInput("p.symforAppManual",
-                    "p.sym:",
+                    "Fraction of cases that are symptomatic",
                     min = .6,  max = .8, value = .6, step = .1),
         
         sliderInput("iso_delay_tracecedforAppManual",
-                    "iso_delay_traceced:",
+                    "Delay to isolation for traced cases (days)",
                     min = 1,  max = 4, value = 1, step = 1),
         
         
         sliderInput("iso_delay_untracedforAppManaual",
-                    "iso_delay_untraced:",
+                    "Delay to isolation for untraced & distancing cases",
                     min = 1,  max = 5, value = 1, step = 4),
         
-        sliderInput("sd_contactforAppManual",
-                    "sd_contact:",
-                    min = .3,  max = .8, value = .3, step = .5),
+        # sliderInput("sd_contactforAppManual",
+        #             "Strength of physical distancing (contact rate)",
+        #             min = .3,  max = .8, value = .3, step = .5),
+        shinyWidgets::sliderTextInput("sd_contactforAppManual","
+                                      Strength of physical distancing (contact rate)",
+                                      choices=c(0.3, 0.6, 0.8),
+                                      selected=0.3, grid = T),
         
         sliderInput("daysforAppManual",
                     "days:",
