@@ -7,7 +7,8 @@ header <- dashboardHeader(title = "COVID-19 Simulation Dashboard")
 sidebar <- dashboardSidebar(
   sidebarMenu(id = "sbMenu",
               menuItem("Dashboard", tabName = "dashboard", icon = icon("dashboard")),
-              menuItem(h5(HTML("Reproductive Number<br/>Time Series")), icon = icon(""), tabName = "second"),
+              menuItem(h5(HTML("Reproductive Number<br/>Time Series")), tabName = "second"),
+              menuItem(h5(HTML("Reproductive Number<br/>Time Series <br/> Two scenarios")), tabName = "secondOne"),
               menuItem(h5(HTML("Reproductive Number<br/>Only App tracing")), tabName = "third"),
               menuItem(h5(HTML("Reproductive Number<br/>Only Manual tracing")), tabName = "fourth"),
               menuItem(h5(HTML("Reproductive Number<br/>App and Manual tracing")), tabName = "fifth")
@@ -16,14 +17,20 @@ sidebar <- dashboardSidebar(
 
 
 body <- dashboardBody(
+
   tabItems(
     tabItem(tabName = "dashboard",
             h2("Dashboard Main Page")
     ),
-
+    
     tabItem(tabName = "second",
             ui <- UiDesign()
 
+    ),
+    
+    tabItem(tabName = "secondOne",
+            ui <- TwoSenarioInOnePage()
+            
     ),
     tabItem(tabName = "third",
             ui <- UiRt_Only_App()
@@ -61,6 +68,38 @@ server <- function (input, output, session){
                                 input$sd_contact_rate1)
         outputPlot
       })
+      
+      
+      output$plotTwoScenarios1 <- renderPlot({
+        
+        # scenarios<- select100Scenarios(dat, 2,.5,.5,.7,2,1,.3)
+        
+        returnPlotTowScenarions(dat,
+                                input$R012,
+                                input$p.trace12,
+                                input$p.trace_app12,
+                                input$p.symp12,
+                                input$iso_delay_traced_max12,
+                                input$iso_delay_untraced_sd_max12,
+                                input$sd_contact_rate112,
+                                input$R023,
+                                input$p.trace23,
+                                input$p.trace_app23,
+                                input$p.symp23,
+                                input$iso_delay_traced_max23,
+                                input$iso_delay_untraced_sd_max23,
+                                input$sd_contact_rate123
+        )
+        
+      })
+      
+      
+      
+      
+      
+      
+      
+      
       
       output$plotRtNactive <- renderPlot({
         outputPlot<- returnPlot(dat,"n.active",
@@ -120,6 +159,8 @@ server <- function (input, output, session){
       })
  
 }
+
+
 
 # 
 # ui <- UiRt_Only_App()

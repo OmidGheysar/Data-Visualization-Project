@@ -2,6 +2,7 @@ slidebar1For2 <- function() {
   
   ui <- fluidPage(
 
+    
     # Input: Simple integer interval ----
     sliderInput("R012", "R0",
                 min = 2, max = 3,
@@ -38,6 +39,7 @@ slidebar1For2 <- function() {
                 min = 0, max = 31,
                 value = 20, step = 1)
   )
+  
   return(ui)
 }
 
@@ -81,6 +83,7 @@ slidebar1For3 <- function() {
                 min = 0, max = 31,
                 value = 20, step = 1)
   )
+  
   return(ui)
 }
 

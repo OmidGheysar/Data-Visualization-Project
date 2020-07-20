@@ -1,26 +1,28 @@
-library(shiny)
-library("ggplot2")
-library(magrittr) # needs to be run every time you start R and want to use %>%
-library(dplyr)    # alternatively, this also loads %>%
-library("tidyverse")
-library(shinydashboard)
-source("C:/Users/omidg/OneDrive/Desktop/BCCCDC R shiny Project/BCCCDC-Project/data manipulation.R")
-source("C:/Users/omidg/OneDrive/Desktop/BCCCDC R shiny Project/BCCCDC-Project/PlotMaker.R")
-source("C:/Users/omidg/OneDrive/Desktop/BCCCDC R shiny Project/BCCCDC-Project/SidebaryLayout.R")
-source("C:/Users/omidg/OneDrive/Desktop/BCCCDC R shiny Project/BCCCDC-Project/serverDesign.R")
-source("C:/Users/omidg/OneDrive/Desktop/BCCCDC R shiny Project/BCCCDC-Project/CreateDataFrame.R")
-
+# library(shiny)
+# library("ggplot2")
+# library(magrittr) # needs to be run every time you start R and want to use %>%
+# library(dplyr)    # alternatively, this also loads %>%
+# library("tidyverse")
+# library(shinydashboard)
+# source("C:/Users/omidg/OneDrive/Desktop/BCCCDC R shiny Project/BCCCDC-Project/data manipulation.R")
+# source("C:/Users/omidg/OneDrive/Desktop/BCCCDC R shiny Project/BCCCDC-Project/PlotMaker.R")
+# source("C:/Users/omidg/OneDrive/Desktop/BCCCDC R shiny Project/BCCCDC-Project/SidebaryLayout.R")
+# source("C:/Users/omidg/OneDrive/Desktop/BCCCDC R shiny Project/BCCCDC-Project/serverDesign.R")
+# source("C:/Users/omidg/OneDrive/Desktop/BCCCDC R shiny Project/BCCCDC-Project/CreateDataFrame.R")
+# dat <- readRDS("05_22.rds")
 
 source("C:/Users/omidg/OneDrive/Desktop/BCCCDC R shiny Project/BCCCDC-Project/slidebar1For2.R")
-# dat <- readRDS("05_22.rds")
+source("C:/Users/omidg/OneDrive/Desktop/BCCCDC R shiny Project/BCCCDC-Project/returnPlotTowScenarions.R")
+
+TwoSenarioInOnePage <- function(){
 ui <- fluidPage(
   fluidRow(
     column(3,
            slidebar1For2()
     ),
     column(6,
-           plotOutput("plot1"),
-           plotOutput("plot2")
+           plotOutput("plotTwoScenarios1"),
+           plotOutput("plotTwoScenarios2")
            
     ), 
     column(3,
@@ -28,8 +30,6 @@ ui <- fluidPage(
     )
     
   ),
-  
-  
   
   hr(),
 
@@ -40,14 +40,15 @@ ui <- fluidPage(
   
 )
 
-
+return(ui)
+}
 
 server <- function(input, output) {
-  
-  output$plot1 <- renderPlot({
-  
+
+  output$plotTwoScenarios1 <- renderPlot({
+
   # scenarios<- select100Scenarios(dat, 2,.5,.5,.7,2,1,.3)
-    
+
     returnPlotTowScenarions(dat,
                             input$R012,
                             input$p.trace12,
@@ -64,14 +65,12 @@ server <- function(input, output) {
                             input$iso_delay_untraced_sd_max23,
                             input$sd_contact_rate123
                             )
-  
+
   })
 
-  output$plot2 <- renderPlot({
-    p
-  })
+
 }
-
-
-shinyApp(ui, server)
+# 
+# 
+# shinyApp(ui, server)
 
