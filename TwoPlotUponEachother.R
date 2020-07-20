@@ -14,15 +14,13 @@ source("C:/Users/omidg/OneDrive/Desktop/BCCCDC R shiny Project/BCCCDC-Project/Cr
 dat <- readRDS("05_22.rds")
 
 
-myPlot<- returnPlot(dat,"n.incub" ,2.5,.75,.5,.7,2,1,.3)
-myPlot
+# myPlot<- returnPlot(dat,"n.incub" ,2.5,.75,.5,.7,2,1,.3)
+# myPlot
 
-
+# Here is the place that I get input
 output<- select100Scenarios(dat, 2.5,.75,.5,.7,2,1,.3)
-
 yAxsis <- "n.incub"
-
-
+# =============================
 
 results1 <- output%>% 
   select(day,yAxsis) %>% 
@@ -35,11 +33,6 @@ results1 <- output%>%
     Q_90 = quantile(get(yAxsis), 0.90, na.rm=TRUE)
   ) %>% ungroup()
 
-
-caption=NULL
-subtitle=NULL
-ylim=NULL
-title='Reproductive number Rt'
 paired.cols <- RColorBrewer::brewer.pal(12, "Paired")
 p <- ggplot2::ggplot(results1, ggplot2::aes(x=day)) +
   ggplot2::geom_ribbon(
@@ -68,10 +61,11 @@ p <- ggplot2::ggplot(results1, ggplot2::aes(x=day)) +
   ) 
 
 
-
+# Here is the place that I get input
 output<- select100Scenarios(dat, 2,.5,.5,.7,2,1,.3)
-
 yAxsis <- "n.incub"
+# ===============================
+
 results2 <- output%>% 
   select(day,yAxsis) %>% 
   group_by(day) %>%
@@ -82,12 +76,6 @@ results2 <- output%>%
     Q_75 = quantile(get(yAxsis), 0.75, na.rm=TRUE),
     Q_90 = quantile(get(yAxsis), 0.90, na.rm=TRUE)
   ) %>% ungroup()
-
-
-caption=NULL
-subtitle=NULL
-ylim=NULL
-title='Reproductive number Rt'
 
 p <- p+ geom_ribbon(aes(y=results2$Rt_median,
                  ymin=results2$Q_05,
