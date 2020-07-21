@@ -57,7 +57,7 @@ server <- function (input, output, session){
   
   dat <- readRDS("05_22.rds")
   
-      output$plotRtTime <- renderPlot({
+      output$plotRtTime <- renderPlotly({
         outputPlot<- returnPlot(dat,"Rt",
                                 input$R0,
                                 input$p.trace,
@@ -67,6 +67,25 @@ server <- function (input, output, session){
                                 input$iso_delay_untraced_sd_max,
                                 input$sd_contact_rate1)
         outputPlot
+      })
+      
+      output$plotRtNactive <- renderPlotly({
+        outputPlot<- returnPlot(dat,"n.active",
+                                input$R0,
+                                input$p.trace,
+                                input$p.trace_app,
+                                input$p.symp,
+                                input$iso_delay_traced_max,
+                                input$iso_delay_untraced_sd_max,
+                                input$sd_contact_rate1)
+        outputPlot
+      })
+      
+      
+      output$captionMainTimeSeries <- renderText({ 
+        paste("here you can talk about your self regulation
+          whatever makes you happy or any kind of inner voice will be appreciate
+          it is our destiny to be successful!!!!", input$range)
       })
       
       
@@ -91,26 +110,6 @@ server <- function (input, output, session){
                                 input$sd_contact_rate123
         )
         
-      })
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      output$plotRtNactive <- renderPlot({
-        outputPlot<- returnPlot(dat,"n.active",
-                                input$R0,
-                                input$p.trace,
-                                input$p.trace_app,
-                                input$p.symp,
-                                input$iso_delay_traced_max,
-                                input$iso_delay_untraced_sd_max,
-                                input$sd_contact_rate1)
-        outputPlot
       })
       
       output$plotRt_Only_App <- renderPlot({

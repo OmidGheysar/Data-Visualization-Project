@@ -1,7 +1,7 @@
 
 uploadRequiredLibraries <- function(){
   # install.packages("shinydashboard")
-  # library(plotly)
+  library(plotly)
   library(shiny)
   library("ggplot2")
   library(magrittr) # needs to be run every time you start R and want to use %>%

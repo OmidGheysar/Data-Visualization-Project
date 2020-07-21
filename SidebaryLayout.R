@@ -45,38 +45,36 @@ UiDesign <- function() {
     
     # Main panel for displaying outputs ----
     mainPanel(
-      plotOutput("plotRtTime"),
-      plotOutput("plotRtNactive"),
+      plotlyOutput("plotRtTime"),
+      plotlyOutput("plotRtNactive"),
+      textOutput("captionMainTimeSeries")
     )
   )
   return(ui)
 }
 
-plotRtTime <- function(input){
-  outputPlot<- returnPlot(dat,"Rt",
-                      input$R0,
-                      input$p.trace,
-                      input$p.trace_app,
-                      input$p.symp,
-                      input$iso_delay_traced_max,
-                      input$iso_delay_untraced_sd_max,
-                      input$sd_contact_rate1)
-  
-  return(outputPlot)
-}
-  
-plotRtNactive <- function(input){
-  outputPlot<- returnPlot(dat,"n.active",
-                          input$R0,
-                          input$p.trace,
-                          input$p.trace_app,
-                          input$p.symp,
-                          input$iso_delay_traced_max,
-                          input$iso_delay_untraced_sd_max,
-                          input$sd_contact_rate1)
-  
-  return(outputPlot)
-}
+# server <- function (input, output, session){
+#   
+#   # dat <- readRDS("05_22.rds")
+#   
+#   output$plotRtTime <- renderPlotly({
+# 
+#     
+#       outputPlot<- returnPlot(dat,"Rt",
+#                           input$R0,
+#                           input$p.trace,
+#                           input$p.trace_app,
+#                           input$p.symp,
+#                           input$iso_delay_traced_max,
+#                           input$iso_delay_untraced_sd_max,
+#                           input$sd_contact_rate1)
+#       outputPlot
+#   })
+#   
+# }
+# 
+# shinyApp(ui, server)
+
 
   
   
