@@ -21,8 +21,8 @@ ui <- fluidPage(
            slidebar1For2()
     ),
     column(6,
-           plotOutput("plotTwoScenarios1"),
-           plotOutput("plotTwoScenarios2")
+           plotlyOutput("plotTwoScenarios1"),
+           plotlyOutput("plotTwoScenarios2")
            
     ), 
     column(3,

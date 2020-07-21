@@ -89,7 +89,7 @@ server <- function (input, output, session){
       })
       
       
-      output$plotTwoScenarios1 <- renderPlot({
+      output$plotTwoScenarios1 <- renderPlotly({
         
         # scenarios<- select100Scenarios(dat, 2,.5,.5,.7,2,1,.3)
         
@@ -112,7 +112,7 @@ server <- function (input, output, session){
         
       })
       
-      output$plotRt_Only_App <- renderPlot({
+      output$plotRt_Only_App <- renderPlotly({
         
         myPlot <- RtBasedonAppTrace(dat,
                                     day = input$daysforApp,
@@ -127,7 +127,7 @@ server <- function (input, output, session){
 
       })
       
-      output$plotRt_Only_Manual <- renderPlot({
+      output$plotRt_Only_Manual <- renderPlotly({
         
         myPlot <- RtBasedonManualTrace(dat,
                                        day = input$daysforManual,
@@ -142,7 +142,7 @@ server <- function (input, output, session){
         
       })
       
-      output$plotRt_App_Manual <- renderPlot({
+      output$plotRt_App_Manual <- renderPlotly({
         
         myPlot <- RtBasedonAppAndManual(dat,
                                         day = input$daysforAppManual,

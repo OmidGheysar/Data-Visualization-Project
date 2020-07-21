@@ -37,10 +37,10 @@ aes_y <- "Rt"
 aes_col <- "p.trace"
 aes_grp <- "p.trace"
 
-# results<- select64000Scenarios(dat, 1, 2.5,.5,.5,.7,2,5,.3)
+
 results<- select64000Scenarios(dat, days, R, p.tr, p.trace_ap, p.sym,
                                iso_delay_traced, iso_delay_untraced, sd_contact) 
-
+results<- select64000Scenarios(dat, 30, 2.5,.5,.5,.7,2,5,.3)
 p <- ggplot(results,
             aes(x=eval(as.name(aes_x)),
                 y=eval(as.name(aes_y)),
@@ -49,16 +49,26 @@ p <- ggplot(results,
   stat_summary(geom="pointrange",
                fun.y  = "median",
                fun.ymin = function(x) quantile(x, .25),
-               fun.ymax = function(x) quantile(x, .75),size=1) +
+               fun.ymax = function(x) quantile(x, .75),size=2) +
   stat_summary(geom="line",
                fun.y = "median",size=1)+ylim(0,1.5)+
-  labs(y="Reproductive Number", x="Fraction of people using contact tracing app", 
-       color="Fraction of cases manually traced")
+  # labs(y="Reproductive Number", x="Fraction of people using contact tracing app", 
+  #      color="Fraction of cases manually traced")
+labs(y="", x="", 
+     color="")
 p <- p + geom_hline(yintercept=1,
                     linetype='dotdash',
                     alpha=0.6)
+p <- p + labs(title="Colors show the level of manual tracing")
+p <- ggplotly(p)
+x <- list(
+  title = "Fraction of people using contact tracing app"
+)
+y <- list(
+  title = "Reproductive Number"
+)
 
-p
+return(p %>% layout(xaxis = x, yaxis = y,  margin = list(l = 50, r = 50, b = 50, t = 50, pad = 4),title=list(x=1)))
 
 }
 
@@ -104,7 +114,7 @@ UiRt_App_Manual <- function(){
       
       # Show Word Cloud
       mainPanel(
-        plotOutput("plotRt_App_Manual")
+        plotlyOutput("plotRt_App_Manual")
       )
     )
   )

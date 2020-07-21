@@ -47,16 +47,24 @@ p <- ggplot(results,
   stat_summary(geom="pointrange",
                fun.y  = "median",
                fun.ymin = function(x) quantile(x, .25),
-               fun.ymax = function(x) quantile(x, .75),size=1) +
+               fun.ymax = function(x) quantile(x, .75),size=2) +
   stat_summary(geom="line",
                fun.y = "median",size=1)+ylim(0,1.5)+
-  labs(y="Reproductive Number", x="Fraction of cases manually traced",
-       color="Delay to isolation for traced cases (days)")
+  labs(y="Reproductive Number", x="",
+       color="")
   p <- p + geom_hline(yintercept=1,
                     linetype='dotdash',
                     alpha=0.6)
+  p <- p + labs(title="Colors show delay to isolation for traced cases (days)")
+  p <- ggplotly(p)
+  x <- list(
+    title = "Fraction of cases manually traced"
+  )
+  y <- list(
+    title = "Reproductive Number"
+  )
   
-  return(p)
+  return(p %>% layout(xaxis = x, yaxis = y,  margin = list(l = 50, r = 50, b = 50, t = 50, pad = 4),title=list(x=1)))
 
 }
 
@@ -97,7 +105,7 @@ UiRt_Only_Manual <- function(){
       
       # Show Word Cloud
       mainPanel(
-        plotOutput("plotRt_Only_Manual")
+        plotlyOutput("plotRt_Only_Manual")
       )
     )
   )
