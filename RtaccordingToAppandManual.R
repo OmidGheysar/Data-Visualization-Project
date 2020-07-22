@@ -40,7 +40,7 @@ aes_grp <- "p.trace"
 
 results<- select64000Scenarios(dat, days, R, p.tr, p.trace_ap, p.sym,
                                iso_delay_traced, iso_delay_untraced, sd_contact) 
-results<- select64000Scenarios(dat, 30, 2.5,.5,.5,.7,2,5,.3)
+# results<- select64000Scenarios(dat, 30, 2.5,.5,.5,.7,2,5,.3)
 p <- ggplot(results,
             aes(x=eval(as.name(aes_x)),
                 y=eval(as.name(aes_y)),
@@ -81,35 +81,36 @@ UiRt_App_Manual <- function(){
     sidebarLayout(
       # Sidebar with a slider and selection inputs
       sidebarPanel(
-        sliderInput("R0forAppManual",
-                    "R0:",
-                    min = 2,  max = 3, value = 2, step = .5),
         
-        sliderInput("p.symforAppManual",
-                    "Fraction of cases that are symptomatic",
-                    min = .6,  max = .8, value = .6, step = .1),
-        
-        sliderInput("iso_delay_tracecedforAppManual",
-                    "Delay to isolation for traced cases (days)",
-                    min = 1,  max = 4, value = 1, step = 1),
-        
-        
-        sliderInput("iso_delay_untracedforAppManaual",
-                    "Delay to isolation for untraced & distancing cases",
-                    min = 1,  max = 5, value = 1, step = 4),
-        
-        # sliderInput("sd_contactforAppManual",
-        #             "Strength of physical distancing (contact rate)",
-        #             min = .3,  max = .8, value = .3, step = .5),
         shinyWidgets::sliderTextInput("sd_contactforAppManual","
                                       Strength of physical distancing (contact rate)",
                                       choices=c(0.3, 0.6, 0.8),
                                       selected=0.3, grid = T),
         
-        sliderInput("daysforAppManual",
-                    "days:",
-                    min = 0,  max = 30,  value = 20),
+        sliderInput("iso_delay_tracecedforAppManual",
+                    "Delay to isolation for traced cases (days)",
+                    min = 1,  max = 4, value = 1, step = 1),
         
+        selectInput("selectionAppManual", "Select something", choices = c("Descision Making Parameters", "All Parameters")),
+        conditionalPanel(
+          "input.selectionAppManual == 'All Parameters'",
+          sliderInput("R0forAppManual",
+                      "R0:",
+                      min = 2,  max = 3, value = 2, step = .5),
+          
+          sliderInput("p.symforAppManual",
+                      "Fraction of cases that are symptomatic",
+                      min = .6,  max = .8, value = .6, step = .1),
+          
+          sliderInput("iso_delay_untracedforAppManaual",
+                      "Delay to isolation for untraced & distancing cases",
+                      min = 1,  max = 5, value = 1, step = 4),
+          
+          sliderInput("daysforAppManual",
+                      "days:",
+                      min = 0,  max = 30,  value = 20)
+        )
+   
       ),
       
       # Show Word Cloud
@@ -122,6 +123,11 @@ UiRt_App_Manual <- function(){
   return (ui)
 }
 
+# server <- function(input, output, session) {
+# 
+# }
+# 
+# shinyApp(ui, server)
 
 
 plotRt_App_Manual <- function(input){
