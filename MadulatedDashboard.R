@@ -20,7 +20,8 @@ body <- dashboardBody(
 
   tabItems(
     tabItem(tabName = "dashboard",
-            h2("Dashboard Main Page")
+            h1("Simulation of COVID-19"),
+            titlePanel(title=div(img(src="covid.PNG")))
     ),
     
     tabItem(tabName = "second",
@@ -80,6 +81,32 @@ server <- function (input, output, session){
                                 input$sd_contact_rate1)
         outputPlot
       })
+      
+      
+      output$TableTime <- renderTable({
+        data.frame(
+          Name = c("R0 ",
+                   "Fraction of cases that are symptomatic",
+                   "Delay to isolation for untraced & distancing cases",
+                   "days",
+                   "Delay to isolation for traced cases (days)",
+                   "Fraction of people using contact tracing app",
+                   "Fraction of cases manually traced",
+                   "Strength of physical distancing (contact rate)"),
+          Value = as.character(c(input$R0,
+                                 input$p.symp,
+                                 input$iso_delay_untraced_sd_max,
+                                 input$day,
+                                 input$iso_delay_traced_max,
+                                 input$p.trace_app,
+                                 input$p.trace,
+                                 input$sd_contact_rate1)),
+          stringsAsFactors = FALSE)
+      })
+      
+      
+      
+      
       
       
       output$captionMainTimeSeries <- renderText({ 

@@ -22,6 +22,13 @@ ui <- fluidPage(
   )
 )
 
+server <- function(input, output, session) {
+
+}
+
+shinyApp(ui, server)
+
+
 server <- function(input, output) {
   
   output$caption1 <- renderText({ 
