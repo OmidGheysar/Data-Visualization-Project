@@ -105,17 +105,6 @@ server <- function (input, output, session){
       })
       
       
-      
-      
-      
-      
-      output$captionMainTimeSeries <- renderText({ 
-        paste("here you can talk about your self regulation
-          whatever makes you happy or any kind of inner voice will be appreciate
-          it is our destiny to be successful!!!!", input$range)
-      })
-      
-      
       output$plotTwoScenarios1 <- renderPlotly({
         
         # scenarios<- select100Scenarios(dat, 2,.5,.5,.7,2,1,.3)

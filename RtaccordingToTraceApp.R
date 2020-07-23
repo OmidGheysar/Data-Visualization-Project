@@ -111,7 +111,9 @@ UiRt_Only_App <- function(){
       
       # Show Word Cloud
       mainPanel(
-        plotlyOutput("plotRt_Only_App")
+        plotlyOutput("plotRt_Only_App"),
+        h4(code("Impact of digital contact tracing for 
+                Reproductive Number of covid-19"))
       )
     )
   )
