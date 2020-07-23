@@ -100,7 +100,10 @@ UiRt_Only_Manual <- function(){
           sliderInput("daysforManual",
                       "days:",
                       min = 0,  max = 30,  value = 20)
-        ) 
+        ),
+        hr(),
+        h3("Assumpations"),
+        tableOutput("tableManual")
       ),
       
       # Show Word Cloud
@@ -112,9 +115,30 @@ UiRt_Only_Manual <- function(){
   return(ui)
 }
 
-server <- function(input, output, session) {
-
-}
+# server <- function(input, output, session) {
+# 
+#   output$tableManual <- renderTable({
+#     data.frame(
+#       Name = c("R0 ",
+#                "Fraction of cases that are symptomatic",
+#                "Delay to isolation for untraced & distancing cases",
+#                "days",
+#                "Delay to isolation for traced cases (days)",
+#                "Fraction of people using contact tracing app",
+#                "Fraction of cases manually traced",
+#                "Strength of physical distancing (contact rate)"),
+#       Value = as.character(c(input$R0forManual,
+#                              input$p.symforManual,
+#                              input$iso_delay_untracedforManual,
+#                              input$daysforManual,
+#                              "None",
+#                              0,
+#                              "None",
+#                              input$sd_contactforManual)),
+#       stringsAsFactors = FALSE)
+#   })
+#   
+# }
 
 shinyApp(ui, server)
 
