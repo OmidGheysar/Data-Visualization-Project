@@ -154,6 +154,32 @@ server <- function (input, output, session){
 
       })
       
+      
+        output$tableApp <- renderTable({
+          data.frame(
+            Name = c("R0 ",
+                     "Fraction of cases that are symptomatic",
+                     "Delay to isolation for untraced & distancing cases",
+                     "days",
+                     "Delay to isolation for traced cases (days)",
+                     "Fraction of people using contact tracing app",
+                     "Fraction of cases manually traced",
+                     "Strength of physical distancing (contact rate)"),
+            Value = as.character(c(input$R0forApp,
+                                   input$p.symforApp,
+                                   input$iso_delay_untracedforApp,
+                                   input$daysforApp,
+                                   "None",
+                                   0,
+                                   "None",
+                                   input$sd_contactforApp)),
+            stringsAsFactors = FALSE)
+        })
+      
+      
+      
+      
+      
       output$plotRt_Only_Manual <- renderPlotly({
         
         myPlot <- RtBasedonManualTrace(dat,
@@ -182,6 +208,27 @@ server <- function (input, output, session){
                                         sd_contact = input$sd_contactforAppManual)
         myPlot
         
+      })
+      
+      output$tableAppManual <- renderTable({
+        data.frame(
+          Name = c("R0 ",
+                   "Fraction of cases that are symptomatic",
+                   "Delay to isolation for untraced & distancing cases",
+                   "days",
+                   "Delay to isolation for traced cases (days)",
+                   "Fraction of people using contact tracing app",
+                   "Fraction of cases manually traced",
+                   "Strength of physical distancing (contact rate)"),
+          Value = as.character(c(input$R0forAppManual,
+                                 input$p.symforAppManual,
+                                 input$iso_delay_untracedforAppManaual,
+                                 input$daysforAppManual,
+                                 input$iso_delay_tracecedforAppManual,
+                                 "None",
+                                 "None",
+                                 input$sd_contactforAppManual)),
+          stringsAsFactors = FALSE)
       })
  
 }

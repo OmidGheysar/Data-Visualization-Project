@@ -103,8 +103,10 @@ UiRt_Only_App <- function(){
           sliderInput("daysforApp",
                       "days:",
                       min = 0,  max = 30,  value = 20)
-        )
-        
+        ),
+        hr(),
+        h3("Assumpations"),
+        tableOutput("tableApp")
       ),
       
       # Show Word Cloud
@@ -116,8 +118,31 @@ UiRt_Only_App <- function(){
   return(ui)
   
 }  
+
+
 # server <- function(input, output, session) {
 # 
+#   output$tableApp <- renderTable({
+#     data.frame(
+#       Name = c("R0 ",
+#                "Fraction of cases that are symptomatic",
+#                "Delay to isolation for untraced & distancing cases",
+#                "days",
+#                "Delay to isolation for traced cases (days)",
+#                "Fraction of people using contact tracing app",
+#                "Fraction of cases manually traced",
+#                "Strength of physical distancing (contact rate)"),
+#       Value = as.character(c(input$R0forApp,
+#                              input$p.symforApp,
+#                              input$iso_delay_untracedforApp,
+#                              input$daysforApp,
+#                              "input$iso_delay_tracecedforApp",
+#                              0,
+#                              "None",
+#                              input$sd_contactforApp)),
+#       stringsAsFactors = FALSE)
+#   })
+#   
 # }
 # 
 # shinyApp(ui, server)

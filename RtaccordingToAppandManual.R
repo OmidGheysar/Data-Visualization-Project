@@ -109,7 +109,10 @@ UiRt_App_Manual <- function(){
           sliderInput("daysforAppManual",
                       "days:",
                       min = 0,  max = 30,  value = 20)
-        )
+        ),
+        hr(),
+        h3("Assumpations"),
+        tableOutput("tableAppManual")
    
       ),
       
@@ -123,11 +126,31 @@ UiRt_App_Manual <- function(){
   return (ui)
 }
 
-# server <- function(input, output, session) {
-# 
-# }
-# 
-# shinyApp(ui, server)
+server <- function(input, output, session) {
+
+  output$tableAppManual <- renderTable({
+    data.frame(
+      Name = c("R0 ",
+               "Fraction of cases that are symptomatic",
+               "Delay to isolation for untraced & distancing cases",
+               "days",
+               "Delay to isolation for traced cases (days)",
+               "Fraction of people using contact tracing app",
+               "Fraction of cases manually traced",
+               "Strength of physical distancing (contact rate)"),
+      Value = as.character(c(input$R0forAppManual,
+                             input$p.symforAppManual,
+                             input$iso_delay_untracedforAppManaual,
+                             input$daysforAppManual,
+                             input$iso_delay_tracecedforAppManual,
+                             "None",
+                             "None",
+                             input$sd_contactforAppManual)),
+      stringsAsFactors = FALSE)
+  })
+}
+
+shinyApp(ui, server)
 
 
 plotRt_App_Manual <- function(input){
