@@ -1,7 +1,6 @@
 source("C:/Users/omidg/OneDrive/Desktop/BCCCDC R shiny Project/BCCCDC-Project/uploadRequiredLibraries.R")
 uploadRequiredLibraries()
 
-
 header <- dashboardHeader(title = "COVID-19 Simulation Dashboard")
 
 sidebar <- dashboardSidebar(
@@ -56,9 +55,16 @@ ui <- dashboardPage(header, sidebar, body)
 
 server <- function (input, output, session){
   
+  showModal(modalDialog("Loading the data .....", footer=NULL))
+  #Do the stuff here....
+  #...
   dat <- readRDS("05_22.rds")
+  #...
+  #Finish the function
+  removeModal()
   
       output$plotRtTime <- renderPlotly({
+        
         outputPlot<- returnPlot(dat,"Rt",
                                 input$R0,
                                 input$p.trace,

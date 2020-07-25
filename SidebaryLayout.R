@@ -54,6 +54,7 @@ UiDesign <- function() {
     
     # Main panel for displaying outputs ----
     mainPanel(
+      
       plotlyOutput("plotRtTime"),
       plotlyOutput("plotRtNactive"),
       textOutput("captionMainTimeSeries"),

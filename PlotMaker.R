@@ -27,9 +27,10 @@ returnPlot <- function(dat,
                               iso_delay_untraced_sd_max,
                               sd_contact_rate1)
 
-  # output<- select100Scenarios(dat, 2.5,.5,.5,.7,2,1,.3)
+  output<- select100Scenarios(dat, 2.5,.5,.5,.7,2,1,.3)
+  
   # # ouptColumn <- "Rt"
-  # yAxsis <- "n.incub"
+  yAxsis <- "n.incub"
   
    yAxsis <- ouptColumn
    results <- output%>% 
