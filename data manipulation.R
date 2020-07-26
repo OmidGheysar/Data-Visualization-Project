@@ -17,7 +17,7 @@ select100Scenarios <- function(dat,
                                  p.symp== p.sym&
                                  iso_delay_traced_max==iso_delay_traced&
                                  iso_delay_untraced_sd_max==iso_delay_untraced&
-                                 sd_contact_rate1==sd_contact) %>% select("day":"Rt")
+                                 sd_contact_rate1==sd_contact)
   return(scenarios100)
 }
 

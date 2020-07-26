@@ -9,6 +9,8 @@ source("C:/Users/omidg/OneDrive/Desktop/BCCCDC R shiny Project/BCCCDC-Project/Sp
 
 # dat <- readRDS("05_22.rds")
 
+dat <- readRDS("Newdata.rds")
+
 returnPlot <- function(dat,
                        ouptColumn,
                        R0,
@@ -27,29 +29,36 @@ returnPlot <- function(dat,
                               iso_delay_untraced_sd_max,
                               sd_contact_rate1)
 
-  output<- select100Scenarios(dat, 2.5,.5,.5,.7,2,1,.3)
+  output<- select100Scenarios(dat, 2,.5,.5,.7,2,1,.3)
   
   # # ouptColumn <- "Rt"
   yAxsis <- "n.incub"
   
-   yAxsis <- ouptColumn
-   results <- output%>% 
-      select(day,yAxsis) %>% 
-     group_by(day) %>%
-     summarise(
-       Q_05 = quantile(get(yAxsis), 0.05, na.rm=TRUE),
-       Q_25 = quantile(get(yAxsis), 0.25, na.rm=TRUE),
-       Rt_median = median(get(yAxsis), na.rm=TRUE),
-       Q_75 = quantile(get(yAxsis), 0.75, na.rm=TRUE),
-       Q_90 = quantile(get(yAxsis), 0.90, na.rm=TRUE)
-     ) %>% ungroup()
+   # yAxsis <- ouptColumn
+   # results <- output%>% 
+   #    select(day,yAxsis) %>% 
+   #   group_by(day) %>%
+   #   summarise(
+   #     Q_05 = quantile(get(yAxsis), 0.05, na.rm=TRUE),
+   #     Q_25 = quantile(get(yAxsis), 0.25, na.rm=TRUE),
+   #     Rt_median = median(get(yAxsis), na.rm=TRUE),
+   #     Q_75 = quantile(get(yAxsis), 0.75, na.rm=TRUE),
+   #     Q_90 = quantile(get(yAxsis), 0.90, na.rm=TRUE)
+   #   ) %>% ungroup()
    
-   
+      Q_05  <-  output$Rt_Q_05
+      Q_25 <-  output$Rt_Q_25
+      Rt_median <-  output$Rt_Q_50
+      Q_75 <-  output$Rt_Q_75
+      Q_90 <-  output$Rt_Q_95
+      results <- output
+  
    caption=NULL
    subtitle=NULL
    ylim=NULL
    
-   if(ouptColumn == "Rt"){num <- 7}else {num <- 1}
+   # if(ouptColumn == "Rt"){num <- 7}else {num <- 1}
+   num <- 7
    
    paired.cols <- RColorBrewer::brewer.pal(12, "Paired")
    p <- ggplot2::ggplot(results, ggplot2::aes(x=day)) +
@@ -79,20 +88,7 @@ returnPlot <- function(dat,
      ) +
      
      ggplot2::scale_y_continuous(labels = scales::comma) 
-     # ggplot2::theme_classic(base_size=16)
-   
-   # Add optional titles and labels
-   # if (!is.null(title)){
-   #   p <- p + ggplot2::labs(title=title)
-   # }
-   # if (!is.null(subtitle)){
-   #   p <- p + ggplot2::labs(subtitle=subtitle)
-   # }
-   # if (!is.null(caption)){
-   #   p <- p + ggplot2::labs(caption=caption)
-   # }
-   
-   # Use a user-defined max y value (for comparison across models)
+
    if (ouptColumn=="Rt"){
       p <- p + labs(title='Reproductive number Rt')
       p <- p + labs(x="Day", y="Reproductive Number")
