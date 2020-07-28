@@ -58,7 +58,8 @@ server <- function (input, output, session){
   showModal(modalDialog("Loading the data .....", footer=NULL))
   #Do the stuff here....
   #...
-  dat <- readRDS("05_22.rds")
+  # dat <- readRDS("05_22.rds")
+  dat <- readRDS("Newdata.rds")
   #...
   #Finish the function
   removeModal()
