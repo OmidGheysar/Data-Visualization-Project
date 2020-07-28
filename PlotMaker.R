@@ -92,8 +92,8 @@ returnPlot <- function(dat,
 }
 
 
-myPlot<- returnPlot(dat,"Rt" ,3,.5,.5,.7,2,1,.3)
-myPlot
+# myPlot<- returnPlot(dat,"Rt" ,3,.5,.5,.7,2,1,.3)
+# myPlot
 
 
 
