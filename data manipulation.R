@@ -23,7 +23,7 @@ select100Scenarios <- function(dat,
 
 
 
-# output<- select100Scenarios(dat, 2,.5,.5,.7,2,1,.3)
+
 # output<- select100Scenarios(dat,2,0,0,.8,1,5,.8)
 # 
 # 

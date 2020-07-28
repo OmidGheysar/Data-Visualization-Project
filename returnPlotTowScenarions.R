@@ -32,79 +32,75 @@ returnPlotTowScenarions <- function(dat,
                                   inputiso_delay_traced_max23,
                                   inputiso_delay_untraced_sd_max23,
                                   inputsd_contact_rate123)
-  yAxsis <- "Rt"
+
+  # dat <- readRDS("Newdata.rds")
+  # scenarios1<- select100Scenarios(dat,2,0,0,.8,1,5,.8)
+  results1 <- scenarios1
+  ouptColumn <- "Rt"
+  Q_05_scenarios1  <-  scenarios1[[paste(ouptColumn, "Q_05", sep="_")]]
+  Q_25_scenarios1 <-   scenarios1[[paste(ouptColumn, "Q_25", sep="_")]]
+  Rt_median_scenarios1 <-  scenarios1[[paste(ouptColumn, "Q_50", sep="_")]]
+  Q_75_scenarios1 <-  scenarios1[[paste(ouptColumn, "Q_75", sep="_")]]
+  Q_90_scenarios1 <-  scenarios1[[paste(ouptColumn, "Q_95", sep="_")]]
   
-  
-  results1 <- scenarios1%>%
-    select(day,yAxsis) %>%
-    group_by(day) %>%
-    summarise(
-      Q_05 = quantile(get(yAxsis), 0.05, na.rm=TRUE),
-      Q_25 = quantile(get(yAxsis), 0.25, na.rm=TRUE),
-      Rt_median = median(get(yAxsis), na.rm=TRUE),
-      Q_75 = quantile(get(yAxsis), 0.75, na.rm=TRUE),
-      Q_90 = quantile(get(yAxsis), 0.90, na.rm=TRUE)
-    ) %>% ungroup()
   
   paired.cols <- RColorBrewer::brewer.pal(12, "Paired")
   p <- ggplot2::ggplot(results1, ggplot2::aes(x=day)) +
     ggplot2::geom_ribbon(
-      ggplot2::aes(y=Rt_median,
-                   ymin=Q_05,
-                   ymax=Q_90),
+      ggplot2::aes(y=Rt_median_scenarios1,
+                   ymin=Q_05_scenarios1,
+                   ymax=Q_90_scenarios1),
       fill=paired.cols[7],
       alpha=0.2
     ) +
     ggplot2::geom_ribbon(
-      ggplot2::aes(y=Rt_median,
-                   ymin=Q_25,
-                   ymax=Q_75),
+      ggplot2::aes(y=Rt_median_scenarios1,
+                   ymin=Q_25_scenarios1,
+                   ymax=Q_75_scenarios1),
       fill=paired.cols[8],
       alpha=0.3
     ) +
     ggplot2::geom_line(
-      ggplot2::aes(y=Rt_median),
+      ggplot2::aes(y=Rt_median_scenarios1),
       color=paired.cols[8],
       size=1.2
     ) +
     ggplot2::geom_point(
-      ggplot2::aes(y=Rt_median),
+      ggplot2::aes(y=Rt_median_scenarios1),
       color=paired.cols[8],
       size=3
     )
   
+  # scenarios2<- select100Scenarios(dat,3,1,1,.8,1,5,.8)
+  ouptColumn <- "Rt"
+  results2 <- scenarios2
   
-  results2 <- scenarios2%>%
-    select(day,yAxsis) %>%
-    group_by(day) %>%
-    summarise(
-      Q_05 = quantile(get(yAxsis), 0.05, na.rm=TRUE),
-      Q_25 = quantile(get(yAxsis), 0.25, na.rm=TRUE),
-      Rt_median = median(get(yAxsis), na.rm=TRUE),
-      Q_75 = quantile(get(yAxsis), 0.75, na.rm=TRUE),
-      Q_90 = quantile(get(yAxsis), 0.90, na.rm=TRUE)
-    ) %>% ungroup()
-  
-  p <- p+ geom_ribbon(aes(y=results2$Rt_median,
-                          ymin=results2$Q_05,
-                          ymax=results2$Q_90),
+  Q_05_scenarios2  <-  scenarios2[[paste(ouptColumn, "Q_05", sep="_")]]
+  Q_25_scenarios2 <-   scenarios2[[paste(ouptColumn, "Q_25", sep="_")]]
+  Rt_median_scenarios2 <-  scenarios2[[paste(ouptColumn, "Q_50", sep="_")]]
+  Q_75_scenarios2 <-  scenarios2[[paste(ouptColumn, "Q_75", sep="_")]]
+  Q_90_scenarios2 <-  scenarios2[[paste(ouptColumn, "Q_95", sep="_")]]
+
+  p <- p+ geom_ribbon(aes(y=Rt_median_scenarios2,
+                          ymin=Q_05_scenarios2 ,
+                          ymax=Q_90_scenarios2),
                       fill=paired.cols[2],
                       alpha=0.2
   )+
     ggplot2::geom_ribbon(
-      ggplot2::aes(y=results2$Rt_median,
-                   ymin=results2$Q_25,
-                   ymax=results2$Q_75),
+      ggplot2::aes(y=Rt_median_scenarios2,
+                   ymin=Q_25_scenarios2,
+                   ymax=Q_75_scenarios2),
       fill=paired.cols[2],
       alpha=0.3
     ) +
     ggplot2::geom_line(
-      ggplot2::aes(y=results2$Rt_median),
+      ggplot2::aes(y=Rt_median_scenarios2),
       color=paired.cols[2],
       size=1.2
     ) +
     ggplot2::geom_point(
-      ggplot2::aes(y=results2$Rt_median),
+      ggplot2::aes(y=Rt_median_scenarios2),
       color=paired.cols[2],
       size=3
     )
