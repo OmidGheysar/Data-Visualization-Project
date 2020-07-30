@@ -1,7 +1,7 @@
 library(magrittr) # needs to be run every time you start R and want to use %>%
 library(dplyr)    # alternatively, this also loads %>%
 library("tidyverse")
- source("C:/Users/omidg/OneDrive/Desktop/BCCCDC R shiny Project/BCCCDC-Project/data manipulation.R")
+ source("data manipulation.R")
 
 dat <- readRDS("05_22.rds")
 

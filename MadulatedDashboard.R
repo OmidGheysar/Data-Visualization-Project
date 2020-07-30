@@ -1,4 +1,4 @@
-source("C:/Users/omidg/OneDrive/Desktop/BCCCDC R shiny Project/BCCCDC-Project/uploadRequiredLibraries.R")
+source("uploadRequiredLibraries.R")
 uploadRequiredLibraries()
 
 header <- dashboardHeader(title = "COVID-19 Simulation Dashboard")

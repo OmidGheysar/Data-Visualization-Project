@@ -11,8 +11,8 @@
 # source("C:/Users/omidg/OneDrive/Desktop/BCCCDC R shiny Project/BCCCDC-Project/CreateDataFrame.R")
 # dat <- readRDS("05_22.rds")
 
-source("C:/Users/omidg/OneDrive/Desktop/BCCCDC R shiny Project/BCCCDC-Project/slidebar1For2.R")
-source("C:/Users/omidg/OneDrive/Desktop/BCCCDC R shiny Project/BCCCDC-Project/returnPlotTowScenarions.R")
+source("slidebar1For2.R")
+source("returnPlotTowScenarions.R")
 
 TwoSenarioInOnePage <- function(){
 ui <- fluidPage(

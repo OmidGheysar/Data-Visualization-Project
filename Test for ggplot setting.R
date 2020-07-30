@@ -3,8 +3,8 @@ library("ggplot2")
 library(magrittr) # needs to be run every time you start R and want to use %>%
 library(dplyr)    # alternatively, this also loads %>%
 library("tidyverse")
-source("C:/Users/omidg/OneDrive/Desktop/BCCCDC R shiny Project/BCCCDC-Project/data manipulation.R")
-source("C:/Users/omidg/OneDrive/Desktop/BCCCDC R shiny Project/BCCCDC-Project/SpecificPlotSetting.R")
+source("data manipulation.R")
+source("SpecificPlotSetting.R")
 # dat <- readRDS("05_22.rds")
 # output<- select100Scenarios(dat, 2.5,.5,.5,.7,2,1,.3)
 # saveRDS(output, file = "myPlotScenario.rds")

@@ -1,126 +1,261 @@
-library(shiny)
-library("ggplot2")
-library(magrittr) # needs to be run every time you start R and want to use %>%
-library(dplyr)    # alternatively, this also loads %>%
-library("tidyverse")
-source("C:/Users/omidg/OneDrive/Desktop/BCCCDC R shiny Project/BCCCDC-Project/data manipulation.R")
-dat <- readRDS("05_22.rds")
+source("uploadRequiredLibraries.R")
+uploadRequiredLibraries()
 
+header <- dashboardHeader(title = "COVID-19 Simulation Dashboard")
 
-
-ui <- fluidPage(
-  
-  actionButton("load", "Fetch the Data"),
-  actionButton("do", "Click Me"),
-  plotOutput("plotLoad"),
-  plotOutput("plot"),
-  
-  fluidPage(
-    
-    # Copy the line below to make a set of radio buttons
-    radioButtons("radio", label = h3("Radio buttons"),
-                 choices = list("Choice 1" = 1, "Choice 2" = 2, "Choice 3" = 3), 
-                 selected = 1),
-    
-    hr(),
-    fluidRow(column(3, verbatimTextOutput("value")))
-    
+sidebar <- dashboardSidebar(
+  sidebarMenu(id = "sbMenu",
+              menuItem("Dashboard", tabName = "dashboard", icon = icon("dashboard")),
+              menuItem(h5(HTML("Reproductive Number<br/>Time Series")), tabName = "second"),
+              menuItem(h5(HTML("Reproductive Number<br/>Time Series <br/> Two scenarios")), tabName = "secondOne"),
+              menuItem(h5(HTML("Reproductive Number<br/>Only App tracing")), tabName = "third"),
+              menuItem(h5(HTML("Reproductive Number<br/>Only Manual tracing")), tabName = "fourth"),
+              menuItem(h5(HTML("Reproductive Number<br/>App and Manual tracing")), tabName = "fifth")
   )
 )
 
-server <- function(input, output, session) {
-  
-  
-  output$value <- renderPrint({ input$radio })
 
+body <- dashboardBody(
   
-  
-  
-  
-  observeEvent(input$load, {
+  tabItems(
+    tabItem(tabName = "dashboard",
+            h1("Simulation of COVID-19"),
+            titlePanel(title=div(img(src="covid.PNG")))
+    ),
     
-    # write your code here:
-    # ==========================================
-    output$plotLoad <- renderPlot({
-      
-      x <- runif(300)
-      y <- runif(300)
-      df <- data.frame(c("X","Y"),x,y)
-      ggplot(data=df, aes(x,y))+geom_line()
-      plot(dim(dat))
-      
-      
-    })
-    # ==========================================
+    tabItem(tabName = "second",
+            ui <- UiDesign()
+            
+    ),
+    
+    tabItem(tabName = "secondOne",
+            ui <- TwoSenarioInOnePage()
+            
+    ),
+    tabItem(tabName = "third",
+            ui <- UiRt_Only_App()
+            
+    ),
+    tabItem(tabName = "fourth",
+            ui <- UiRt_Only_Manual()
+            
+    ),
+    tabItem(tabName = "fifth",
+            ui <- UiRt_App_Manual()
+            
+    )
+  )
+)
+
+
+ui <- dashboardPage(header, sidebar, body)
+
+
+
+
+server <- function (input, output, session){
+  
+  showModal(modalDialog("Loading the data .....", footer=NULL))
+  #Do the stuff here....
+  #...
+  # dat <- readRDS("05_22.rds")
+  dat <- readRDS("Newdata.rds")
+  #...
+  #Finish the function
+  removeModal()
+  
+  output$plotRtTime <- renderPlotly({
+    
+    outputPlot<- returnPlot(dat,"Rt",
+                            input$R0,
+                            input$p.trace,
+                            input$p.trace_app,
+                            input$p.symp,
+                            input$iso_delay_traced_max,
+                            input$iso_delay_untraced_sd_max,
+                            input$sd_contact_rate1)
+    outputPlot
+  })
+  
+  output$plotRtNactive <- renderPlotly({
+    outputPlot<- returnPlot(dat,"n.active",
+                            input$R0,
+                            input$p.trace,
+                            input$p.trace_app,
+                            input$p.symp,
+                            input$iso_delay_traced_max,
+                            input$iso_delay_untraced_sd_max,
+                            input$sd_contact_rate1)
+    outputPlot
+  })
+  
+  
+  output$TableTime <- renderTable({
+    data.frame(
+      Name = c("R0 ",
+               "Fraction of cases that are symptomatic",
+               "Delay to isolation for untraced & distancing cases",
+               "days",
+               "Delay to isolation for traced cases (days)",
+               "Fraction of people using contact tracing app",
+               "Fraction of cases manually traced",
+               "Strength of physical distancing (contact rate)"),
+      Value = as.character(c(input$R0,
+                             input$p.symp,
+                             input$iso_delay_untraced_sd_max,
+                             input$day,
+                             input$iso_delay_traced_max,
+                             input$p.trace_app,
+                             input$p.trace,
+                             input$sd_contact_rate1)),
+      stringsAsFactors = FALSE)
+  })
+  
+  
+  output$plotTwoScenarios1 <- renderPlotly({
+    
+    # scenarios<- select100Scenarios(dat, 2,.5,.5,.7,2,1,.3)
+    
+    returnPlotTowScenarions(dat,
+                            input$R012,
+                            input$p.trace12,
+                            input$p.trace_app12,
+                            input$p.symp12,
+                            input$iso_delay_traced_max12,
+                            input$iso_delay_untraced_sd_max12,
+                            input$sd_contact_rate112,
+                            input$R023,
+                            input$p.trace23,
+                            input$p.trace_app23,
+                            input$p.symp23,
+                            input$iso_delay_traced_max23,
+                            input$iso_delay_untraced_sd_max23,
+                            input$sd_contact_rate123
+    )
+    
+  })
+  
+  output$plotRt_Only_App <- renderPlotly({
+    
+    myPlot <- RtBasedonAppTrace(dat,
+                                day = input$daysforApp,
+                                R = input$R0forApp,
+                                p.tr = 0,
+                                p.trace_ap = 100,
+                                p.sym = input$p.symforApp,
+                                iso_delay_traced=1,
+                                iso_delay_untraced= input$iso_delay_untracedforApp,
+                                sd_contact = input$sd_contactforApp)
+    myPlot
+    
+  })
+  
+  
+  output$tableApp <- renderTable({
+    data.frame(
+      Name = c("R0 ",
+               "Fraction of cases that are symptomatic",
+               "Delay to isolation for untraced & distancing cases",
+               "days",
+               "Delay to isolation for traced cases (days)",
+               "Fraction of people using contact tracing app",
+               "Fraction of cases manually traced",
+               "Strength of physical distancing (contact rate)"),
+      Value = as.character(c(input$R0forApp,
+                             input$p.symforApp,
+                             input$iso_delay_untracedforApp,
+                             input$daysforApp,
+                             "None",
+                             0,
+                             "None",
+                             input$sd_contactforApp)),
+      stringsAsFactors = FALSE)
   })
   
   
   
   
-  observeEvent(input$do, {
+  
+  output$plotRt_Only_Manual <- renderPlotly({
     
-    # write your code here:
-    # ==========================================
-    output$plotLoad <- renderPlot({
+    myPlot <- RtBasedonManualTrace(dat,
+                                   day = input$daysforManual,
+                                   R = input$R0forManual,
+                                   p.tr = 100,
+                                   p.trace_ap = 0,
+                                   p.sym = input$p.symforManual,
+                                   iso_delay_traced=100,
+                                   iso_delay_untraced= input$iso_delay_untracedforManual,
+                                   sd_contact = input$sd_contactforManual)
+    myPlot
     
-      
-      # dat <- readRDS("05_22.rds")
-      # display shape ===========================================================
-      output<- select100Scenarios(dat,2,0,0,.8,1,5,.8)
-      dB <- data.frame(RQ2=double(),RQ3=double(),RQ4=double(),n.active=double(), stringsAsFactors=FALSE)
-      for (i in 0:31){
-        result<- output %>% filter(day==i) %>% select("day","Rt","n.active")
-        dB[nrow(dB) + 1,] = c(quantile(result$Rt)[c(2,3,4)],mean(result$n.active))
-      }
-      
-      
-      days <- 0:31
-      plot(days, dB$RQ3)
-      
-      quantile(output$Rt)[c(2,3,4)]
-      p <- ggplot(data = dB, mapping =  aes(x = days, y = RQ3))
-      
-      p <- p + geom_point()
-      p <- p + geom_line()
-      p
-      
-      myDay <- (0:31)
-      Q2 <- dB$RQ2 
-      Q3 <- dB$RQ3
-      Q4 <- dB$RQ4
-      kB <- tibble(myDay,Q2, Q3, Q4)
-      # kB <- cbind(kB, as.double(0:31) )
-      kB <- kB %>% pivot_longer(cols = c(Q2, Q3, Q4),
-                                names_to = "Activity")
-      
-      ggplot(kB,aes(x = myDay, 
-                    y = value, 
-                    col = Activity, 
-                    group = Activity)) +
-        geom_line() + 
-        geom_point() +ylim(0,2.8)
-      
-      # end of ggplot =============================================================
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      # x <- runif(100)
-      # y <- runif(100)
-      # df <- data.frame(c("X","Y"),x,y)
-      # ggplot(data=df, aes(x,y))+geom_line()
-      
-    })
-    # ==========================================
+  })
+  
+  output$plotRt_App_Manual <- renderPlotly({
     
+    myPlot <- RtBasedonAppAndManual(dat,
+                                    day = input$daysforAppManual,
+                                    R = input$R0forAppManual,
+                                    p.tr = 100,
+                                    p.trace_ap = 100,
+                                    p.sym = input$p.symforAppManual,
+                                    iso_delay_traced=input$iso_delay_tracecedforAppManual,
+                                    iso_delay_untraced= input$iso_delay_untracedforAppManaual,
+                                    sd_contact = input$sd_contactforAppManual)
+    myPlot
+    
+  })
+  
+  output$tableAppManual <- renderTable({
+    data.frame(
+      Name = c("R0 ",
+               "Fraction of cases that are symptomatic",
+               "Delay to isolation for untraced & distancing cases",
+               "days",
+               "Delay to isolation for traced cases (days)",
+               "Fraction of people using contact tracing app",
+               "Fraction of cases manually traced",
+               "Strength of physical distancing (contact rate)"),
+      Value = as.character(c(input$R0forAppManual,
+                             input$p.symforAppManual,
+                             input$iso_delay_untracedforAppManaual,
+                             input$daysforAppManual,
+                             input$iso_delay_tracecedforAppManual,
+                             "None",
+                             "None",
+                             input$sd_contactforAppManual)),
+      stringsAsFactors = FALSE)
+  })
+  
+  
+  output$tableManual <- renderTable({
+    data.frame(
+      Name = c("R0 ",
+               "Fraction of cases that are symptomatic",
+               "Delay to isolation for untraced & distancing cases",
+               "days",
+               "Delay to isolation for traced cases (days)",
+               "Fraction of people using contact tracing app",
+               "Fraction of cases manually traced",
+               "Strength of physical distancing (contact rate)"),
+      Value = as.character(c(input$R0forManual,
+                             input$p.symforManual,
+                             input$iso_delay_untracedforManual,
+                             input$daysforManual,
+                             "None",
+                             0,
+                             "None",
+                             input$sd_contactforManual)),
+      stringsAsFactors = FALSE)
   })
   
 }
+
+
+
+# 
+# ui <- UiRt_Only_App()
+# server <- ServerRt_Only_App()
+
 
 shinyApp(ui, server)
