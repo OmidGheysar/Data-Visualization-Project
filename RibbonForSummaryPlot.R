@@ -2,6 +2,7 @@
 aes_x <- "p.trace"
 aes_y <- "Rt_Q_50"
 dat <- readRDS("Newdata.rds")
+# I should be careful about which one of select64000Scenarios as there are at least 3 of them
 results<- select64000Scenarios(dat,10 ,3,.5,.5,.7,2,1,.3)
 paired.cols <- RColorBrewer::brewer.pal(12, "Paired")
 outputs1 <- results %>% filter(iso_delay_traced_max==1)

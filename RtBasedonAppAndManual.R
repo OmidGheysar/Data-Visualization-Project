@@ -114,7 +114,7 @@ UiRt_App_Manual <- function(){
                       min = 0,  max = 30,  value = 20)
         ),
         hr(),
-        h3("Assumpations"),
+        h3("Assumptions"),
         tableOutput("tableAppManual")
         
       ),

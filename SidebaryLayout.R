@@ -48,7 +48,7 @@ UiDesign <- function() {
                     value = 20, step = 1)
       ),
       hr(),
-      h3("Assumpations"),
+      h3("Assumptions"),
       tableOutput("TableTime")
     ),
     
