@@ -116,7 +116,7 @@ server <- function (input, output, session){
     
     # scenarios<- select100Scenarios(dat, 2,.5,.5,.7,2,1,.3)
     
-    returnPlotTowScenarions(dat,
+    RtBasedonTwoPlots(dat,
                             input$R012,
                             input$p.trace12,
                             input$p.trace_app12,

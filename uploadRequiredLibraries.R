@@ -16,5 +16,6 @@ uploadRequiredLibraries <- function(){
   source("RtBasedonManualTrace.R")
   source("RtBasedonAppAndManual.R")
   source("RtBasedonAppTrace.R")
+  source("RtBasedonTwoPlots.R")
  # dat <- readRDS("05_22.rds")
 }

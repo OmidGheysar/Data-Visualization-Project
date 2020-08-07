@@ -88,6 +88,7 @@ returnPlot <- function(dat,
       p <- p + labs(x="Day", y="Number of active cases")
    }
 
+   p <- p+theme_bw()
   return(p)
 }
 

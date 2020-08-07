@@ -59,10 +59,7 @@ RtBasedonManualTrace <- function(dat,
   results<- select64000Scenarios(dat, days, R, p.tr, p.trace_ap, p.sym,
                                  iso_delay_traced, iso_delay_untraced, sd_contact)
   paired.cols <- RColorBrewer::brewer.pal(12, "Paired")
-  
-  
-  
-  
+
   outputs1 <- results %>% filter(iso_delay_traced_max==1)
   outputs2 <- results %>% filter(iso_delay_traced_max==2)
   outputs3 <- results %>% filter(iso_delay_traced_max==3)
@@ -98,13 +95,13 @@ RtBasedonManualTrace <- function(dat,
     label = c("1 day","2 days","3 days","4 days")
   )
   
-  p <- p + geom_text(data=annotation, aes( x=x, y=y, label=label),                 , 
+  p <- p + geom_text(data=annotation, aes( x=x, y=y, label=label),                 
                      color=c(paired.cols[8],paired.cols[2],paired.cols[6],"yellow"), 
                      size=4 , angle=0, fontface="bold" )
-  p <- p+annotate("point", x = .05, y = .50, colour = paired.cols[8],size = 4)
-  p <- p+annotate("point", x = .05, y = .45, colour = paired.cols[2],size = 4)
-  p <- p+annotate("point", x = .05, y = .40, colour = paired.cols[6],size = 4)
-  p <- p+annotate("point", x = .05, y = .35, colour = "yellow",size = 4)
+  p <- p+annotate("point", x = .00, y = .50, colour = paired.cols[8],size = 3)
+  p <- p+annotate("point", x = .00, y = .45, colour = paired.cols[2],size = 3)
+  p <- p+annotate("point", x = .00, y = .40, colour = paired.cols[6],size = 3)
+  p <- p+annotate("point", x = .00, y = .35, colour = "yellow",size = 3)
   p
   
   

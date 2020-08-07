@@ -31,28 +31,67 @@ RtBasedonAppTrace <- function(dat,
   }
   
   
-  aes_x <- "p.trace_app"
-  aes_y <- "Revenue"
-  aes_col <- "iso_delay_untraced_sd_max"
-  aes_grp <- "iso_delay_untraced_sd_max"
+  # aes_x <- "p.trace_app"
+  # aes_y <- "Revenue"
+  # aes_col <- "iso_delay_untraced_sd_max"
+  # aes_grp <- "iso_delay_untraced_sd_max"
   
+
+  # # dat <- readRDS("Newdata.rds")
+  # # results<- select64000Scenarios(dat,10 ,3,.5,.5,.7,2,1,.3)
+  # long_results <- results %>% gather(Quarter, Revenue, Rt_Q_05:Rt_Q_95) 
+  # p <- ggplot(long_results,
+  #             aes(x=eval(as.name(aes_x)),
+  #                 y=eval(as.name(aes_y)),
+  #                 color=factor(eval(as.name(aes_col))),
+  #                 group=eval(as.name(aes_grp)))) +
+  #   stat_summary(geom="pointrange",
+  #                fun.y  = "median",
+  #                fun.ymin = function(x) quantile(x, .25),
+  #                fun.ymax = function(x) quantile(x, .75),size=2) +
+  #   stat_summary(geom="line",
+  #                fun.y = "median",size=1)+ylim(0,1.5)+
+  
+  
+  aes_x <- "p.trace_app"
+  aes_y <- "Rt_Q_50"
+  dat <- readRDS("Newdata.rds")
+  # I should be careful about which one of select64000Scenarios as there are at least 3 of them
+  # results<- select64000Scenarios(dat,10 ,3,.5,.5,.7,2,1,.3)
   results<- select64000Scenarios(dat, days, R, p.tr, p.trace_ap, p.sym,
                                  iso_delay_traced, iso_delay_untraced, sd_contact)
-  # dat <- readRDS("Newdata.rds")
-  # results<- select64000Scenarios(dat,10 ,3,.5,.5,.7,2,1,.3)
-  long_results <- results %>% gather(Quarter, Revenue, Rt_Q_05:Rt_Q_95) 
-  p <- ggplot(long_results,
-              aes(x=eval(as.name(aes_x)),
-                  y=eval(as.name(aes_y)),
-                  color=factor(eval(as.name(aes_col))),
-                  group=eval(as.name(aes_grp)))) +
-    stat_summary(geom="pointrange",
-                 fun.y  = "median",
-                 fun.ymin = function(x) quantile(x, .25),
-                 fun.ymax = function(x) quantile(x, .75),size=2) +
-    stat_summary(geom="line",
-                 fun.y = "median",size=1)+ylim(0,1.5)+
-    labs(y="Reproductive Number", x="",
+  paired.cols <- RColorBrewer::brewer.pal(12, "Paired")
+  
+  
+  outputs1 <- results %>% filter(iso_delay_untraced_sd_max==1)
+  outputs2 <- results %>% filter(iso_delay_untraced_sd_max==5)
+  
+  
+  p <- ggplot(outputs1 ,aes(x=eval(as.name(aes_x)), y=Rt_Q_50))
+  
+  p <- p+ geom_ribbon(aes(ymin=Rt_Q_25,ymax=Rt_Q_75),fill=paired.cols[8],alpha=0.4)
+  p <- p+ geom_ribbon(aes(ymin=outputs2$Rt_Q_25,ymax=outputs2$Rt_Q_75), fill=paired.cols[2],alpha=0.4)
+  
+  p <- p+geom_line(size = 2,color = paired.cols[8])
+  p <- p+geom_line(aes(x=outputs2$p.trace_app, y=outputs2$Rt_Q_50),size = 2,color = paired.cols[2])
+  
+  p <- p+geom_point(shape = 21, colour = paired.cols[8], fill = "white", size = 2, stroke = 3)
+  p <- p+geom_point(aes(x=outputs2$p.trace_app, y=outputs2$Rt_Q_50),
+                    shape = 21, colour = paired.cols[2], fill = "white", size = 2, stroke = 3)
+  
+  p <- p+theme_bw()
+  annotation <- data.frame(
+    x= c(0.12,0.12),
+    y = c(.60,.52),
+    label = c("1 day delay","5 days delay")
+  )
+  
+  p <- p + geom_text(data=annotation, aes( x=x, y=y, label=label),                
+                     color=c(paired.cols[8],paired.cols[2]), 
+                     size=4 , angle=0, fontface="bold" )
+  p <- p+annotate("point", x = .0, y = .60, colour = paired.cols[8],size = 3)
+  p <- p+annotate("point", x = .0, y = .52, colour = paired.cols[2],size = 3)
+  p<- p+labs(y="Reproductive Number", x="",
          color="")
   p <- p + geom_hline(yintercept=1,
                       linetype='dotdash',
