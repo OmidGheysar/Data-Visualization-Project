@@ -45,7 +45,7 @@ UiDesign <- function() {
         
         sliderInput("day", "day",
                     min = 0, max = 31,
-                    value = 20, step = 1)
+                    value = 31, step = 1)
       ),
       hr(),
       h3("Assumptions"),

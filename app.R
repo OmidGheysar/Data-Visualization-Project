@@ -73,7 +73,8 @@ server <- function (input, output, session){
                             input$p.symp,
                             input$iso_delay_traced_max,
                             input$iso_delay_untraced_sd_max,
-                            input$sd_contact_rate1)
+                            input$sd_contact_rate1,
+                            input$day)
     outputPlot
   })
   
@@ -85,7 +86,8 @@ server <- function (input, output, session){
                             input$p.symp,
                             input$iso_delay_traced_max,
                             input$iso_delay_untraced_sd_max,
-                            input$sd_contact_rate1)
+                            input$sd_contact_rate1,
+                            input$day)
     outputPlot
   })
   

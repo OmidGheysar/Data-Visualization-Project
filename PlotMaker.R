@@ -19,7 +19,8 @@ returnPlot <- function(dat,
                        p.symp,
                        iso_delay_traced_max,
                        iso_delay_untraced_sd_max,
-                       sd_contact_rate1) {
+                       sd_contact_rate1,
+                       numberDay) {
   
   output<- select100Scenarios(dat,
                               R0,
@@ -39,6 +40,10 @@ returnPlot <- function(dat,
 
       results <- output
   
+   # ndays <-  18   
+   # numberDay <-  ndays
+   ndays <- numberDay
+   
    caption=NULL
    subtitle=NULL
    ylim=NULL
@@ -47,28 +52,28 @@ returnPlot <- function(dat,
 
    
    paired.cols <- RColorBrewer::brewer.pal(12, "Paired")
-   p <- ggplot2::ggplot(results, ggplot2::aes(x=day)) +
+   p <- ggplot2::ggplot(head (results,ndays), ggplot2::aes(head(day,ndays))) +
      ggplot2::geom_ribbon(
-       ggplot2::aes(y=Rt_median,
-                    ymin=Q_05,
-                    ymax=Q_90),
+       ggplot2::aes(y= head(Rt_median,ndays) ,
+                    ymin=head(Q_05,ndays),
+                    ymax=head(Q_90,ndays)),
        fill=paired.cols[num],
        alpha=0.8
      ) +
      ggplot2::geom_ribbon(
        ggplot2::aes(
-                    ymin=Q_25,
-                    ymax=Q_75),
+                    ymin=head(Q_25,ndays),
+                    ymax=head(Q_75,ndays)),
        fill=paired.cols[num+1],
        alpha=0.5
      ) +
      ggplot2::geom_line(
-       ggplot2::aes(y=Rt_median),
+       ggplot2::aes(y=head(Rt_median,ndays)),
        color=paired.cols[num+1],
        size=1.2
      ) +
      ggplot2::geom_point(
-       ggplot2::aes(y=Rt_median),
+       ggplot2::aes(y=head(Rt_median,ndays)),
        color=paired.cols[num+1],
        shape = 21,fill = "white", size = 1, stroke = 2
      ) +

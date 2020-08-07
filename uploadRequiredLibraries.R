@@ -17,5 +17,8 @@ uploadRequiredLibraries <- function(){
   source("RtBasedonAppAndManual.R")
   source("RtBasedonAppTrace.R")
   source("RtBasedonTwoPlots.R")
+  
+  source("slidebar1For2.R")
+  source("returnPlotTowScenarions.R")
  # dat <- readRDS("05_22.rds")
 }

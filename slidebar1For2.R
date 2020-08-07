@@ -35,9 +35,9 @@ slidebar1For2 <- function() {
                   min = 1, max = 5,
                   value = 1, step = 4),
       
-      sliderInput("day", "day",
-                  min = 0, max = 31,
-                  value = 20, step = 1)
+      # sliderInput("day", "day",
+      #             min = 0, max = 31,
+      #             value = 20, step = 1)
     )
   
   )
@@ -84,9 +84,9 @@ slidebar1For3 <- function() {
                   min = 1, max = 5,
                   value = 1, step = 4),
       
-      sliderInput("day", "day",
-                  min = 0, max = 31,
-                  value = 20, step = 1)
+      # sliderInput("day", "day",
+      #             min = 0, max = 31,
+      #             value = 20, step = 1)
     )
     
   )
