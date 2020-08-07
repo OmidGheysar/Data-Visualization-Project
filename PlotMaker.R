@@ -70,7 +70,7 @@ returnPlot <- function(dat,
      ggplot2::geom_point(
        ggplot2::aes(y=Rt_median),
        color=paired.cols[num+1],
-       size=3
+       shape = 21,fill = "white", size = 1, stroke = 2
      ) +
      
      ggplot2::scale_y_continuous(labels = scales::comma) 

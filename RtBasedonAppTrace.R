@@ -124,9 +124,9 @@ UiRt_Only_App <- function(){
                                       Strength of physical distancing (contact rate)",
                                       choices=c(0.3, 0.6, 0.8),
                                       selected=0.3, grid = T),
-        sliderInput("iso_delay_untracedforApp",
-                    "Delay to isolation for untraced & distancing cases:",
-                    min = 1,  max = 5, value = 1, step = 4),
+        # sliderInput("iso_delay_untracedforApp",
+        #             "Delay to isolation for untraced & distancing cases:",
+        #             min = 1,  max = 5, value = 1, step = 4),
         
         selectInput("selectionApp", "Select something", choices = c("Descision Making Parameters", "All Parameters")),
         conditionalPanel(

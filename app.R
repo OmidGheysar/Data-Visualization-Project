@@ -163,7 +163,7 @@ server <- function (input, output, session){
                "Strength of physical distancing (contact rate)"),
       Value = as.character(c(input$R0forApp,
                              input$p.symforApp,
-                             input$iso_delay_untracedforApp,
+                             "None",
                              input$daysforApp,
                              "None",
                              0,

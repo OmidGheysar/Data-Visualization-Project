@@ -5,9 +5,9 @@ account: omidapp
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 2538648
-bundleId: 3488070
+bundleId: 3488595
 url: https://omidapp.shinyapps.io/BCCCDC-Project/
-when: 1596823466.58072
+when: 1596832519.4855
 asMultiple: FALSE
 asStatic: FALSE
 ignoredFiles: 05_22.rds

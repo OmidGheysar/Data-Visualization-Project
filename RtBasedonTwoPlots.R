@@ -68,7 +68,7 @@ RtBasedonTwoPlots <- function(dat,
     ggplot2::geom_point(
       ggplot2::aes(y=Rt_median_scenarios1),
       color=paired.cols[8],
-      size=3
+      shape = 21,fill = "white", size = 1, stroke = 2
     )
 
   # scenarios2<- select100Scenarios(dat,3,1,1,.8,1,5,.8)
@@ -102,9 +102,9 @@ RtBasedonTwoPlots <- function(dat,
     ggplot2::geom_point(
       ggplot2::aes(y=Rt_median_scenarios2),
       color=paired.cols[2],
-      size=3
+      shape = 21,fill = "white", size = 1, stroke = 2
     )
-
+  p <- p + labs(x="Day", y="Reproductive Number")
   p <- p+theme_bw()
   return(p)
 
