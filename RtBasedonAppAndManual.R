@@ -123,7 +123,7 @@ RtBasedonAppAndManual <- function(dat,
   p <- p + labs(title="Colors show the level of manual tracing")
   p <- ggplotly(p)
   x <- list(
-    title = "Fraction of people using contact tracing app"
+    title = "Fraction of cases manually traced"
   )
   y <- list(
     title = "Reproductive Number"
