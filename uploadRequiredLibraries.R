@@ -4,6 +4,7 @@ uploadRequiredLibraries <- function(){
   # install.packages("shiny")
   # install.packages("shinydashboard")
   # install.packages("shinyWidgets")
+  # install.packages("plyr")
   library(plotly)
   library(shiny)
   library("ggplot2")
