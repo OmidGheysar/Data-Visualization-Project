@@ -13,8 +13,7 @@ sidebar <- dashboardSidebar(
               menuItem(h5(HTML("Reproductive Number<br/>App and Manual tracing")), tabName = "fifth")
   )
 )
-
-
+# here is the body of dashboard
 body <- dashboardBody(
   
   tabItems(
