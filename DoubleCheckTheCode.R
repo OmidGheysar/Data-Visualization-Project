@@ -1,6 +1,7 @@
 
 # lets get start working on the debuging 
 # I did revert!
+# here is example
 dat <- readRDS("05_22.rds")
 output<- select100Scenarios(dat, 2.5,.5,.5,.7,2,1,.3)
 
