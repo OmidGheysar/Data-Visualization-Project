@@ -18,7 +18,7 @@ body <- dashboardBody(
   
   tabItems(
     tabItem(tabName = "dashboard",
-            h1("Simulation of COVID-19 Main page"),
+            h1("Simulation of COVID-19"),
             titlePanel(title=div(img(src="covid.PNG")))
     ),
     
@@ -141,11 +141,11 @@ server <- function (input, output, session){
     myPlot <- RtBasedonAppTrace(dat,
                                 day = input$daysforApp,
                                 R = input$R0forApp,
-                                p.tr = 0,
-                                p.trace_ap = 100,
+                                # p.tr = 0,
+                                # p.trace_ap = 100,
                                 p.sym = input$p.symforApp,
-                                iso_delay_traced=1,
-                                iso_delay_untraced= input$iso_delay_untracedforApp,
+                                # iso_delay_traced=1,
+                                # iso_delay_untraced= input$iso_delay_untracedforApp,
                                 sd_contact = input$sd_contactforApp)
     myPlot
     
