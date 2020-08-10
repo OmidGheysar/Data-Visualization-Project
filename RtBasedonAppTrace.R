@@ -1,65 +1,36 @@
 RtBasedonAppTrace <- function(dat,
                               days,
                               R,
-                              p.tr = 0,
-                              p.trace_ap = 100,
                               p.sym,
-                              iso_delay_traced = 1,
-                              iso_delay_untraced,
                               sd_contact){
   
   
   select64000Scenarios <- function(dat,
                                    days,
                                    R,
-                                   p.tr,
-                                   p.trace_ap,
                                    p.sym,
-                                   iso_delay_traced,
-                                   iso_delay_untraced,
                                    sd_contact) {
     
     scenarios<-dat %>% filter(R0==R &
                                 p.trace==0&
-                                # p.trace_app==p.trace_ap&
                                 p.symp== p.sym&
-                                iso_delay_traced_max==iso_delay_traced&
-                                # iso_delay_untraced_sd_max==iso_delay_untraced&
+                                # why is this ?????????
+                                iso_delay_traced_max==2&
                                 sd_contact_rate1==sd_contact) %>% filter(day==days) %>%  
       select(p.trace_app,iso_delay_untraced_sd_max,"day":"n.active_Q_95") 
     return(scenarios)
   }
-  
-  
-  # aes_x <- "p.trace_app"
-  # aes_y <- "Revenue"
-  # aes_col <- "iso_delay_untraced_sd_max"
-  # aes_grp <- "iso_delay_untraced_sd_max"
-  
 
-  # # dat <- readRDS("Newdata.rds")
-  # # results<- select64000Scenarios(dat,10 ,3,.5,.5,.7,2,1,.3)
-  # long_results <- results %>% gather(Quarter, Revenue, Rt_Q_05:Rt_Q_95) 
-  # p <- ggplot(long_results,
-  #             aes(x=eval(as.name(aes_x)),
-  #                 y=eval(as.name(aes_y)),
-  #                 color=factor(eval(as.name(aes_col))),
-  #                 group=eval(as.name(aes_grp)))) +
-  #   stat_summary(geom="pointrange",
-  #                fun.y  = "median",
-  #                fun.ymin = function(x) quantile(x, .25),
-  #                fun.ymax = function(x) quantile(x, .75),size=2) +
-  #   stat_summary(geom="line",
-  #                fun.y = "median",size=1)+ylim(0,1.5)+
-  
-  
   aes_x <- "p.trace_app"
   aes_y <- "Rt_Q_50"
-  dat <- readRDS("Newdata.rds")
-  # I should be careful about which one of select64000Scenarios as there are at least 3 of them
-  # results<- select64000Scenarios(dat,10 ,3,.5,.5,.7,2,1,.3)
-  results<- select64000Scenarios(dat, days, R, p.tr, p.trace_ap, p.sym,
-                                 iso_delay_traced, iso_delay_untraced, sd_contact)
+
+  results<- select64000Scenarios(dat, 
+                                 days, 
+                                 R,
+                                 p.sym,
+                                 sd_contact)
+  # dat <- readRDS("Newdata.rds")
+  # results<- select64000Scenarios(dat,31 ,3,.7,.3)
   paired.cols <- RColorBrewer::brewer.pal(12, "Paired")
   
   
@@ -124,10 +95,6 @@ UiRt_Only_App <- function(){
                                       Strength of physical distancing (contact rate)",
                                       choices=c(0.3, 0.6, 0.8),
                                       selected=0.3, grid = T),
-        # sliderInput("iso_delay_untracedforApp",
-        #             "Delay to isolation for untraced & distancing cases:",
-        #             min = 1,  max = 5, value = 1, step = 4),
-        
         selectInput("selectionApp", "Select something", choices = c("Descision Making Parameters", "All Parameters")),
         conditionalPanel(
           "input.selectionApp == 'All Parameters'",
@@ -141,7 +108,7 @@ UiRt_Only_App <- function(){
           
           sliderInput("daysforApp",
                       "days:",
-                      min = 0,  max = 30,  value = 20)
+                      min = 0,  max = 31,  value = 20)
         ),
         hr(),
         h3("Assumptions"),
@@ -159,52 +126,6 @@ UiRt_Only_App <- function(){
   return(ui)
   
 }  
-
-
-# server <- function(input, output, session) {
-# 
-#   output$tableApp <- renderTable({
-#     data.frame(
-#       Name = c("R0 ",
-#                "Fraction of cases that are symptomatic",
-#                "Delay to isolation for untraced & distancing cases",
-#                "days",
-#                "Delay to isolation for traced cases (days)",
-#                "Fraction of people using contact tracing app",
-#                "Fraction of cases manually traced",
-#                "Strength of physical distancing (contact rate)"),
-#       Value = as.character(c(input$R0forApp,
-#                              input$p.symforApp,
-#                              input$iso_delay_untracedforApp,
-#                              input$daysforApp,
-#                              "input$iso_delay_tracecedforApp",
-#                              0,
-#                              "None",
-#                              input$sd_contactforApp)),
-#       stringsAsFactors = FALSE)
-#   })
-#   
-# }
-# 
-# shinyApp(ui, server)
-
-
-
-plotRt_Only_App <- function(input){
-  
-  myPlot <- RtBasedonAppTrace(dat,
-                              day = input$daysforApp,
-                              R = input$R0forApp,
-                              p.tr = 0,
-                              p.trace_ap = 100,
-                              p.sym = input$p.symforApp,
-                              iso_delay_traced=1,
-                              iso_delay_untraced= input$iso_delay_untracedforApp,
-                              sd_contact = input$sd_contactforApp)
-  return(myPlot)
-  
-}
-
 
 
 
