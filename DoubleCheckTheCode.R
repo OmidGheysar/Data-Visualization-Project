@@ -1,8 +1,5 @@
 
-<<<<<<< HEAD
 # lets get start working on the debugging 
-=======
-# lets get start working on the debuging 
 # I did revert!
 # here is example
 dat <- readRDS("05_22.rds")
