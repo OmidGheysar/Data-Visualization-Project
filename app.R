@@ -115,8 +115,6 @@ server <- function (input, output, session){
   
   output$plotTwoScenarios1 <- renderPlotly({
     
-    # scenarios<- select100Scenarios(dat, 2,.5,.5,.7,2,1,.3)
-    
     RtBasedonTwoPlots(dat,
                             input$R012,
                             input$p.trace12,
@@ -152,19 +150,11 @@ server <- function (input, output, session){
     data.frame(
       Name = c("R0 ",
                "Fraction of cases that are symptomatic",
-               "Delay to isolation for untraced & distancing cases",
                "days",
-               "Delay to isolation for traced cases (days)",
-               "Fraction of people using contact tracing app",
-               "Fraction of cases manually traced",
                "Strength of physical distancing (contact rate)"),
       Value = as.character(c(input$R0forApp,
                              input$p.symforApp,
-                             "None",
                              input$daysforApp,
-                             "None",
-                             0,
-                             "None",
                              input$sd_contactforApp)),
       stringsAsFactors = FALSE)
   })
@@ -182,6 +172,23 @@ server <- function (input, output, session){
     myPlot
     
   })
+  
+  output$tableManual <- renderTable({
+    data.frame(
+      Name = c("R0 ",
+               "Fraction of cases that are symptomatic",
+               "Delay to isolation for untraced & distancing cases",
+               "days",
+               "Strength of physical distancing (contact rate)"),
+      Value = as.character(c(input$R0forManual,
+                             input$p.symforManual,
+                             input$iso_delay_untracedforManual,
+                             input$daysforManual,
+                             input$sd_contactforManual)),
+      stringsAsFactors = FALSE)
+  })
+  
+  
   
   output$plotRt_App_Manual <- renderPlotly({
     
@@ -203,39 +210,13 @@ server <- function (input, output, session){
                "Delay to isolation for untraced & distancing cases",
                "days",
                "Delay to isolation for traced cases (days)",
-               "Fraction of people using contact tracing app",
-               "Fraction of cases manually traced",
                "Strength of physical distancing (contact rate)"),
       Value = as.character(c(input$R0forAppManual,
                              input$p.symforAppManual,
                              input$iso_delay_untracedforAppManaual,
                              input$daysforAppManual,
                              input$iso_delay_tracecedforAppManual,
-                             "None",
-                             "None",
                              input$sd_contactforAppManual)),
-      stringsAsFactors = FALSE)
-  })
-  
-  
-  output$tableManual <- renderTable({
-    data.frame(
-      Name = c("R0 ",
-               "Fraction of cases that are symptomatic",
-               "Delay to isolation for untraced & distancing cases",
-               "days",
-               "Delay to isolation for traced cases (days)",
-               "Fraction of people using contact tracing app",
-               "Fraction of cases manually traced",
-               "Strength of physical distancing (contact rate)"),
-      Value = as.character(c(input$R0forManual,
-                             input$p.symforManual,
-                             input$iso_delay_untracedforManual,
-                             input$daysforManual,
-                             "None",
-                             0,
-                             "None",
-                             input$sd_contactforManual)),
       stringsAsFactors = FALSE)
   })
   
