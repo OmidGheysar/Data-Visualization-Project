@@ -18,7 +18,7 @@ body <- dashboardBody(
   
   tabItems(
     tabItem(tabName = "dashboard",
-            h1("Simulation of COVID-19 Main page"),
+            h1("Simulation of COVID-19"),
             titlePanel(title=div(img(src="covid.PNG")))
     ),
     
