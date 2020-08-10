@@ -141,11 +141,7 @@ server <- function (input, output, session){
     myPlot <- RtBasedonAppTrace(dat,
                                 day = input$daysforApp,
                                 R = input$R0forApp,
-                                # p.tr = 0,
-                                # p.trace_ap = 100,
                                 p.sym = input$p.symforApp,
-                                # iso_delay_traced=1,
-                                # iso_delay_untraced= input$iso_delay_untracedforApp,
                                 sd_contact = input$sd_contactforApp)
     myPlot
     
@@ -175,17 +171,12 @@ server <- function (input, output, session){
   
   
   
-  
-  
   output$plotRt_Only_Manual <- renderPlotly({
     
     myPlot <- RtBasedonManualTrace(dat,
                                    day = input$daysforManual,
                                    R = input$R0forManual,
-                                   p.tr = 100,
-                                   p.trace_ap = 0,
                                    p.sym = input$p.symforManual,
-                                   iso_delay_traced=100,
                                    iso_delay_untraced= input$iso_delay_untracedforManual,
                                    sd_contact = input$sd_contactforManual)
     myPlot
@@ -197,8 +188,6 @@ server <- function (input, output, session){
     myPlot <- RtBasedonAppAndManual(dat,
                                     day = input$daysforAppManual,
                                     R = input$R0forAppManual,
-                                    p.tr = 100,
-                                    p.trace_ap = 100,
                                     p.sym = input$p.symforAppManual,
                                     iso_delay_traced=input$iso_delay_tracecedforAppManual,
                                     iso_delay_untraced= input$iso_delay_untracedforAppManaual,
@@ -251,12 +240,5 @@ server <- function (input, output, session){
   })
   
 }
-
-
-
-# 
-# ui <- UiRt_Only_App()
-# server <- ServerRt_Only_App()
-
 
 shinyApp(ui, server)

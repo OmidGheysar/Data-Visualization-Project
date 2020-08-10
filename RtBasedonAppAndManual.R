@@ -2,8 +2,6 @@
 RtBasedonAppAndManual <- function(dat,
                                   days,
                                   R,
-                                  p.tr = 100,
-                                  p.trace_ap = 100,
                                   p.sym,
                                   iso_delay_traced,
                                   iso_delay_untraced,
@@ -13,16 +11,12 @@ RtBasedonAppAndManual <- function(dat,
   select64000Scenarios <- function(dat,
                                    days,
                                    R,
-                                   p.tr,
-                                   p.trace_ap,
                                    p.sym,
                                    iso_delay_traced,
                                    iso_delay_untraced,
                                    sd_contact) {
     
     scenarios64000<-dat %>% filter(R0==R &
-                                     # p.trace==p.tr&
-                                     # p.trace_app==p.trace_ap&
                                      p.symp== p.sym&
                                      iso_delay_traced_max==iso_delay_traced&
                                      iso_delay_untraced_sd_max==iso_delay_untraced&
@@ -31,41 +25,17 @@ RtBasedonAppAndManual <- function(dat,
     return(scenarios64000)
   }
   
-  
-  aes_x <- "p.trace_app"
-  aes_y <- "Revenue"
-  aes_col <- "p.trace"
-  aes_grp <- "p.trace"
-  
-  
-  results<- select64000Scenarios(dat, days, R, p.tr, p.trace_ap, p.sym,
-                                 iso_delay_traced, iso_delay_untraced, sd_contact) 
-  
-  # # dat <- readRDS("Newdata.rds")
-  # # results<- select64000Scenarios(dat,10 ,3,.5,.5,.7,2,1,.3)
-  # long_results <- results %>% gather(Quarter, Revenue, Rt_Q_05:Rt_Q_95) 
-  # p <- ggplot(long_results,
-  #             aes(x=eval(as.name(aes_x)),
-  #                 y=eval(as.name(aes_y)),
-  #                 color=factor(eval(as.name(aes_col))),
-  #                 group=eval(as.name(aes_grp)))) +
-  #   stat_summary(geom="pointrange",
-  #                fun.y  = "median",
-  #                fun.ymin = function(x) min(x),
-  #                fun.ymax = function(x) max(x),size=2) +
-  #   stat_summary(geom="line",
-  #                fun.y = "median",size=1)+ylim(0,1.5)+
-  #   # labs(y="Reproductive Number", x="Fraction of people using contact tracing app", 
-  #   #      color="Fraction of cases manually traced")
-  # ==========================================
-  
   aes_x <- "p.trace"
   aes_y <- "Rt_Q_50"
-  dat <- readRDS("Newdata.rds")
-  # I should be careful about which one of select64000Scenarios as there are at least 3 of them
-  # results<- select64000Scenarios(dat,10 ,3,.5,.5,.7,2,1,.3)
-  results<- select64000Scenarios(dat, days, R, p.tr, p.trace_ap, p.sym,
-                                 iso_delay_traced, iso_delay_untraced, sd_contact) 
+  # dat <- readRDS("Newdata.rds")
+  # results<- select64000Scenarios(dat,10 ,3,.7,2,1,.3)
+  results<- select64000Scenarios(dat,
+                                 days, 
+                                 R, 
+                                 p.sym,
+                                 iso_delay_traced, 
+                                 iso_delay_untraced, 
+                                 sd_contact) 
   paired.cols <- RColorBrewer::brewer.pal(12, "Paired")
   outputs1 <- results %>% filter(p.trace_app==0)
   outputs2 <- results %>% filter(p.trace_app==.25)
@@ -103,7 +73,7 @@ RtBasedonAppAndManual <- function(dat,
     label = c("0.00 app trace","0.25 app trace","0.50 app trace","0.75 app trace","1.00 app trace")
   )
   
-  p <- p + geom_text(data=annotation, aes( x=x, y=y, label=label),                 , 
+  p <- p + geom_text(data=annotation, aes( x=x, y=y, label=label),                 
                      color=c(paired.cols[8],paired.cols[2],paired.cols[6],"yellow",paired.cols[3]), 
                      size=4 , angle=0, fontface="bold" )
   p <- p+annotate("point", x = .0, y = .20, colour = paired.cols[8],size = 3)
@@ -169,7 +139,7 @@ UiRt_App_Manual <- function(){
           
           sliderInput("daysforAppManual",
                       "days:",
-                      min = 0,  max = 30,  value = 20)
+                      min = 0,  max = 31,  value = 20)
         ),
         hr(),
         h3("Assumptions"),
@@ -188,49 +158,4 @@ UiRt_App_Manual <- function(){
   
   return (ui)
 }
-
-server <- function(input, output, session) {
-  
-  output$tableAppManual <- renderTable({
-    data.frame(
-      Name = c("R0 ",
-               "Fraction of cases that are symptomatic",
-               "Delay to isolation for untraced & distancing cases",
-               "days",
-               "Delay to isolation for traced cases (days)",
-               "Fraction of people using contact tracing app",
-               "Fraction of cases manually traced",
-               "Strength of physical distancing (contact rate)"),
-      Value = as.character(c(input$R0forAppManual,
-                             input$p.symforAppManual,
-                             input$iso_delay_untracedforAppManaual,
-                             input$daysforAppManual,
-                             input$iso_delay_tracecedforAppManual,
-                             "None",
-                             "None",
-                             input$sd_contactforAppManual)),
-      stringsAsFactors = FALSE)
-  })
-}
-
-shinyApp(ui, server)
-
-
-plotRt_App_Manual <- function(input){
-  myPlot <- RtBasedonAppAndManual(dat,
-                                  day = input$daysforAppManual,
-                                  R = input$R0forAppManual,
-                                  p.tr = 100,
-                                  p.trace_ap = 100,
-                                  p.sym = input$p.symforAppManual,
-                                  iso_delay_traced=input$iso_delay_tracecedforAppManual,
-                                  iso_delay_untraced= input$iso_delay_untracedforAppManaual,
-                                  sd_contact = input$sd_contactforAppManual)
-  return(myPlot)
-}
-
-# ui <- UiRt_App_Manual()
-# server <- ServerRt_App_Manual()
-
-
 
