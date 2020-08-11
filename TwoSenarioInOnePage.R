@@ -1,36 +1,29 @@
-# library(shiny)
-# library("ggplot2")
-# library(magrittr) # needs to be run every time you start R and want to use %>%
-# library(dplyr)    # alternatively, this also loads %>%
-# library("tidyverse")
-# library(shinydashboard)
-# source("C:/Users/omidg/OneDrive/Desktop/BCCCDC R shiny Project/BCCCDC-Project/data manipulation.R")
-# source("C:/Users/omidg/OneDrive/Desktop/BCCCDC R shiny Project/BCCCDC-Project/PlotMaker.R")
-# source("C:/Users/omidg/OneDrive/Desktop/BCCCDC R shiny Project/BCCCDC-Project/SidebaryLayout.R")
-# source("C:/Users/omidg/OneDrive/Desktop/BCCCDC R shiny Project/BCCCDC-Project/serverDesign.R")
-# source("C:/Users/omidg/OneDrive/Desktop/BCCCDC R shiny Project/BCCCDC-Project/CreateDataFrame.R")
-# dat <- readRDS("05_22.rds")
-
-
-
-
 TwoSenarioInOnePage <- function(){
 ui <- fluidPage(
   fluidRow(
-    column(3,
-           slidebar1For2()
+    box(
+      title = "Scenario with blue color", width = 3, solidHeader = TRUE, status = "primary",
+       background = "navy",
+      slidebar1For2()
     ),
-    column(6,
+    
+    box(width = 6, solidHeader = FALSE, status = "info",
+      color = "black",background = "navy",
+    # column(6,
            plotlyOutput("plotTwoScenarios1"),
            # plotlyOutput("plotTwoScenarios2"),
            h4(code("Compare the Reproductive Number of two scenarios 
                    based upon their simulation parameters"))
-           
-    ), 
-    column(3,
-           slidebar1For3()
-    )
-    
+
+           # ),
+
+    ),
+    box(
+      title = "Scenario with orange color", width = 3, solidHeader = TRUE, status = "warning",
+      background = "navy",
+      slidebar1For3()
+    ),
+
   ),
   
   hr(),
@@ -72,7 +65,5 @@ server <- function(input, output) {
 
 
 }
-# 
-# 
-# shinyApp(ui, server)
+
 

@@ -5,6 +5,7 @@ uploadRequiredLibraries <- function(){
   # install.packages("shinydashboard")
   # install.packages("shinyWidgets")
   # install.packages("plyr")
+  library(shinyWidgets)
   library(plotly)
   library(shiny)
   library("ggplot2")
@@ -21,8 +22,8 @@ uploadRequiredLibraries <- function(){
   source("RtBasedonAppAndManual.R")
   source("RtBasedonAppTrace.R")
   source("RtBasedonTwoPlots.R")
-  
   source("slidebar1For2.R")
+  source("TwoSenarioInOnePage.R")
   source("returnPlotTowScenarions.R")
  # dat <- readRDS("05_22.rds")
 }

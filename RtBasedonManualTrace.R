@@ -104,48 +104,44 @@ RtBasedonManualTrace <- function(dat,
 
 UiRt_Only_Manual <- function(){
   
-  ui <- fluidPage(
-    # Application title
-    titlePanel("Parameters of Scenarios"),
-    
-    sidebarLayout(
-      # Sidebar with a slider and selection inputs
-      sidebarPanel(
-        
-        shinyWidgets::sliderTextInput("sd_contactforManual","
+  ui <- fluidRow(
+    box(
+      title = "Scenario with blue color", width = 4, solidHeader = TRUE, status = "primary",
+      color = "black",background = "navy",
+      shinyWidgets::sliderTextInput("sd_contactforManual","
                                       Strength of physical distancing (contact rate)",
-                                      choices=c(0.3, 0.6, 0.8),
-                                      selected=0.3, grid = T),
-        sliderInput("iso_delay_untracedforManual",
-                    "Delay to isolation for untraced & distancing cases",
-                    min = 1,  max = 5, value = 1, step = 4),
-        selectInput("selection", "Select something", choices = c("Descision Making Parameters", "All Parameters")),
-        conditionalPanel(
-          "input.selection == 'All Parameters'",
-          sliderInput("R0forManual",
-                      "R0:",
-                      min = 2,  max = 3, value = 2, step = .5),
-          
-          sliderInput("p.symforManual",
-                      "Fraction of cases that are symptomatic",
-                      min = .6,  max = .8, value = .6, step = .1),
-          
-          sliderInput("daysforManual",
-                      "days:",
-                      min = 0,  max = 31,  value = 20)
-        ),
-        hr(),
-        h3("Assumptions"),
-        tableOutput("tableManual")
+                                    choices=c(0.3, 0.6, 0.8),
+                                    selected=0.3, grid = T),
+      sliderInput("iso_delay_untracedforManual",
+                  "Delay to isolation for untraced & distancing cases",
+                  min = 1,  max = 5, value = 1, step = 4),
+      selectInput("selection", "Select something", choices = c("Descision Making Parameters", "All Parameters")),
+      conditionalPanel(
+        "input.selection == 'All Parameters'",
+        sliderInput("R0forManual",
+                    "R0:",
+                    min = 2,  max = 3, value = 2, step = .5),
+        
+        sliderInput("p.symforManual",
+                    "Fraction of cases that are symptomatic",
+                    min = .6,  max = .8, value = .6, step = .1),
+        
+        sliderInput("daysforManual",
+                    "days:",
+                    min = 0,  max = 31,  value = 20)
       ),
+      hr(),
+      h3("Assumptions"),
+      tableOutput("tableManual")
       
-      # Show Word Cloud
-      mainPanel(
-        plotlyOutput("plotRt_Only_Manual"),
-        h4(code("Impact of Manual contact tracing for 
+    ),
+    box( width = 8, solidHeader = TRUE,
+         color = "black",background = "navy",
+      plotlyOutput("plotRt_Only_Manual"),
+      h4(code("Impact of Manual contact tracing for 
                 Reproductive Number of covid-19"))
-      )
-    )
+    ),
   )
+  
   return(ui)
 }

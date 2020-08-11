@@ -1,13 +1,21 @@
 slidebar1For2 <- function() {
-  
-  ui <- fluidPage(
+  # color
 
-    
-    # Input: Simple integer interval ----
+  ui <- fluidPage(
     
     shinyWidgets::sliderTextInput("sd_contact_rate112","Strength of physical distancing (contact rate)",
                                   choices=c(0.3, 0.6, 0.8),
                                   selected=0.3, grid = T),
+    tags$head(tags$style(
+      HTML('
+         #sd_contact_rate112 {
+            background-color: #dec4de;
+        }
+
+        body, label, input, button, select { 
+          font-family: "Arial";
+        }')
+    )),
     
     sliderInput("p.trace12", "Fraction of cases manually traced",
                 min = 0, max = 1,
@@ -23,18 +31,18 @@ slidebar1For2 <- function() {
     selectInput("selection12", "Select something", choices = c("Descision Making Parameters", "All Parameters")),
     conditionalPanel(
       "input.selection12 == 'All Parameters'",
-      
+
       sliderInput("R012", "R0",
                   min = 2, max = 3,
                   value = 2.5, step = 0.5),
       sliderInput("p.symp12", "Fraction of cases that are symptomatic",
                   min = 0.6, max = 0.8,
                   value = .7, step = 0.1),
-      
+
       sliderInput("iso_delay_untraced_sd_max12", "Delay to isolation for untraced & distancing cases",
                   min = 1, max = 5,
                   value = 1, step = 4),
-      
+
       # sliderInput("day", "day",
       #             min = 0, max = 31,
       #             value = 20, step = 1)
@@ -87,9 +95,10 @@ slidebar1For3 <- function() {
       # sliderInput("day", "day",
       #             min = 0, max = 31,
       #             value = 20, step = 1)
-    )
+    ),
     
   )
+    
   
   return(ui)
 }

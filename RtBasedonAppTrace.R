@@ -82,46 +82,39 @@ RtBasedonAppTrace <- function(dat,
 
 UiRt_Only_App <- function(){
   
-  
-  ui <- fluidPage(
-    # Application title
-    titlePanel("Parameters of Scenarios"),
-    
-    sidebarLayout(
-      # Sidebar with a slider and selection inputs
-      sidebarPanel(
-        
-        shinyWidgets::sliderTextInput("sd_contactforApp","
+  ui <-fluidRow(
+    box( width = 4, solidHeader = TRUE, status = "primary",
+      color = "black",background = "navy",
+      shinyWidgets::sliderTextInput("sd_contactforApp","
                                       Strength of physical distancing (contact rate)",
-                                      choices=c(0.3, 0.6, 0.8),
-                                      selected=0.3, grid = T),
-        selectInput("selectionApp", "Select something", choices = c("Descision Making Parameters", "All Parameters")),
-        conditionalPanel(
-          "input.selectionApp == 'All Parameters'",
-          sliderInput("R0forApp",
-                      "R0:",
-                      min = 2,  max = 3, value = 2, step = .5),
-          
-          sliderInput("p.symforApp",
-                      "Fraction of cases that are symptomatic",
-                      min = .6,  max = .8, value = .6, step = .1),
-          
-          sliderInput("daysforApp",
-                      "days:",
-                      min = 0,  max = 31,  value = 20)
-        ),
-        hr(),
-        h3("Assumptions"),
-        tableOutput("tableApp")
+                                    choices=c(0.3, 0.6, 0.8),
+                                    selected=0.3, grid = T),
+      selectInput("selectionApp", "Select something", choices = c("Descision Making Parameters", "All Parameters")),
+      conditionalPanel(
+        "input.selectionApp == 'All Parameters'",
+        sliderInput("R0forApp",
+                    "R0:",
+                    min = 2,  max = 3, value = 2, step = .5),
+        
+        sliderInput("p.symforApp",
+                    "Fraction of cases that are symptomatic",
+                    min = .6,  max = .8, value = .6, step = .1),
+        
+        sliderInput("daysforApp",
+                    "days:",
+                    min = 0,  max = 31,  value = 20)
       ),
+      hr(),
+      h3("Assumptions"),
+      tableOutput("tableApp")
       
-      # Show Word Cloud
-      mainPanel(
-        plotlyOutput("plotRt_Only_App"),
-        h4(code("Impact of digital contact tracing for 
+    ),
+    box( width = 8, solidHeader = TRUE,
+      color = "black",background = "navy",
+      plotlyOutput("plotRt_Only_App"),
+      h4(code("Impact of digital contact tracing for 
                 Reproductive Number of covid-19"))
-      )
-    )
+    ),
   )
   return(ui)
   

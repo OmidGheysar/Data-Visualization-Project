@@ -1,5 +1,6 @@
 source("uploadRequiredLibraries.R")
 uploadRequiredLibraries()
+library(shinyWidgets)
 
 header <- dashboardHeader(title = "COVID-19 Simulation Dashboard")
 
@@ -15,7 +16,7 @@ sidebar <- dashboardSidebar(
 )
 # here is the body of dashboard
 body <- dashboardBody(
-  
+
   tabItems(
     tabItem(tabName = "dashboard",
             h1("Simulation of COVID-19"),

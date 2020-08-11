@@ -105,56 +105,105 @@ RtBasedonAppAndManual <- function(dat,
 
 
 UiRt_App_Manual <- function(){
-  ui <- fluidPage(
-    # Application title
-    titlePanel("Parameters of Scenarios"),
-    
-    sidebarLayout(
-      # Sidebar with a slider and selection inputs
-      sidebarPanel(
-        
-        shinyWidgets::sliderTextInput("sd_contactforAppManual","
+  
+  ui <- fluidRow(
+    box(
+      title = "Scenario with blue color", width = 4, solidHeader = TRUE, status = "primary",
+      background = "navy",
+      shinyWidgets::sliderTextInput("sd_contactforAppManual","
                                       Strength of physical distancing (contact rate)",
-                                      choices=c(0.3, 0.6, 0.8),
-                                      selected=0.3, grid = T),
-        
-        sliderInput("iso_delay_tracecedforAppManual",
-                    "Delay to isolation for traced cases (days)",
-                    min = 1,  max = 4, value = 1, step = 1),
-        
-        selectInput("selectionAppManual", "Select something", choices = c("Descision Making Parameters", "All Parameters")),
-        conditionalPanel(
-          "input.selectionAppManual == 'All Parameters'",
-          sliderInput("R0forAppManual",
-                      "R0:",
-                      min = 2,  max = 3, value = 2, step = .5),
-          
-          sliderInput("p.symforAppManual",
-                      "Fraction of cases that are symptomatic",
-                      min = .6,  max = .8, value = .6, step = .1),
-          
-          sliderInput("iso_delay_untracedforAppManaual",
-                      "Delay to isolation for untraced & distancing cases",
-                      min = 1,  max = 5, value = 1, step = 4),
-          
-          sliderInput("daysforAppManual",
-                      "days:",
-                      min = 0,  max = 31,  value = 20)
-        ),
-        hr(),
-        h3("Assumptions"),
-        tableOutput("tableAppManual")
-        
-      ),
+                                    choices=c(0.3, 0.6, 0.8),
+                                    selected=0.3, grid = T),
       
-      # Show Word Cloud
-      mainPanel(
-        plotlyOutput("plotRt_App_Manual"),
-        h4(code("Impact of Manual and digital contact tracing for 
+      sliderInput("iso_delay_tracecedforAppManual",
+                  "Delay to isolation for traced cases (days)",
+                  min = 1,  max = 4, value = 1, step = 1),
+      
+      selectInput("selectionAppManual", "Select something", choices = c("Descision Making Parameters", "All Parameters")),
+      conditionalPanel(
+        "input.selectionAppManual == 'All Parameters'",
+        sliderInput("R0forAppManual",
+                    "R0:",
+                    min = 2,  max = 3, value = 2, step = .5),
+        
+        sliderInput("p.symforAppManual",
+                    "Fraction of cases that are symptomatic",
+                    min = .6,  max = .8, value = .6, step = .1),
+        
+        sliderInput("iso_delay_untracedforAppManaual",
+                    "Delay to isolation for untraced & distancing cases",
+                    min = 1,  max = 5, value = 1, step = 4),
+        
+        sliderInput("daysforAppManual",
+                    "days:",
+                    min = 0,  max = 31,  value = 20)
+      ),
+      hr(),
+      h3("Assumptions"),
+      tableOutput("tableAppManual")
+      
+    ),
+    box(width = 8, solidHeader = TRUE,color = "black",background = "navy",
+      plotlyOutput("plotRt_App_Manual"),
+      h4(code("Impact of Manual and digital contact tracing for 
                 Reproductive Number of covid-19"))
-      )
-    )
+    ),
   )
+  
+  
+  
+  
+  # 
+  # ui <- fluidPage(
+  #   # Application title
+  #   titlePanel("Parameters of Scenarios"),
+  #   
+  #   sidebarLayout(
+  #     # Sidebar with a slider and selection inputs
+  #     sidebarPanel(
+  #       
+  #       shinyWidgets::sliderTextInput("sd_contactforAppManual","
+  #                                     Strength of physical distancing (contact rate)",
+  #                                     choices=c(0.3, 0.6, 0.8),
+  #                                     selected=0.3, grid = T),
+  #       
+  #       sliderInput("iso_delay_tracecedforAppManual",
+  #                   "Delay to isolation for traced cases (days)",
+  #                   min = 1,  max = 4, value = 1, step = 1),
+  #       
+  #       selectInput("selectionAppManual", "Select something", choices = c("Descision Making Parameters", "All Parameters")),
+  #       conditionalPanel(
+  #         "input.selectionAppManual == 'All Parameters'",
+  #         sliderInput("R0forAppManual",
+  #                     "R0:",
+  #                     min = 2,  max = 3, value = 2, step = .5),
+  #         
+  #         sliderInput("p.symforAppManual",
+  #                     "Fraction of cases that are symptomatic",
+  #                     min = .6,  max = .8, value = .6, step = .1),
+  #         
+  #         sliderInput("iso_delay_untracedforAppManaual",
+  #                     "Delay to isolation for untraced & distancing cases",
+  #                     min = 1,  max = 5, value = 1, step = 4),
+  #         
+  #         sliderInput("daysforAppManual",
+  #                     "days:",
+  #                     min = 0,  max = 31,  value = 20)
+  #       ),
+  #       hr(),
+  #       h3("Assumptions"),
+  #       tableOutput("tableAppManual")
+  #       
+  #     ),
+  #     
+  #     # Show Word Cloud
+  #     mainPanel(
+  #       plotlyOutput("plotRt_App_Manual"),
+  #       h4(code("Impact of Manual and digital contact tracing for 
+  #               Reproductive Number of covid-19"))
+  #     )
+  #   )
+  # )
   
   return (ui)
 }
