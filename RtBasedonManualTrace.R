@@ -105,8 +105,7 @@ RtBasedonManualTrace <- function(dat,
 UiRt_Only_Manual <- function(){
   
   ui <- fluidRow(
-    box(
-      title = "Scenario with blue color", width = 4, solidHeader = TRUE, status = "primary",
+    box( width = 4, solidHeader = TRUE, status = "primary",
       color = "black",background = "navy",
       shinyWidgets::sliderTextInput("sd_contactforManual","
                                       Strength of physical distancing (contact rate)",
