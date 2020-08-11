@@ -20,7 +20,13 @@ body <- dashboardBody(
   tabItems(
     tabItem(tabName = "dashboard",
             h1("Simulation of COVID-19"),
-            titlePanel(title=div(img(src="covid.PNG")))
+            # fluidRow(
+              box(width = 8,color = "black",background = "navy",
+                  solidHeader = FALSE, status = "primary",
+                titlePanel(title=div(img(src="covid.PNG"))
+              )
+            # )
+            ) 
     ),
     
     tabItem(tabName = "second",
