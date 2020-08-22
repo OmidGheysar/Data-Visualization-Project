@@ -38,7 +38,7 @@ UiDesign <- function() {
                     min = 1, max = 5,
                     value = 1, step = 4),
         
-        sliderInput("day", "day",
+        sliderInput("day", "Simulation days",
                     min = 0, max = 31,
                     value = 31, step = 1)
       ),

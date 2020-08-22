@@ -46,12 +46,12 @@ RtBasedonManualTrace <- function(dat,
   p <- p+ geom_ribbon(aes(ymin=Rt_Q_25,ymax=Rt_Q_75),fill=paired.cols[8],alpha=0.4)
   p <- p+ geom_ribbon(aes(ymin=outputs2$Rt_Q_25,ymax=outputs2$Rt_Q_75), fill=paired.cols[2],alpha=0.4)
   p <- p+ geom_ribbon(aes(ymin=outputs3$Rt_Q_25,ymax=outputs3$Rt_Q_75),fill=paired.cols[6],alpha=0.4)
-  p <- p+ geom_ribbon(aes(ymin=outputs4$Rt_Q_25,ymax=outputs4$Rt_Q_75),fill=paired.cols[11],alpha=0.5)
+  p <- p+ geom_ribbon(aes(ymin=outputs4$Rt_Q_25,ymax=outputs4$Rt_Q_75),fill=paired.cols[4],alpha=0.4)
   
   p <- p+geom_line(size = 1.5,color = paired.cols[8])
   p <- p+geom_line(aes(x=outputs2$p.trace, y=outputs2$Rt_Q_50),size = 1.5,color = paired.cols[2])
   p <- p+geom_line(aes(x=outputs3$p.trace, y=outputs3$Rt_Q_50),size = 1.5,color = paired.cols[6])
-  p <- p+geom_line(aes(x=outputs4$p.trace, y=outputs4$Rt_Q_50),size = 1.5,color = paired.cols[11])
+  p <- p+geom_line(aes(x=outputs4$p.trace, y=outputs4$Rt_Q_50),size = 1.5,color = paired.cols[4])
   
   p <- p+geom_point(shape = 21, colour = paired.cols[8], fill = "white", size = 2, stroke = 3)
   p <- p+geom_point(aes(x=outputs2$p.trace, y=outputs2$Rt_Q_50),
@@ -60,23 +60,23 @@ RtBasedonManualTrace <- function(dat,
   p <- p+geom_point(aes(x=outputs3$p.trace, y=outputs3$Rt_Q_50),
                     shape = 21, colour = paired.cols[6], fill = "white", size = 2, stroke = 3)
   p <- p+geom_point(aes(x=outputs4$p.trace, y=outputs4$Rt_Q_50),
-                    shape = 21, colour = paired.cols[11], fill = "white", size = 2, stroke = 3)
+                    shape = 21, colour = paired.cols[4], fill = "white", size = 2, stroke = 3)
   p <- p+theme_bw()
   
   
   annotation <- data.frame(
     x= c(0.12,0.12,0.12,0.12),
-    y = c(.5,.45,.40,.35),
+    y = c(.5,.42,.34,.26),
     label = c("1 day","2 days","3 days","4 days")
   )
   
   p <- p + geom_text(data=annotation, aes( x=x, y=y, label=label),                 
-                     color=c(paired.cols[8],paired.cols[2],paired.cols[6],"yellow"), 
+                     color=c(paired.cols[8],paired.cols[2],paired.cols[6],paired.cols[4]), 
                      size=4 , angle=0, fontface="bold" )
   p <- p+annotate("point", x = .00, y = .50, colour = paired.cols[8],size = 3)
-  p <- p+annotate("point", x = .00, y = .45, colour = paired.cols[2],size = 3)
-  p <- p+annotate("point", x = .00, y = .40, colour = paired.cols[6],size = 3)
-  p <- p+annotate("point", x = .00, y = .35, colour = "yellow",size = 3)
+  p <- p+annotate("point", x = .00, y = .42, colour = paired.cols[2],size = 3)
+  p <- p+annotate("point", x = .00, y = .34, colour = paired.cols[6],size = 3)
+  p <- p+annotate("point", x = .00, y = .26, colour = paired.cols[4],size = 3)
   p
   
   
@@ -118,7 +118,7 @@ UiRt_Only_Manual <- function(){
       conditionalPanel(
         "input.selection == 'All Parameters'",
         sliderInput("R0forManual",
-                    "R0:",
+                    "R0",
                     min = 2,  max = 3, value = 2, step = .5),
         
         sliderInput("p.symforManual",
@@ -126,8 +126,8 @@ UiRt_Only_Manual <- function(){
                     min = .6,  max = .8, value = .6, step = .1),
         
         sliderInput("daysforManual",
-                    "days:",
-                    min = 0,  max = 31,  value = 20)
+                    "Simulation days",
+                    min = 0,  max = 31,  value = 31)
       ),
       hr(),
       h3("Assumptions"),

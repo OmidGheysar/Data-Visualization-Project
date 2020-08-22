@@ -48,14 +48,14 @@ RtBasedonAppAndManual <- function(dat,
   p <- p+ geom_ribbon(aes(ymin=Rt_Q_25,ymax=Rt_Q_75),fill=paired.cols[8],alpha=0.4)
   p <- p+ geom_ribbon(aes(ymin=outputs2$Rt_Q_25,ymax=outputs2$Rt_Q_75), fill=paired.cols[2],alpha=0.4)
   p <- p+ geom_ribbon(aes(ymin=outputs3$Rt_Q_25,ymax=outputs3$Rt_Q_75),fill=paired.cols[6],alpha=0.4)
-  p <- p+ geom_ribbon(aes(ymin=outputs4$Rt_Q_25,ymax=outputs4$Rt_Q_75),fill=paired.cols[11],alpha=0.5)
-  p <- p+ geom_ribbon(aes(ymin=outputs5$Rt_Q_25,ymax=outputs5$Rt_Q_75),fill=paired.cols[3],alpha=0.4)
+  p <- p+ geom_ribbon(aes(ymin=outputs4$Rt_Q_25,ymax=outputs4$Rt_Q_75),fill=paired.cols[4],alpha=0.4)
+  p <- p+ geom_ribbon(aes(ymin=outputs5$Rt_Q_25,ymax=outputs5$Rt_Q_75),fill=paired.cols[5],alpha=0.4)
 
   p <- p+geom_line(size = 2,color = paired.cols[8])
   p <- p+geom_line(aes(x=outputs2$p.trace, y=outputs2$Rt_Q_50),size = 2,color = paired.cols[2])
   p <- p+geom_line(aes(x=outputs3$p.trace, y=outputs3$Rt_Q_50),size = 2,color = paired.cols[6])
-  p <- p+geom_line(aes(x=outputs4$p.trace, y=outputs4$Rt_Q_50),size = 2,color = paired.cols[11])
-  p <- p+geom_line(aes(x=outputs5$p.trace, y=outputs5$Rt_Q_50),size = 2,color = paired.cols[3])
+  p <- p+geom_line(aes(x=outputs4$p.trace, y=outputs4$Rt_Q_50),size = 2,color = paired.cols[4])
+  p <- p+geom_line(aes(x=outputs5$p.trace, y=outputs5$Rt_Q_50),size = 2,color = paired.cols[5])
   
   p <- p+geom_point(shape = 21, colour = paired.cols[8], fill = "white", size = 2, stroke = 3)
   p <- p+geom_point(aes(x=outputs2$p.trace, y=outputs2$Rt_Q_50),
@@ -63,24 +63,24 @@ RtBasedonAppAndManual <- function(dat,
   p <- p+geom_point(aes(x=outputs3$p.trace, y=outputs3$Rt_Q_50),
                     shape = 21, colour = paired.cols[6], fill = "white", size = 2, stroke = 3)
   p <- p+geom_point(aes(x=outputs4$p.trace, y=outputs4$Rt_Q_50),
-                    shape = 21, colour = paired.cols[11], fill = "white", size = 2, stroke = 3)
+                    shape = 21, colour = paired.cols[4], fill = "white", size = 2, stroke = 3)
   p <- p+geom_point(aes(x=outputs5$p.trace, y=outputs5$Rt_Q_50),
-                    shape = 21, colour = paired.cols[3], fill = "white", size = 2, stroke = 3)
+                    shape = 21, colour = paired.cols[5], fill = "white", size = 2, stroke = 3)
   p <- p+theme_bw()
   annotation <- data.frame(
     x= c(0.12,0.12,0.12,0.12,0.12),
-    y = c(.20,.12,.04,-.04,-.12),
+    y = c(.07,.0,-.07,-.14,-.21),
     label = c("0.00 app trace","0.25 app trace","0.50 app trace","0.75 app trace","1.00 app trace")
   )
   
   p <- p + geom_text(data=annotation, aes( x=x, y=y, label=label),                 
-                     color=c(paired.cols[8],paired.cols[2],paired.cols[6],"yellow",paired.cols[3]), 
+                     color=c(paired.cols[8],paired.cols[2],paired.cols[6],paired.cols[4],paired.cols[5]), 
                      size=4 , angle=0, fontface="bold" )
-  p <- p+annotate("point", x = .0, y = .20, colour = paired.cols[8],size = 3)
-  p <- p+annotate("point", x = .0, y = .12, colour = paired.cols[2],size = 3)
-  p <- p+annotate("point", x = .0, y = .04, colour = paired.cols[6],size = 3)
-  p <- p+annotate("point", x = .0, y =-.04, colour = "yellow",size = 3)
-  p <- p+annotate("point", x = .0, y = -.12, colour = paired.cols[3],size = 3)
+  p <- p+annotate("point", x = .0, y = .07, colour = paired.cols[8],size = 3)
+  p <- p+annotate("point", x = .0, y = .0, colour = paired.cols[2],size = 3)
+  p <- p+annotate("point", x = .0, y = -.07, colour = paired.cols[6],size = 3)
+  p <- p+annotate("point", x = .0, y =-.14, colour = paired.cols[4],size = 3)
+  p <- p+annotate("point", x = .0, y = -.21, colour = paired.cols[5],size = 3)
   p
   
   # ===========================================
@@ -122,7 +122,7 @@ UiRt_App_Manual <- function(){
       conditionalPanel(
         "input.selectionAppManual == 'All Parameters'",
         sliderInput("R0forAppManual",
-                    "R0:",
+                    "R0",
                     min = 2,  max = 3, value = 2, step = .5),
         
         sliderInput("p.symforAppManual",
@@ -134,8 +134,8 @@ UiRt_App_Manual <- function(){
                     min = 1,  max = 5, value = 1, step = 4),
         
         sliderInput("daysforAppManual",
-                    "days:",
-                    min = 0,  max = 31,  value = 20)
+                    "Simulation days:",
+                    min = 0,  max = 31,  value = 31)
       ),
       hr(),
       h3("Assumptions"),

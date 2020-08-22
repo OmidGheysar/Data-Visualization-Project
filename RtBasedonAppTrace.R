@@ -93,7 +93,7 @@ UiRt_Only_App <- function(){
       conditionalPanel(
         "input.selectionApp == 'All Parameters'",
         sliderInput("R0forApp",
-                    "R0:",
+                    "R0",
                     min = 2,  max = 3, value = 2, step = .5),
         
         sliderInput("p.symforApp",
@@ -101,8 +101,8 @@ UiRt_Only_App <- function(){
                     min = .6,  max = .8, value = .6, step = .1),
         
         sliderInput("daysforApp",
-                    "days:",
-                    min = 0,  max = 31,  value = 20)
+                    "Simulation days",
+                    min = 0,  max = 31,  value = 31)
       ),
       hr(),
       h3("Assumptions"),

@@ -100,7 +100,7 @@ UiRt_Only_Manual <- function(){
           
           sliderInput("daysforManual",
                       "days:",
-                      min = 0,  max = 30,  value = 20)
+                      min = 0,  max = 30,  value = 31)
         ),
         hr(),
         h3("Assumpations"),
