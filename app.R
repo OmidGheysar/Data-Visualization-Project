@@ -16,17 +16,23 @@ sidebar <- dashboardSidebar(
 )
 # here is the body of dashboard
 body <- dashboardBody(
+  
+#   tags$style("
+#               body {
+#     -moz-transform: scale(0.8, 0.8); /* Moz-browsers */
+#     zoom: 0.8; /* Other non-webkit browsers */
+#     zoom: 80%; /* Webkit browsers */
+# }
+#               "),
 
   tabItems(
     tabItem(tabName = "dashboard",
             h1("Simulation of COVID-19"),
-            # fluidRow(
-              box(width = 8,color = "black",background = "navy",
-                  solidHeader = FALSE, status = "primary",
-                titlePanel(title=div(img(src="covid.PNG"))
-              )
-            # )
-            ) 
+            titlePanel(title=div(img(src="covid4.jpg"))),
+            h4(p("Example image from Hellwell et al.",
+               tags$a(href="https://doi.org/10.1016/S2214-109X(20)30074-7", 
+                      "https://doi.org/10.1016/S2214-109X(20)30074-7"),
+                   " - Placeholder Only" ))
     ),
     
     tabItem(tabName = "second",
@@ -107,7 +113,7 @@ server <- function (input, output, session){
                "Delay to isolation for traced cases (days)",
                "Fraction of people using contact tracing app",
                "Fraction of cases manually traced",
-               "Strength of physical distancing (contact rate)"),
+               "Contact rate (proportion of normal)"),
       Value = as.character(c(input$R0,
                              input$p.symp,
                              input$iso_delay_untraced_sd_max,
@@ -158,7 +164,7 @@ server <- function (input, output, session){
       Name = c("R0 ",
                "Fraction of cases that are symptomatic",
                "days",
-               "Strength of physical distancing (contact rate)"),
+               "Contact rate (proportion of normal)"),
       Value = as.character(c(input$R0forApp,
                              input$p.symforApp,
                              input$daysforApp,
@@ -186,7 +192,7 @@ server <- function (input, output, session){
                "Fraction of cases that are symptomatic",
                "Delay to isolation for untraced & distancing cases",
                "days",
-               "Strength of physical distancing (contact rate)"),
+               "Contact rate (proportion of normal)"),
       Value = as.character(c(input$R0forManual,
                              input$p.symforManual,
                              input$iso_delay_untracedforManual,
@@ -217,7 +223,7 @@ server <- function (input, output, session){
                "Delay to isolation for untraced & distancing cases",
                "days",
                "Delay to isolation for traced cases (days)",
-               "Strength of physical distancing (contact rate)"),
+               "Contact rate (proportion of normal)"),
       Value = as.character(c(input$R0forAppManual,
                              input$p.symforAppManual,
                              input$iso_delay_untracedforAppManaual,

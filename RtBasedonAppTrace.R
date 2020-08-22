@@ -86,7 +86,7 @@ UiRt_Only_App <- function(){
     box( width = 4, solidHeader = TRUE, status = "primary",
       color = "black",background = "navy",
       shinyWidgets::sliderTextInput("sd_contactforApp","
-                                      Strength of physical distancing (contact rate)",
+                                      Contact rate (proportion of normal)",
                                     choices=c(0.3, 0.6, 0.8),
                                     selected=0.3, grid = T),
       selectInput("selectionApp", "Select something", choices = c("Descision Making Parameters", "All Parameters")),

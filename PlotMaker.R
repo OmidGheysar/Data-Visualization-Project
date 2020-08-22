@@ -86,7 +86,7 @@ returnPlot <- function(dat,
    }
 
    p <- p+theme_bw()
-  return(p)
+  return(ggplotly(p))
 }
 
 

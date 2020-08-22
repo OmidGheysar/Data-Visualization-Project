@@ -110,7 +110,7 @@ UiRt_App_Manual <- function(){
     box(width = 4, solidHeader = TRUE, status = "primary",
       background = "navy",
       shinyWidgets::sliderTextInput("sd_contactforAppManual","
-                                      Strength of physical distancing (contact rate)",
+                                      Contact rate (proportion of normal)",
                                     choices=c(0.3, 0.6, 0.8),
                                     selected=0.3, grid = T),
       

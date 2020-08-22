@@ -3,7 +3,7 @@ slidebar1For2 <- function() {
 
   ui <- fluidPage(
     
-    shinyWidgets::sliderTextInput("sd_contact_rate112","Strength of physical distancing (contact rate)",
+    shinyWidgets::sliderTextInput("sd_contact_rate112","Contact rate (proportion of normal)",
                                   choices=c(0.3, 0.6, 0.8),
                                   selected=0.3, grid = T),
     tags$head(tags$style(
@@ -60,9 +60,9 @@ slidebar1For3 <- function() {
   ui <- fluidPage(
     
     # Input: Simple integer interval ----
-    shinyWidgets::sliderTextInput("sd_contact_rate123","Strength of physical distancing (contact rate)",
+    shinyWidgets::sliderTextInput("sd_contact_rate123","Contact rate (proportion of normal)",
                                   choices=c(0.3, 0.6, 0.8),
-                                  selected=0.3, grid = T),
+                                  selected=0.6, grid = T),
     sliderInput("p.trace23", "Fraction of cases manually traced",
                 min = 0, max = 1,
                 value = .5, step = 0.25),

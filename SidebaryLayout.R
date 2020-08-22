@@ -2,7 +2,7 @@ UiDesign <- function() {
   
   ui <- fluidRow(
     box( width = 4, solidHeader = TRUE, color = "black",background = "navy",
-      shinyWidgets::sliderTextInput("sd_contact_rate1","Strength of physical distancing (contact rate)",
+      shinyWidgets::sliderTextInput("sd_contact_rate1","Contact rate (proportion of normal)",
                                     choices=c(0.3, 0.6, 0.8),
                                     selected=0.3, grid = T),
       

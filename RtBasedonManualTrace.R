@@ -108,7 +108,7 @@ UiRt_Only_Manual <- function(){
     box( width = 4, solidHeader = TRUE, status = "primary",
       color = "black",background = "navy",
       shinyWidgets::sliderTextInput("sd_contactforManual","
-                                      Strength of physical distancing (contact rate)",
+                                      Contact rate (proportion of normal)",
                                     choices=c(0.3, 0.6, 0.8),
                                     selected=0.3, grid = T),
       sliderInput("iso_delay_untracedforManual",
