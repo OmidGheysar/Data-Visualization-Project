@@ -51,8 +51,25 @@ UiDesign <- function() {
       plotlyOutput("plotRtNactive"),
       textOutput("captionMainTimeSeries"),
       h4(code("Given the simulation parameters, plot shows the time series of the progress of epidemiological
-            factors of Covid-19 for the duration of 31 days"))
+            factors of Covid-19 for the duration of 31 days")),
+      # box(width = 20, color = "black",background = "navy",
+          navbarPage(inverse=TRUE,"Please choose your plot",
+                     tabPanel("Plot"),
+                     tabPanel("Summary"),
+                     tabPanel("Table"),
+                     tabPanel("Plot"),
+                     tabPanel("Summary"),
+                     tabPanel("Table"),
+                     tabPanel("Plot"),
+                     tabPanel("Summary"),
+                     tabPanel("Table"),
+                     tabPanel("Plot"),
+                     tabPanel("Summary"),
+                     tabPanel("Table")
+          # )
     ),
+    )
+
   )
   
 
