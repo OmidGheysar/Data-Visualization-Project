@@ -1,4 +1,4 @@
-RtBasedonAppTrace <- function(dat,
+RtBasedonAppTrace <- function(dat,ouptColumn,
                               days,
                               R,
                               p.sym,
@@ -17,12 +17,16 @@ RtBasedonAppTrace <- function(dat,
                                 # why is this ?????????
                                 iso_delay_traced_max==2&
                                 sd_contact_rate1==sd_contact) %>% filter(day==days) %>%  
-      select(p.trace_app,iso_delay_untraced_sd_max,"day":"n.active_Q_95") 
+      select(p.trace_app,iso_delay_untraced_sd_max,"day":"n.iso_Q_95") 
     return(scenarios)
   }
 
   aes_x <- "p.trace_app"
-  aes_y <- "Rt_Q_50"
+  
+  # ouptColumn <- "n.total"
+  Q_25 <-   paste(ouptColumn, "Q_25", sep="_")
+  Q_50 <-  paste(ouptColumn, "Q_50", sep="_")
+  Q_75 <-  paste(ouptColumn, "Q_75", sep="_")
 
   results<- select64000Scenarios(dat, 
                                  days, 
@@ -38,16 +42,16 @@ RtBasedonAppTrace <- function(dat,
   outputs2 <- results %>% filter(iso_delay_untraced_sd_max==5)
   
   
-  p <- ggplot(outputs1 ,aes(x=eval(as.name(aes_x)), y=Rt_Q_50))
+  p <- ggplot(outputs1 ,aes(x=eval(as.name(aes_x)), y=eval(as.name(Q_50))))
   
-  p <- p+ geom_ribbon(aes(ymin=Rt_Q_25,ymax=Rt_Q_75),fill=paired.cols[8],alpha=0.4)
-  p <- p+ geom_ribbon(aes(ymin=outputs2$Rt_Q_25,ymax=outputs2$Rt_Q_75), fill=paired.cols[2],alpha=0.4)
+  p <- p+ geom_ribbon(aes(ymin=outputs1[[Q_25]],ymax=outputs1[[Q_75]]),fill=paired.cols[8],alpha=0.4)
+  p <- p+ geom_ribbon(aes(ymin=outputs2[[Q_25]],ymax=outputs2[[Q_75]]), fill=paired.cols[2],alpha=0.4)
   
   p <- p+geom_line(size = 2,color = paired.cols[8])
-  p <- p+geom_line(aes(x=outputs2$p.trace_app, y=outputs2$Rt_Q_50),size = 2,color = paired.cols[2])
+  p <- p+geom_line(aes(x=outputs2$p.trace_app, y=outputs2[[Q_50]]),size = 2,color = paired.cols[2])
   
   p <- p+geom_point(shape = 21, colour = paired.cols[8], fill = "white", size = 2, stroke = 3)
-  p <- p+geom_point(aes(x=outputs2$p.trace_app, y=outputs2$Rt_Q_50),
+  p <- p+geom_point(aes(x=outputs2$p.trace_app, y=outputs2[[Q_50]]),
                     shape = 21, colour = paired.cols[2], fill = "white", size = 2, stroke = 3)
   
   p <- p+theme_bw()
@@ -111,7 +115,9 @@ UiRt_Only_App <- function(){
     ),
     box( width = 8, solidHeader = TRUE,
       color = "black",background = "navy",
-      plotlyOutput("plotRt_Only_App"),
+      plotlyOutput("plotRt_Only_App1"),
+      br(),
+      plotlyOutput("plotRt_Only_App2"),
       h4(code("Impact of digital contact tracing for 
                 Reproductive Number of covid-19"))
     ),

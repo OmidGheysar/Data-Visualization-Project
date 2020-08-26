@@ -121,7 +121,9 @@ UiRt_App_Manual <- function(){
       
       # Show Word Cloud
       mainPanel(
-        plotlyOutput("plotRt_App_Manual"),
+        plotlyOutput("plotRt_App_Manual1"),
+        br(),
+        plotlyOutput("plotRt_App_Manual2"),
         h4(code("Impact of Manual and digital contact tracing for 
                 Reproductive Number of covid-19"))
       )

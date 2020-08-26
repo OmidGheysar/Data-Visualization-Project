@@ -76,6 +76,19 @@ server <- function (input, output, session){
   #Finish the function
   removeModal()
   
+  v <- reactiveValues(data = NULL)
+  observeEvent(input$sth,{
+    if(input$sth == "Currently active cases"){
+      v$data <- "n.active"
+    }else if(input$sth == "New cases") {
+      v$data <- "n.new"
+    }else if(input$sth == "Cumulative new cases") {
+      v$data <- "n.total"
+    }else if(input$sth == "Isolated cases") {
+      v$data <- "n.iso"
+    }
+  })
+  
   output$plotRtTime <- renderPlotly({
     
     outputPlot<- returnPlot(dat,"Rt",
@@ -90,8 +103,9 @@ server <- function (input, output, session){
     outputPlot
   })
   
+  
   output$plotRtNactive <- renderPlotly({
-    outputPlot<- returnPlot(dat,"n.active",
+    outputPlot<- returnPlot(dat,v$data,
                             input$R0,
                             input$p.trace,
                             input$p.trace_app,
@@ -128,7 +142,7 @@ server <- function (input, output, session){
   
   output$plotTwoScenarios1 <- renderPlotly({
     
-    RtBasedonTwoPlots(dat,
+    RtBasedonTwoPlots(dat, "Rt",
                             input$R012,
                             input$p.trace12,
                             input$p.trace_app12,
@@ -147,14 +161,52 @@ server <- function (input, output, session){
     
   })
   
-  output$plotRt_Only_App <- renderPlotly({
+  output$plotTwoScenarios2 <- renderPlotly({
     
-    myPlot <- RtBasedonAppTrace(dat,
+    RtBasedonTwoPlots(dat, "n.new",
+                      input$R012,
+                      input$p.trace12,
+                      input$p.trace_app12,
+                      input$p.symp12,
+                      input$iso_delay_traced_max12,
+                      input$iso_delay_untraced_sd_max12,
+                      input$sd_contact_rate112,
+                      input$R023,
+                      input$p.trace23,
+                      input$p.trace_app23,
+                      input$p.symp23,
+                      input$iso_delay_traced_max23,
+                      input$iso_delay_untraced_sd_max23,
+                      input$sd_contact_rate123
+    )
+    
+  })
+  
+  
+  v <- reactiveValues(data = NULL)
+  
+
+  output$plotRt_Only_App1 <- renderPlotly({
+    
+    myPlot <- RtBasedonAppTrace(dat,"Rt",
                                 day = input$daysforApp,
                                 R = input$R0forApp,
                                 p.sym = input$p.symforApp,
                                 sd_contact = input$sd_contactforApp)
     myPlot
+    
+    
+  })
+  
+  output$plotRt_Only_App2 <- renderPlotly({
+    
+    myPlot <- RtBasedonAppTrace(dat,"n.iso",
+                                day = input$daysforApp,
+                                R = input$R0forApp,
+                                p.sym = input$p.symforApp,
+                                sd_contact = input$sd_contactforApp)
+    myPlot
+    
     
   })
   
@@ -174,9 +226,21 @@ server <- function (input, output, session){
   
   
   
-  output$plotRt_Only_Manual <- renderPlotly({
+  output$plotRt_Only_Manual1 <- renderPlotly({
     
-    myPlot <- RtBasedonManualTrace(dat,
+    myPlot <- RtBasedonManualTrace(dat,"Rt",
+                                   day = input$daysforManual,
+                                   R = input$R0forManual,
+                                   p.sym = input$p.symforManual,
+                                   iso_delay_untraced= input$iso_delay_untracedforManual,
+                                   sd_contact = input$sd_contactforManual)
+    myPlot
+    
+  })
+  
+  output$plotRt_Only_Manual2 <- renderPlotly({
+    
+    myPlot <- RtBasedonManualTrace(dat,"n.new",
                                    day = input$daysforManual,
                                    R = input$R0forManual,
                                    p.sym = input$p.symforManual,
@@ -203,9 +267,22 @@ server <- function (input, output, session){
   
   
   
-  output$plotRt_App_Manual <- renderPlotly({
+  output$plotRt_App_Manual1 <- renderPlotly({
     
-    myPlot <- RtBasedonAppAndManual(dat,
+    myPlot <- RtBasedonAppAndManual(dat,"Rt",
+                                    day = input$daysforAppManual,
+                                    R = input$R0forAppManual,
+                                    p.sym = input$p.symforAppManual,
+                                    iso_delay_traced=input$iso_delay_tracecedforAppManual,
+                                    iso_delay_untraced= input$iso_delay_untracedforAppManaual,
+                                    sd_contact = input$sd_contactforAppManual)
+    myPlot
+    
+  })
+  
+  output$plotRt_App_Manual2 <- renderPlotly({
+    
+    myPlot <- RtBasedonAppAndManual(dat,"n.iso",
                                     day = input$daysforAppManual,
                                     R = input$R0forAppManual,
                                     p.sym = input$p.symforAppManual,

@@ -1,4 +1,4 @@
-RtBasedonManualTrace <- function(dat,
+RtBasedonManualTrace <- function(dat,ouptColumn,
                                  days,
                                  R,
                                  p.sym,
@@ -17,15 +17,21 @@ RtBasedonManualTrace <- function(dat,
                                      p.symp== p.sym&
                                      iso_delay_untraced_sd_max==iso_delay_untraced&
                                      sd_contact_rate1==sd_contact) %>% 
-      select(p.trace,iso_delay_traced_max,"day":"n.active_Q_95") %>% filter(day==days)
+      select(p.trace,iso_delay_traced_max,"day":"n.iso_Q_95") %>% filter(day==days)
     return(scenarios64000)
   }
   
  
   aes_x <- "p.trace"
-  aes_y <- "Rt_Q_50"
-  dat <- readRDS("Newdata.rds")
-
+  # ouptColumn <- "n.new"
+  Q_05  <- paste(ouptColumn, "Q_05", sep="_")
+  Q_25 <-   paste(ouptColumn, "Q_25", sep="_")
+  Q_50 <-  paste(ouptColumn, "Q_50", sep="_")
+  Q_75 <-  paste(ouptColumn, "Q_75", sep="_")
+  Q_95 <-  paste(ouptColumn, "Q_95", sep="_")
+  
+  
+  # dat <- readRDS("Newdata.rds")
   # results<- select64000Scenarios(dat,10 ,3,.7,1,.3)
   results<- select64000Scenarios(dat, 
                                  days, 
@@ -41,25 +47,25 @@ RtBasedonManualTrace <- function(dat,
   outputs4 <- results %>% filter(iso_delay_traced_max==4)
   
   
-  p <- ggplot(outputs1 ,aes(x=eval(as.name(aes_x)), y=Rt_Q_50))
+  p <- ggplot(outputs1 ,aes(x=eval(as.name(aes_x)), y=eval(as.name(Q_50))))
   
-  p <- p+ geom_ribbon(aes(ymin=Rt_Q_25,ymax=Rt_Q_75),fill=paired.cols[8],alpha=0.4)
-  p <- p+ geom_ribbon(aes(ymin=outputs2$Rt_Q_25,ymax=outputs2$Rt_Q_75), fill=paired.cols[2],alpha=0.4)
-  p <- p+ geom_ribbon(aes(ymin=outputs3$Rt_Q_25,ymax=outputs3$Rt_Q_75),fill=paired.cols[6],alpha=0.4)
-  p <- p+ geom_ribbon(aes(ymin=outputs4$Rt_Q_25,ymax=outputs4$Rt_Q_75),fill=paired.cols[4],alpha=0.4)
+  p <- p+ geom_ribbon(aes(ymin=outputs1[[Q_25]],ymax=outputs1[[Q_75]]),fill=paired.cols[8],alpha=0.4)
+  p <- p+ geom_ribbon(aes(ymin=outputs2[[Q_25]],ymax=outputs2[[Q_75]]), fill=paired.cols[2],alpha=0.4)
+  p <- p+ geom_ribbon(aes(ymin=outputs3[[Q_25]],ymax=outputs3[[Q_75]]),fill=paired.cols[6],alpha=0.4)
+  p <- p+ geom_ribbon(aes(ymin=outputs4[[Q_25]],ymax=outputs4[[Q_75]]),fill=paired.cols[4],alpha=0.4)
   
   p <- p+geom_line(size = 1.5,color = paired.cols[8])
-  p <- p+geom_line(aes(x=outputs2$p.trace, y=outputs2$Rt_Q_50),size = 1.5,color = paired.cols[2])
-  p <- p+geom_line(aes(x=outputs3$p.trace, y=outputs3$Rt_Q_50),size = 1.5,color = paired.cols[6])
-  p <- p+geom_line(aes(x=outputs4$p.trace, y=outputs4$Rt_Q_50),size = 1.5,color = paired.cols[4])
+  p <- p+geom_line(aes(x=outputs2$p.trace, y=outputs2[[Q_50]]),size = 1.5,color = paired.cols[2])
+  p <- p+geom_line(aes(x=outputs3$p.trace, y=outputs3[[Q_50]]),size = 1.5,color = paired.cols[6])
+  p <- p+geom_line(aes(x=outputs4$p.trace, y=outputs4[[Q_50]]),size = 1.5,color = paired.cols[4])
   
   p <- p+geom_point(shape = 21, colour = paired.cols[8], fill = "white", size = 2, stroke = 3)
-  p <- p+geom_point(aes(x=outputs2$p.trace, y=outputs2$Rt_Q_50),
+  p <- p+geom_point(aes(x=outputs2$p.trace, y=outputs2[[Q_50]]),
                     shape = 21, colour = paired.cols[2], fill = "white", size = 2, stroke = 3)
   
-  p <- p+geom_point(aes(x=outputs3$p.trace, y=outputs3$Rt_Q_50),
+  p <- p+geom_point(aes(x=outputs3$p.trace, y=outputs3[[Q_50]]),
                     shape = 21, colour = paired.cols[6], fill = "white", size = 2, stroke = 3)
-  p <- p+geom_point(aes(x=outputs4$p.trace, y=outputs4$Rt_Q_50),
+  p <- p+geom_point(aes(x=outputs4$p.trace, y=outputs4[[Q_50]]),
                     shape = 21, colour = paired.cols[4], fill = "white", size = 2, stroke = 3)
   p <- p+theme_bw()
   
@@ -136,7 +142,9 @@ UiRt_Only_Manual <- function(){
     ),
     box( width = 8, solidHeader = TRUE,
          color = "black",background = "navy",
-      plotlyOutput("plotRt_Only_Manual"),
+      plotlyOutput("plotRt_Only_Manual1"),
+      br(),
+      plotlyOutput("plotRt_Only_Manual2"),
       h4(code("Impact of Manual contact tracing for 
                 Reproductive Number of covid-19"))
     ),

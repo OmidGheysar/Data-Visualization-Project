@@ -1,4 +1,4 @@
-RtBasedonTwoPlots <- function(dat,
+RtBasedonTwoPlots <- function(dat, ouptColumn,
                                     inputR012,
                                     inputp.trace12,
                                     inputp.trace_app12,
@@ -36,7 +36,7 @@ RtBasedonTwoPlots <- function(dat,
   # dat <- readRDS("Newdata.rds")
   # scenarios1<- select100Scenarios(dat,2,0,0,.8,1,5,.8)
   results1 <- scenarios1
-  ouptColumn <- "Rt"
+  # ouptColumn <- "n.active"
   Q_05_scenarios1  <-  scenarios1[[paste(ouptColumn, "Q_05", sep="_")]]
   Q_25_scenarios1 <-   scenarios1[[paste(ouptColumn, "Q_25", sep="_")]]
   Rt_median_scenarios1 <-  scenarios1[[paste(ouptColumn, "Q_50", sep="_")]]
@@ -72,7 +72,7 @@ RtBasedonTwoPlots <- function(dat,
     )
 
   # scenarios2<- select100Scenarios(dat,3,1,1,.8,1,5,.8)
-  ouptColumn <- "Rt"
+  # ouptColumn <- "n.active"
   results2 <- scenarios2
 
   Q_05_scenarios2  <-  scenarios2[[paste(ouptColumn, "Q_05", sep="_")]]

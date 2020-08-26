@@ -11,7 +11,8 @@ ui <- fluidPage(
       color = "black",background = "navy",
     # column(6,
            plotlyOutput("plotTwoScenarios1"),
-           # plotlyOutput("plotTwoScenarios2"),
+           br(),
+           plotlyOutput("plotTwoScenarios2"),
            h4(code("Compare the Reproductive Number of two scenarios 
                    based upon their simulation parameters"))
 
