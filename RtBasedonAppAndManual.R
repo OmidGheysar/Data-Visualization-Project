@@ -74,29 +74,34 @@ RtBasedonAppAndManual <- function(dat,ouptColumn,
   p <- p+geom_point(aes(x=outputs5$p.trace, y=outputs5[[Q_50]]),
                     shape = 21, colour = paired.cols[5], fill = "white", size = 2, stroke = 3)
   p <- p+theme_bw()
-  annotation <- data.frame(
-    x= c(0.12,0.12,0.12,0.12,0.12),
-    y = c(.07,.0,-.07,-.14,-.21),
-    label = c("0.00 app trace","0.25 app trace","0.50 app trace","0.75 app trace","1.00 app trace")
-  )
-  
-  p <- p + geom_text(data=annotation, aes( x=x, y=y, label=label),                 
-                     color=c(paired.cols[8],paired.cols[2],paired.cols[6],paired.cols[4],paired.cols[5]), 
-                     size=4 , angle=0, fontface="bold" )
-  p <- p+annotate("point", x = .0, y = .07, colour = paired.cols[8],size = 3)
-  p <- p+annotate("point", x = .0, y = .0, colour = paired.cols[2],size = 3)
-  p <- p+annotate("point", x = .0, y = -.07, colour = paired.cols[6],size = 3)
-  p <- p+annotate("point", x = .0, y =-.14, colour = paired.cols[4],size = 3)
-  p <- p+annotate("point", x = .0, y = -.21, colour = paired.cols[5],size = 3)
-  p
+
   
   # ===========================================
   
   p <- p + labs(y="", x="", 
          color="")
-  p <- p + geom_hline(yintercept=1,
-                      linetype='dotdash',
-                      alpha=0.6)
+  # p <- p + geom_hline(yintercept=1,
+  #                     linetype='dotdash',
+  #                     alpha=0.6)
+  if(ouptColumn=="Rt"){
+    annotation <- data.frame(
+      x= c(0.12,0.12,0.12,0.12,0.12),
+      y = c(.07,.0,-.07,-.14,-.21),
+      label = c("0.00 app trace","0.25 app trace","0.50 app trace","0.75 app trace","1.00 app trace")
+    )
+    
+    p <- p + geom_text(data=annotation, aes( x=x, y=y, label=label),                 
+                       color=c(paired.cols[8],paired.cols[2],paired.cols[6],paired.cols[4],paired.cols[5]), 
+                       size=4 , angle=0, fontface="bold" )
+    p <- p+annotate("point", x = .0, y = .07, colour = paired.cols[8],size = 3)
+    p <- p+annotate("point", x = .0, y = .0, colour = paired.cols[2],size = 3)
+    p <- p+annotate("point", x = .0, y = -.07, colour = paired.cols[6],size = 3)
+    p <- p+annotate("point", x = .0, y =-.14, colour = paired.cols[4],size = 3)
+    p <- p+annotate("point", x = .0, y = -.21, colour = paired.cols[5],size = 3)
+    p <- p + geom_hline(yintercept=1,
+                        linetype='dotdash',
+                        alpha=0.6)
+  }
   p <- p + labs(title="Colors show the level of manual tracing")
   p <- ggplotly(p)
   x <- list(

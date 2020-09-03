@@ -2,7 +2,7 @@ TwoSenarioInOnePage <- function(){
 ui <- fluidPage(
   fluidRow(
     box(
-      title = "Scenario with blue color", width = 3, solidHeader = TRUE, status = "primary",
+      title = "Scenario with orange color", width = 3, solidHeader = TRUE, status = "warning",
        background = "navy",
       slidebar1For2()
     ),
@@ -27,7 +27,7 @@ ui <- fluidPage(
 
     ),
     box(
-      title = "Scenario with orange color", width = 3, solidHeader = TRUE, status = "warning",
+      title = "Scenario with blue color", width = 3, solidHeader = TRUE, status = "primary",
       background = "navy",
       slidebar1For3()
     ),

@@ -70,29 +70,32 @@ RtBasedonManualTrace <- function(dat,ouptColumn,
   p <- p+theme_bw()
   
   
-  annotation <- data.frame(
-    x= c(0.12,0.12,0.12,0.12),
-    y = c(.5,.42,.34,.26),
-    label = c("1 day","2 days","3 days","4 days")
-  )
-  
-  p <- p + geom_text(data=annotation, aes( x=x, y=y, label=label),                 
-                     color=c(paired.cols[8],paired.cols[2],paired.cols[6],paired.cols[4]), 
-                     size=4 , angle=0, fontface="bold" )
-  p <- p+annotate("point", x = .00, y = .50, colour = paired.cols[8],size = 3)
-  p <- p+annotate("point", x = .00, y = .42, colour = paired.cols[2],size = 3)
-  p <- p+annotate("point", x = .00, y = .34, colour = paired.cols[6],size = 3)
-  p <- p+annotate("point", x = .00, y = .26, colour = paired.cols[4],size = 3)
-  p
-  
-  
   # =========================================================
   
   p <- p+labs(y="Reproductive Number", x="",
          color="")
-  p <- p + geom_hline(yintercept=1,
-                      linetype='dotdash',
-                      alpha=0.6)
+  
+  # p <- p + geom_hline(yintercept=1,
+  #                     linetype='dotdash',
+  #                     alpha=0.6)
+  if(ouptColumn=="Rt"){
+    annotation <- data.frame(
+      x= c(0.12,0.12,0.12,0.12),
+      y = c(.5,.42,.34,.26),
+      label = c("1 day","2 days","3 days","4 days")
+    )
+    
+    p <- p + geom_text(data=annotation, aes( x=x, y=y, label=label),                 
+                       color=c(paired.cols[8],paired.cols[2],paired.cols[6],paired.cols[4]), 
+                       size=4 , angle=0, fontface="bold" )
+    p <- p+annotate("point", x = .00, y = .50, colour = paired.cols[8],size = 3)
+    p <- p+annotate("point", x = .00, y = .42, colour = paired.cols[2],size = 3)
+    p <- p+annotate("point", x = .00, y = .34, colour = paired.cols[6],size = 3)
+    p <- p+annotate("point", x = .00, y = .26, colour = paired.cols[4],size = 3)
+    p <- p + geom_hline(yintercept=1,
+                        linetype='dotdash',
+                        alpha=0.6)
+  }
   p <- p + labs(title="Colors show delay to isolation for traced cases (days)")
   p <- ggplotly(p)
   x <- list(

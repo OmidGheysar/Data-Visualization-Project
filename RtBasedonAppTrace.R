@@ -55,20 +55,21 @@ RtBasedonAppTrace <- function(dat,ouptColumn,
                     shape = 21, colour = paired.cols[2], fill = "white", size = 2, stroke = 3)
   
   p <- p+theme_bw()
-  annotation <- data.frame(
-    x= c(0.12,0.12),
-    y = c(.60,.52),
-    label = c("1 day delay","5 days delay")
-  )
-  
-  p <- p + geom_text(data=annotation, aes( x=x, y=y, label=label),                
-                     color=c(paired.cols[8],paired.cols[2]), 
-                     size=4 , angle=0, fontface="bold" )
-  p <- p+annotate("point", x = .0, y = .60, colour = paired.cols[8],size = 3)
-  p <- p+annotate("point", x = .0, y = .52, colour = paired.cols[2],size = 3)
+
+
   p<- p+labs(y="Reproductive Number", x="",
          color="")
   if(ouptColumn=="Rt"){
+    annotation <- data.frame(
+      x= c(0.12,0.12),
+      y = c(.60,.52),
+      label = c("1 day delay","5 days delay")
+    )
+    p <- p + geom_text(data=annotation, aes( x=x, y=y, label=label),                
+                       color=c(paired.cols[8],paired.cols[2]), 
+                       size=4 , angle=0, fontface="bold" )
+    p <- p+annotate("point", x = .0, y = .60, colour = paired.cols[8],size = 3)
+    p <- p+annotate("point", x = .0, y = .52, colour = paired.cols[2],size = 3)
     p <- p + geom_hline(yintercept=1,
                         linetype='dotdash',
                         alpha=0.6)
