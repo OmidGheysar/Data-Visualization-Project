@@ -118,6 +118,12 @@ UiRt_Only_App <- function(){
       plotlyOutput("plotRt_Only_App1"),
       br(),
       plotlyOutput("plotRt_Only_App2"),
+      navbarPage(id = "onlyApp",inverse=TRUE,"Please choose your plot",
+                 tabPanel("Currently active cases"),
+                 tabPanel("New cases"),
+                 tabPanel("Cumulative new cases"),
+                 tabPanel("Isolated cases")
+      ),
       h4(code("Impact of digital contact tracing for 
                 Reproductive Number of covid-19"))
     ),

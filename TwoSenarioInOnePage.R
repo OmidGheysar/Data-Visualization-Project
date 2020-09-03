@@ -13,6 +13,13 @@ ui <- fluidPage(
            plotlyOutput("plotTwoScenarios1"),
            br(),
            plotlyOutput("plotTwoScenarios2"),
+           navbarPage(id = "TwoSecnario",inverse=TRUE,"Please choose your plot",
+               tabPanel("Currently active cases"),
+               tabPanel("New cases"),
+               tabPanel("Cumulative new cases"),
+               tabPanel("Isolated cases")
+           ),
+    
            h4(code("Compare the Reproductive Number of two scenarios 
                    based upon their simulation parameters"))
 

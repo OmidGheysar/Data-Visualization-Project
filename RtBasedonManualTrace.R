@@ -145,6 +145,12 @@ UiRt_Only_Manual <- function(){
       plotlyOutput("plotRt_Only_Manual1"),
       br(),
       plotlyOutput("plotRt_Only_Manual2"),
+      navbarPage(id = "onlyManual",inverse=TRUE,"Please choose your plot",
+                 tabPanel("Currently active cases"),
+                 tabPanel("New cases"),
+                 tabPanel("Cumulative new cases"),
+                 tabPanel("Isolated cases")
+      ),
       h4(code("Impact of Manual contact tracing for 
                 Reproductive Number of covid-19"))
     ),

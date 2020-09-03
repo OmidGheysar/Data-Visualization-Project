@@ -50,7 +50,6 @@ UiDesign <- function() {
       plotlyOutput("plotRtTime"),
       br(),
       plotlyOutput("plotRtNactive"),
-      br(),
           navbarPage(id = "sth",inverse=TRUE,"Please choose your plot",
                      tabPanel("Currently active cases"),
                      tabPanel("New cases"),
