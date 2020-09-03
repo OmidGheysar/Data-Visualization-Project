@@ -76,19 +76,7 @@ server <- function (input, output, session){
   #Finish the function
   removeModal()
   
-  v <- reactiveValues(data = NULL)
-  observeEvent(input$sth,{
-    if(input$sth == "Currently active cases"){
-      v$data <- "n.active"
-    }else if(input$sth == "New cases") {
-      v$data <- "n.new"
-    }else if(input$sth == "Cumulative new cases") {
-      v$data <- "n.total"
-    }else if(input$sth == "Isolated cases") {
-      v$data <- "n.iso"
-    }
-  })
-  
+
   output$plotRtTime <- renderPlotly({
     
     outputPlot<- returnPlot(dat,"Rt",
@@ -103,9 +91,21 @@ server <- function (input, output, session){
     outputPlot
   })
   
+  plot1 <- reactiveValues(data = NULL)
+  observeEvent(input$sth,{
+    if(input$sth == "Currently active cases"){
+      plot1$data <- "n.active"
+    }else if(input$sth == "New cases") {
+      plot1$data <- "n.new"
+    }else if(input$sth == "Cumulative new cases") {
+      plot1$data <- "n.total"
+    }else if(input$sth == "Isolated cases") {
+      plot1$data <- "n.iso"
+    }
+  })
   
   output$plotRtNactive <- renderPlotly({
-    outputPlot<- returnPlot(dat,v$data,
+    outputPlot<- returnPlot(dat,plot1$data,
                             input$R0,
                             input$p.trace,
                             input$p.trace_app,
@@ -161,23 +161,23 @@ server <- function (input, output, session){
     
   })
   
-  v <- reactiveValues(data = NULL)
+  plot2 <- reactiveValues(data = NULL)
   observeEvent(input$TwoSecnario,{
     if(input$TwoSecnario == "Currently active cases"){
-      v$data <- "n.active"
+      plot2$data <- "n.active"
     }else if(input$TwoSecnario == "New cases") {
-      v$data <- "n.new"
+      plot2$data <- "n.new"
     }else if(input$TwoSecnario == "Cumulative new cases") {
-      v$data <- "n.total"
+      plot2$data <- "n.total"
     }else if(input$TwoSecnario == "Isolated cases") {
-      v$data <- "n.iso"
+      plot2$data <- "n.iso"
     }
   })
   
   
   output$plotTwoScenarios2 <- renderPlotly({
     
-    RtBasedonTwoPlots(dat, v$data,
+    RtBasedonTwoPlots(dat, plot2$data,
                       input$R012,
                       input$p.trace12,
                       input$p.trace_app12,
@@ -212,22 +212,22 @@ server <- function (input, output, session){
     
   })
   
-  v <- reactiveValues(data = NULL)
+  plot3 <- reactiveValues(data = NULL)
   observeEvent(input$onlyApp,{
     if(input$onlyApp == "Currently active cases"){
-      v$data <- "n.active"
+      plot3$data <- "n.active"
     }else if(input$onlyApp == "New cases") {
-      v$data <- "n.new"
+      plot3$data <- "n.new"
     }else if(input$onlyApp == "Cumulative new cases") {
-      v$data <- "n.total"
+      plot3$data <- "n.total"
     }else if(input$onlyApp == "Isolated cases") {
-      v$data <- "n.iso"
+      plot3$data <- "n.iso"
     }
   })
   
   output$plotRt_Only_App2 <- renderPlotly({
     
-    myPlot <- RtBasedonAppTrace(dat,v$data,
+    myPlot <- RtBasedonAppTrace(dat,plot3$data,
                                 day = input$daysforApp,
                                 R = input$R0forApp,
                                 p.sym = input$p.symforApp,
@@ -265,22 +265,22 @@ server <- function (input, output, session){
     
   })
   
-  v <- reactiveValues(data = NULL)
+  plot4 <- reactiveValues(data = NULL)
   observeEvent(input$onlyManual,{
     if(input$onlyManual == "Currently active cases"){
-      v$data <- "n.active"
+      plot4$data <- "n.active"
     }else if(input$onlyManual == "New cases") {
-      v$data <- "n.new"
+      plot4$data <- "n.new"
     }else if(input$onlyManual == "Cumulative new cases") {
-      v$data <- "n.total"
+      plot4$data <- "n.total"
     }else if(input$onlyManual == "Isolated cases") {
-      v$data <- "n.iso"
+      plot4$data <- "n.iso"
     }
   })
   
   output$plotRt_Only_Manual2 <- renderPlotly({
     
-    myPlot <- RtBasedonManualTrace(dat,v$data,
+    myPlot <- RtBasedonManualTrace(dat,plot4$data,
                                    day = input$daysforManual,
                                    R = input$R0forManual,
                                    p.sym = input$p.symforManual,
@@ -320,22 +320,22 @@ server <- function (input, output, session){
     
   })
   
-  v <- reactiveValues(data = NULL)
+  plot5 <- reactiveValues(data = NULL)
   observeEvent(input$manualApp,{
     if(input$manualApp == "Currently active cases"){
-      v$data <- "n.active"
+      plot5$data <- "n.active"
     }else if(input$manualApp == "New cases") {
-      v$data <- "n.new"
+      plot5$data <- "n.new"
     }else if(input$manualApp == "Cumulative new cases") {
-      v$data <- "n.total"
+      plot5$data <- "n.total"
     }else if(input$manualApp == "Isolated cases") {
-      v$data <- "n.iso"
+      plot5$data <- "n.iso"
     }
   })
   
   output$plotRt_App_Manual2 <- renderPlotly({
     
-    myPlot <- RtBasedonAppAndManual(dat,v$data,
+    myPlot <- RtBasedonAppAndManual(dat,plot5$data,
                                     day = input$daysforAppManual,
                                     R = input$R0forAppManual,
                                     p.sym = input$p.symforAppManual,

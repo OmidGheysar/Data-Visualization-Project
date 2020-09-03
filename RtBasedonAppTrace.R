@@ -68,9 +68,12 @@ RtBasedonAppTrace <- function(dat,ouptColumn,
   p <- p+annotate("point", x = .0, y = .52, colour = paired.cols[2],size = 3)
   p<- p+labs(y="Reproductive Number", x="",
          color="")
-  p <- p + geom_hline(yintercept=1,
-                      linetype='dotdash',
-                      alpha=0.6)
+  if(ouptColumn=="Rt"){
+    p <- p + geom_hline(yintercept=1,
+                        linetype='dotdash',
+                        alpha=0.6)
+  }
+
   p <- p + labs(title="Colors show delay to isolation for untraced & distancing cases")
   p <- ggplotly(p)
   x <- list(
@@ -116,7 +119,13 @@ UiRt_Only_App <- function(){
     box( width = 8, solidHeader = TRUE,
       color = "black",background = "navy",
       plotlyOutput("plotRt_Only_App1"),
-      br(),
+      # fluidRow(
+        actionButton("run", "1 day delay", 
+                     style="color: #fff; background-color: #FF7F00; border-color: #2e6da4"),
+        actionButton("run", "2 days delay", 
+                     style="color: #fff; background-color: #1F78B4; border-color: #2e6da4"),
+        
+      # ),
       plotlyOutput("plotRt_Only_App2"),
       navbarPage(id = "onlyApp",inverse=TRUE,"Please choose your plot",
                  tabPanel("Currently active cases"),
