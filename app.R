@@ -161,6 +161,51 @@ server <- function (input, output, session){
     
   })
   
+  output$T1 <- renderTable({
+    data.frame(
+      Name = c("R0 ",
+               "Fraction of cases that are symptomatic",
+               "Delay to isolation for untraced & distancing cases",
+               "Simulation days",
+               "Delay to isolation for traced cases (days)",
+               "Fraction of people using contact tracing app",
+               "Fraction of cases manually traced",
+               "Contact rate (proportion of normal)"),
+      Value = as.character(c(input$R012,
+                             input$p.symp12,
+                             input$iso_delay_untraced_sd_max12,
+                             31,
+                             input$iso_delay_traced_max12,
+                             input$p.trace_app12,
+                             input$p.trace12,
+                             input$sd_contact_rate112)),
+      stringsAsFactors = FALSE)
+  })
+  
+  output$T2 <- renderTable({
+    data.frame(
+      Name = c("R0 ",
+               "Fraction of cases that are symptomatic",
+               "Delay to isolation for untraced & distancing cases",
+               "Simulation days",
+               "Delay to isolation for traced cases (days)",
+               "Fraction of people using contact tracing app",
+               "Fraction of cases manually traced",
+               "Contact rate (proportion of normal)"),
+      Value = as.character(c(input$R023,
+                             input$p.symp23,
+                             input$iso_delay_untraced_sd_max23,
+                             31,
+                             input$iso_delay_traced_max23,
+                             input$p.trace_app23,
+                             input$p.trace23,
+                             input$sd_contact_rate123)),
+      stringsAsFactors = FALSE)
+  })
+  
+  
+  
+  
   plot2 <- reactiveValues(data = NULL)
   observeEvent(input$TwoSecnario,{
     if(input$TwoSecnario == "Currently active cases"){

@@ -138,7 +138,7 @@ RtBasedonAppAndManual <- function(dat,ouptColumn,
 UiRt_App_Manual <- function(){
   
   ui <- fluidRow(
-    box(width = 4, solidHeader = TRUE, status = "primary",
+    box(title = "Choose which parameters to set",width = 4, solidHeader = TRUE, status = "primary",
       background = "navy",
       shinyWidgets::sliderTextInput("sd_contactforAppManual","
                                       Contact rate (proportion of normal)",

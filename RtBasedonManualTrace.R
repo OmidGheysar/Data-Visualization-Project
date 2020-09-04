@@ -132,7 +132,7 @@ RtBasedonManualTrace <- function(dat,ouptColumn,
 UiRt_Only_Manual <- function(){
   
   ui <- fluidRow(
-    box( width = 4, solidHeader = TRUE, status = "primary",
+    box(title = "Choose which parameters to set", width = 4, solidHeader = TRUE, status = "primary",
       color = "black",background = "navy",
       shinyWidgets::sliderTextInput("sd_contactforManual","
                                       Contact rate (proportion of normal)",

@@ -6,16 +6,7 @@ slidebar1For2 <- function() {
     shinyWidgets::sliderTextInput("sd_contact_rate112","Contact rate (proportion of normal)",
                                   choices=c(0.3, 0.6, 0.8),
                                   selected=0.3, grid = T),
-    tags$head(tags$style(
-      HTML('
-         #sd_contact_rate112 {
-            background-color: #dec4de;
-        }
 
-        body, label, input, button, select { 
-          font-family: "Arial";
-        }')
-    )),
     
     sliderInput("p.trace12", "Fraction of cases manually traced",
                 min = 0, max = 1,
@@ -43,9 +34,6 @@ slidebar1For2 <- function() {
                   min = 1, max = 5,
                   value = 1, step = 4),
 
-      # sliderInput("day", "day",
-      #             min = 0, max = 31,
-      #             value = 20, step = 1)
     )
   
   )

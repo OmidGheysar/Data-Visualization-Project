@@ -109,7 +109,7 @@ RtBasedonAppTrace <- function(dat,ouptColumn,
 UiRt_Only_App <- function(){
   
   ui <-fluidRow(
-    box( width = 4, solidHeader = TRUE, status = "primary",
+    box(title = "Choose which parameters to set", width = 4, solidHeader = TRUE, status = "primary",
       color = "black",background = "navy",
       shinyWidgets::sliderTextInput("sd_contactforApp","
                                       Contact rate (proportion of normal)",
@@ -141,7 +141,7 @@ UiRt_Only_App <- function(){
       # fluidRow(
         actionButton("run", "1 day delay", 
                      style="color: #fff; background-color: #FF7F00; border-color: #2e6da4"),
-        actionButton("run", "2 days delay", 
+        actionButton("run", "5 days delay", 
                      style="color: #fff; background-color: #1F78B4; border-color: #2e6da4"),
         
       # ),

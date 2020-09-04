@@ -1,10 +1,21 @@
 UiDesign <- function() {
   
   ui <- fluidRow(
-    box( width = 4, solidHeader = TRUE, color = "black",background = "navy",
+    box(title = "Choose which parameters to set",  width = 4, solidHeader = TRUE, color = "black",
+        background = "navy", status = "primary",
       shinyWidgets::sliderTextInput("sd_contact_rate1","Contact rate (proportion of normal)",
                                     choices=c(0.3, 0.6, 0.8),
                                     selected=0.3, grid = T),
+      tags$head(tags$style(
+        HTML('
+           #sd_contact_rate112 {
+              background-color: #dec4de;
+          }
+
+          body, label, input, button, select {
+            font-family: "Arial";
+          }')
+      )),
       
       sliderInput("p.trace", "Fraction of cases manually traced",
                   min = 0, max = 1,

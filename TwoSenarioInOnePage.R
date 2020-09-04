@@ -4,7 +4,10 @@ ui <- fluidPage(
     box(
       title = "Scenario with orange color", width = 3, solidHeader = TRUE, status = "warning",
        background = "navy",
-      slidebar1For2()
+      slidebar1For2(),
+      hr(),
+      h3("Assumptions"),
+      tableOutput("T1")
     ),
     
     box(width = 6, solidHeader = FALSE, status = "info",
@@ -21,7 +24,7 @@ ui <- fluidPage(
            ),
     
            h4(code("Compare the Reproductive Number of two scenarios 
-                   based upon their simulation parameters"))
+                   based on their simulation parameters"))
 
            # ),
 
@@ -29,7 +32,10 @@ ui <- fluidPage(
     box(
       title = "Scenario with blue color", width = 3, solidHeader = TRUE, status = "primary",
       background = "navy",
-      slidebar1For3()
+      slidebar1For3(),
+      hr(),
+      h3("Assumptions"),
+      tableOutput("T2")
     ),
 
   ),
