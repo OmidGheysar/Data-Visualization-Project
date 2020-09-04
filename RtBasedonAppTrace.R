@@ -56,10 +56,9 @@ RtBasedonAppTrace <- function(dat,ouptColumn,
   
   p <- p+theme_bw()
 
-
-  p<- p+labs(y="Reproductive Number", x="",
-         color="")
   if(ouptColumn=="Rt"){
+    # p<- p+labs(y="Reproductive Number", x="",
+    #            color="")
     annotation <- data.frame(
       x= c(0.12,0.12),
       y = c(.60,.52),
@@ -80,9 +79,28 @@ RtBasedonAppTrace <- function(dat,ouptColumn,
   x <- list(
     title = "Fraction of people using contact tracing app"
   )
+  
+  if(ouptColumn=="Rt"){
   y <- list(
     title = "Reproductive Number"
   )
+  }else if(ouptColumn=="n.active"){
+    y <- list(
+    title = "Currently Active Cases"
+    )
+  }else if(ouptColumn=="n.new"){
+    y <- list(
+    title = "New Cases"
+    )
+  }else if(ouptColumn=="n.total"){
+    y <- list(
+    title = "Cumulative New Cases"
+    )
+  }else if(ouptColumn=="n.iso"){
+    y <- list(
+    title = "Isolated Cases"
+    )
+  }
   
   return(p %>% layout(xaxis = x, yaxis = y,  margin = list(l = 50, r = 50, b = 50, t = 50, pad = 4),title=list(x=1))) 
   

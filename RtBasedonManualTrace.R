@@ -101,9 +101,27 @@ RtBasedonManualTrace <- function(dat,ouptColumn,
   x <- list(
     title = "Fraction of cases manually traced"
   )
-  y <- list(
-    title = "Reproductive Number"
-  )
+  if(ouptColumn=="Rt"){
+    y <- list(
+      title = "Reproductive Number"
+    )
+  }else if(ouptColumn=="n.active"){
+    y <- list(
+      title = "Currently Active Cases"
+    )
+  }else if(ouptColumn=="n.new"){
+    y <- list(
+      title = "New Cases"
+    )
+  }else if(ouptColumn=="n.total"){
+    y <- list(
+      title = "Cumulative New Cases"
+    )
+  }else if(ouptColumn=="n.iso"){
+    y <- list(
+      title = "Isolated Cases"
+    )
+  }
   
 
   return(p %>% layout(xaxis = x, yaxis = y,  margin = list(l = 50, r = 50, b = 50, t = 50, pad = 4),title=list(x=1)))
