@@ -27,13 +27,43 @@ body <- dashboardBody(
 
   tabItems(
     tabItem(tabName = "dashboard",
-            h1("Simulation of COVID-19"),
-            titlePanel(title=div(img(src="covid4.jpg"))),
-            h4(p("Example image from Hellwell et al.",
-               tags$a(href="https://doi.org/10.1016/S2214-109X(20)30074-7", 
-                      "https://doi.org/10.1016/S2214-109X(20)30074-7"),
-                   " - Placeholder Only" ))
-    ),
+            box(
+              h1("Simulation of COVID-19"),
+              titlePanel(title=div(img(src="covid.jpg"))),
+              h4(p("Example image from Hellwell et al.",
+                   tags$a(href="https://doi.org/10.1016/S2214-109X(20)30074-7", 
+                          "https://doi.org/10.1016/S2214-109X(20)30074-7"),
+                   " - Placeholder Only" )),
+              width = 12
+            ),
+
+            fluidRow(
+              box(title = "About the Model",
+                  "Box content here", br(), "More box content",
+                  width = 12,solidHeader = TRUE, status = "primary",
+                  collapsible = TRUE, collapsed = TRUE,
+                  p("This package implements a stochastic branching process inspired by Hellewell et al. (2020) to simulate theevolution of an infectious disease in a population. This simulation includes factors that add to disease growth(such as importation of cases) or limit disease growth (such as contact tracing and subsequent isolation).Disease and behaviourial parameters for each case are stochastically generated from user-defined distributionwhen each case is initialized. This includes properties such as time to symptom onset and time of secondaryinfections (serial intervals). Because our simulation runs forward one time-step at a time, disease milestonessuch as symptom onset or secondary infections are essentially “pre-loaded” when the case is generated butdon’t actually occur in the simulation until their corresponding time-step. This allows for processes to be time-dependent and/or depend on the current state of other cases (e.g. the efficiency of contact tracing could dependon the number of active cases that require tracing) and creates snapshots of the simulation at every timestep"),
+                  ),
+              box(title = "About the Model",
+                  "Box content here", br(), "More box content",
+                  width = 12,solidHeader = TRUE, status = "primary",
+                  collapsible = TRUE, collapsed = TRUE,
+                  p("This package implements a stochastic branching process inspired by Hellewell et al. (2020) to simulate theevolution of an infectious disease in a population. This simulation includes factors that add to disease growth(such as importation of cases) or limit disease growth (such as contact tracing and subsequent isolation).Disease and behaviourial parameters for each case are stochastically generated from user-defined distributionwhen each case is initialized. This includes properties such as time to symptom onset and time of secondaryinfections (serial intervals). Because our simulation runs forward one time-step at a time, disease milestonessuch as symptom onset or secondary infections are essentially “pre-loaded” when the case is generated butdon’t actually occur in the simulation until their corresponding time-step. This allows for processes to be time-dependent and/or depend on the current state of other cases (e.g. the efficiency of contact tracing could dependon the number of active cases that require tracing) and creates snapshots of the simulation at every timestep"),
+              ),
+              box(title = "About the Model",
+                  "Box content here", br(), "More box content",
+                  width = 12,solidHeader = TRUE, status = "primary",
+                  collapsible = TRUE, collapsed = TRUE,
+                  p("This package implements a stochastic branching process inspired by Hellewell et al. (2020) to simulate theevolution of an infectious disease in a population. This simulation includes factors that add to disease growth(such as importation of cases) or limit disease growth (such as contact tracing and subsequent isolation).Disease and behaviourial parameters for each case are stochastically generated from user-defined distributionwhen each case is initialized. This includes properties such as time to symptom onset and time of secondaryinfections (serial intervals). Because our simulation runs forward one time-step at a time, disease milestonessuch as symptom onset or secondary infections are essentially “pre-loaded” when the case is generated butdon’t actually occur in the simulation until their corresponding time-step. This allows for processes to be time-dependent and/or depend on the current state of other cases (e.g. the efficiency of contact tracing could dependon the number of active cases that require tracing) and creates snapshots of the simulation at every timestep"),
+              ),
+              box(title = "About the Model",
+                  "Box content here", br(), "More box content",
+                  width = 12,solidHeader = TRUE, status = "primary",
+                  collapsible = TRUE, collapsed = TRUE,
+                  p("This package implements a stochastic branching process inspired by Hellewell et al. (2020) to simulate theevolution of an infectious disease in a population. This simulation includes factors that add to disease growth(such as importation of cases) or limit disease growth (such as contact tracing and subsequent isolation).Disease and behaviourial parameters for each case are stochastically generated from user-defined distributionwhen each case is initialized. This includes properties such as time to symptom onset and time of secondaryinfections (serial intervals). Because our simulation runs forward one time-step at a time, disease milestonessuch as symptom onset or secondary infections are essentially “pre-loaded” when the case is generated butdon’t actually occur in the simulation until their corresponding time-step. This allows for processes to be time-dependent and/or depend on the current state of other cases (e.g. the efficiency of contact tracing could dependon the number of active cases that require tracing) and creates snapshots of the simulation at every timestep"),
+              )
+              ),
+            ),
     
     tabItem(tabName = "second",
             ui <- UiDesign()
