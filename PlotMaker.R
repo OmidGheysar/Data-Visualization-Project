@@ -88,6 +88,9 @@ returnPlot <- function(dat,
    
    
    if(ouptColumn=="Rt"){
+      p <- p + geom_hline(yintercept=1,
+                          linetype='dotdash',
+                          alpha=0.6)
       y <- list(
          title = "Reproductive Number"
       )
