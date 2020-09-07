@@ -72,21 +72,55 @@ returnPlot <- function(dat,
      
      ggplot2::scale_y_continuous(labels = scales::comma) 
 
-   if (ouptColumn=="Rt"){
-      p <- p + labs(title='Reproductive number Rt')
-      p <- p + labs(x="Day", y="Reproductive Number")
-      # p <- p + ylim(0,2)
-      p <- p + geom_hline(
-        yintercept=1,
-        linetype='dotdash'
-      ) 
-   }else {
-      p <- p + labs(title='Number of active cases')
-      p <- p + labs(x="Day", y="Number of active cases")
+   # if (ouptColumn=="Rt"){
+   #    # p <- p + labs(title='Reproductive number Rt')
+   #    p <- p + labs(x="Day", y="Reproductive Number")
+   #    # p <- p + ylim(0,2)
+   #    p <- p + geom_hline(
+   #      yintercept=1,
+   #      linetype='dotdash'
+   #    ) 
+   # }else {
+   #    p <- p + labs(title='Number of active cases')
+   #    p <- p + labs(x="Day", y="Number of active cases")
+   # }
+   
+   
+   
+   if(ouptColumn=="Rt"){
+      y <- list(
+         title = "Reproductive Number"
+      )
+   }else if(ouptColumn=="n.active"){
+      y <- list(
+         title = "Currently Active Cases"
+      )
+   }else if(ouptColumn=="n.new"){
+      y <- list(
+         title = "New Cases"
+      )
+   }else if(ouptColumn=="n.total"){
+      y <- list(
+         title = "Cumulative New Cases"
+      )
+   }else if(ouptColumn=="n.iso"){
+      y <- list(
+         title = "Isolated Cases"
+      )
    }
-
    p <- p+theme_bw()
-  return(ggplotly(p))
+   p <- p + labs(y="", x="", 
+                 color="")
+   # p <- p + labs(title="Colors show the level of app tracing")
+   p <- ggplotly(p)
+   x <- list(
+      title = "Day"
+   )
+
+
+   # return(ggplotly(p))
+   return(p %>% layout(xaxis = x, yaxis = y,  
+                       margin = list(l = 50, r = 20, b = 50, t = 20, pad = 4),title=list(x=1)))
 }
 
 
