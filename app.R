@@ -7,11 +7,11 @@ header <- dashboardHeader(title = "COVID-19 Simulation Dashboard")
 sidebar <- dashboardSidebar(
   sidebarMenu(id = "sbMenu",
               menuItem("Dashboard", tabName = "dashboard", icon = icon("dashboard")),
-              menuItem(h5(HTML("Reproductive Number<br/>Time Series")), tabName = "second"),
-              menuItem(h5(HTML("Reproductive Number<br/>Time Series <br/> Two scenarios")), tabName = "secondOne"),
-              menuItem(h5(HTML("Reproductive Number<br/>Only App tracing")), tabName = "third"),
-              menuItem(h5(HTML("Reproductive Number<br/>Only Manual tracing")), tabName = "fourth"),
-              menuItem(h5(HTML("Reproductive Number<br/>App and Manual tracing")), tabName = "fifth")
+              menuItem(h5(HTML("Time series")), tabName = "second"),
+              menuItem(h5(HTML("Time series<br/>Two scenarios")), tabName = "secondOne"),
+              menuItem(h5(HTML("Contact tracing with<br/>only App")), tabName = "third"),
+              menuItem(h5(HTML("Contact tracing with<br/>Manual methods only")), tabName = "fourth"),
+              menuItem(h5(HTML("Contact tracing with<br/>both App and Manual<br/> methods")), tabName = "fifth")
   )
 )
 # here is the body of dashboard
@@ -54,7 +54,8 @@ body <- dashboardBody(
                   p(strong("Asymptomatic:"),"This state describes cases determined to be asymptomatic and pass their incubation period without being isolated or exceed their infection duration. Cases in this state can cause secondary infections. Traced asymptomatic cases may move to the isolated state if their isolation delay is shorterthan their infection duration. Otherwise, traced asymptomatic cases move to the inactive state at the end of their infection. Untraced asymptomatic cases can only move to the inactive state after their infection duration has passed. Note that the infection duration can be set to a very large number, in which case untraced asymptomatic cases may remain in the asymptomatic indefinitely."),
                   p(strong("Isolated"),": This state describes cases that have been isolated from the main population and can no longercause secondary infections. Traced cases can arrive at this state from any of the above states after some stochastically determined delay beyond the index case’s isolation. This delay can be as short as 0 days.Untraced symptomatic cases arrive at this state after a different stochastically determined delay beyondtheir own onset of symptoms. This is one of the two potential end states. All cases that reach this state will remain isolated for the rest of the simulation."),  
                   p(strong("Inactive"),": This state describes cases that are not isolated but are no longer considered to have the disease and are no longer causing secondary infections. Cases can arrive to this state from any of the incubation,symptomatic or asymptomatic states if they reach the end of their stochastically drawn infection duration period before advancing to the isolated state. The use of this state is optional: if the infection duration parameter is set to a very large value (e.g. longer than the total duration of the simulation) then cases will never reach this state. The purpose of this state is to avoid retaining a very large number of untraced asymptomatic cases that are no longer affecting the simulation as well as to avoid the rare situation where the serial interval distribution leads to a stochastic draw of an unrealistic and very large serial interval (in cases where this event is not meant to be included in the simulation)."), 
-                  
+                  p("Summary of case statuses and pathways is shown in the following graph."),
+                  titlePanel(title=div(img(src="test.JPG"))),
               ),
               box(title = "What happens in each timestep",
                   width = 12,solidHeader = TRUE, status = "primary",
@@ -172,7 +173,8 @@ server <- function (input, output, session){
                "Delay to isolation for traced cases (days)",
                "Fraction of people using contact tracing app",
                "Fraction of cases manually traced",
-               "Contact rate (proportion of normal)"),
+               "Contact rate (proportion of normal)",
+               "Initial number of infected individuals"),
       Value = as.character(c(input$R0,
                              input$p.symp,
                              input$iso_delay_untraced_sd_max,
@@ -180,7 +182,8 @@ server <- function (input, output, session){
                              input$iso_delay_traced_max,
                              input$p.trace_app,
                              input$p.trace,
-                             input$sd_contact_rate1)),
+                             input$sd_contact_rate1,
+                             100)),
       stringsAsFactors = FALSE)
   })
   
@@ -215,7 +218,8 @@ server <- function (input, output, session){
                "Delay to isolation for traced cases (days)",
                "Fraction of people using contact tracing app",
                "Fraction of cases manually traced",
-               "Contact rate (proportion of normal)"),
+               "Contact rate (proportion of normal)",
+               "Initial number of infected individuals"),
       Value = as.character(c(input$R012,
                              input$p.symp12,
                              input$iso_delay_untraced_sd_max12,
@@ -223,7 +227,8 @@ server <- function (input, output, session){
                              input$iso_delay_traced_max12,
                              input$p.trace_app12,
                              input$p.trace12,
-                             input$sd_contact_rate112)),
+                             input$sd_contact_rate112,
+                             100)),
       stringsAsFactors = FALSE)
   })
   
@@ -236,7 +241,8 @@ server <- function (input, output, session){
                "Delay to isolation for traced cases (days)",
                "Fraction of people using contact tracing app",
                "Fraction of cases manually traced",
-               "Contact rate (proportion of normal)"),
+               "Contact rate (proportion of normal)",
+               "Initial number of infected individuals"),
       Value = as.character(c(input$R023,
                              input$p.symp23,
                              input$iso_delay_untraced_sd_max23,
@@ -244,7 +250,8 @@ server <- function (input, output, session){
                              input$iso_delay_traced_max23,
                              input$p.trace_app23,
                              input$p.trace23,
-                             input$sd_contact_rate123)),
+                             input$sd_contact_rate123,
+                             100)),
       stringsAsFactors = FALSE)
   })
   
@@ -333,11 +340,13 @@ server <- function (input, output, session){
       Name = c("R0 ",
                "Fraction of cases that are symptomatic",
                "simulation days",
-               "Contact rate (proportion of normal)"),
+               "Contact rate (proportion of normal)",
+               "Initial number of infected individuals"),
       Value = as.character(c(input$R0forApp,
                              input$p.symforApp,
                              input$daysforApp,
-                             input$sd_contactforApp)),
+                             input$sd_contactforApp,
+                             100)),
       stringsAsFactors = FALSE)
   })
   
@@ -386,12 +395,14 @@ server <- function (input, output, session){
                "Fraction of cases that are symptomatic",
                "Delay to isolation for untraced & distancing cases",
                "Simulation days",
-               "Contact rate (proportion of normal)"),
+               "Contact rate (proportion of normal)",
+               "Initial number of infected individuals"),
       Value = as.character(c(input$R0forManual,
                              input$p.symforManual,
                              input$iso_delay_untracedforManual,
                              input$daysforManual,
-                             input$sd_contactforManual)),
+                             input$sd_contactforManual,
+                             100)),
       stringsAsFactors = FALSE)
   })
   
@@ -443,13 +454,15 @@ server <- function (input, output, session){
                "Delay to isolation for untraced & distancing cases",
                "Simulation days",
                "Delay to isolation for traced cases (days)",
-               "Contact rate (proportion of normal)"),
+               "Contact rate (proportion of normal)",
+               "Initial number of infected individuals"),
       Value = as.character(c(input$R0forAppManual,
                              input$p.symforAppManual,
                              input$iso_delay_untracedforAppManaual,
                              input$daysforAppManual,
                              input$iso_delay_tracecedforAppManual,
-                             input$sd_contactforAppManual)),
+                             input$sd_contactforAppManual,
+                             100)),
       stringsAsFactors = FALSE)
   })
   
