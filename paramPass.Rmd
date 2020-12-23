@@ -1,0 +1,22 @@
+---
+title: My Document
+output: pdf_document
+params:
+    df: no
+    ivs: no
+    dvs: no
+    sth: no
+---
+
+
+Histograms
+-------------------------------------
+  
+  ```{r}
+params$sth
+for (v in union(params$ivs, params$dvs))
+{
+  hist <- ggplot(params$df, aes_string(x=v)) + geom_histogram()
+  print(hist)
+}
+```
