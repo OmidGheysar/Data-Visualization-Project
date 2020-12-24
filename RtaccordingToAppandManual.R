@@ -43,7 +43,7 @@ results<- select64000Scenarios(dat, days, R, p.tr, p.trace_ap, p.sym,
 
 # dat <- readRDS("Newdata.rds")
 # results<- select64000Scenarios(dat,10 ,3,.5,.5,.7,2,1,.3)
-long_results <- results %>% gather(Quarter, Revenue, Rt_Q_05:Rt_Q_95) 
+long_results <- results %>% gather(nameOfColumn, values, Rt_Q_05:Rt_Q_95) 
 p <- ggplot(long_results,
             aes(x=eval(as.name(aes_x)),
                 y=eval(as.name(aes_y)),
