@@ -1,3 +1,5 @@
+library(babynames)
+library(ggtext)
 
 
 data(mtcars)
@@ -147,4 +149,15 @@ plotMaker5 <- function() {
   myPlot<- RtBasedonTwoPlotsForReport(dat,"Rt",2,0,0,.8,1,5,.8, 3,0,0,.8,1,5,.8)
   myPlot
 }
+
+plotMaker6 <- function() {
+  p<- RtBasedonAppTraceForReport(dat,"Rt",31 ,2,.7,.3)
+  p
+}
+
+plotMaker7 <- function() {
+  plot<- RtBasedonManualTraceForR(dat,"Rt",10 ,3,.7,1,.3)
+  plot
+}
+
 

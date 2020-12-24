@@ -23,6 +23,9 @@ plotMaker2()
 plotMaker3()
 plotMaker4()
 plotMaker5()
+plotMaker6()
+plotMaker7()
+
 
 df <- data.frame(bucket = c("Omid Gheysar Gharamaki for the best table of the year is selected","1:11","1:11","1:11","1:11","1:11","1:11","1:11","1:11","1:11","1:11"),
                  value = c(-0.8125594, -0.7590050, -0.7189301, -0.7188391, -0.5047816,
