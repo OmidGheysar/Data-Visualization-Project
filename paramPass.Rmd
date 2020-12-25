@@ -7,7 +7,11 @@ params:
     ivs: c("cyghfl", "gfgf")
     dvs: no
     sth: 200
-    dB: no
+    dp3: no
+    dp4: no
+    dp5: no
+    dp6: no
+    dp7: no
 ---
 
 
@@ -23,11 +27,20 @@ dat <- readRDS("Newdata.rds")
 
 plotMaker1()
 plotMaker2()
-RtBasedonAppAndManualForReport(dat,dB[2,"lable"],dB[3,"value"],dB[4,"value"],dB[5,"value"],dB[6,"value"],dB[7,"value"],dB[8,"value"])
-plotMaker4()
-plotMaker5()
-plotMaker6()
-plotMaker7()
+
+RtBasedonAppAndManualForReport(dat,dp3[2,"lable"],dp3[3,"value"],dp3[4,"value"],dp3[5,"value"],dp3[6,"value"],dp3[7,"value"],dp3[8,"value"])
+
+plotProducerForReport(dat,dp4[2,"lable"],dp4[3,"value"],dp4[4,"value"],
+dp4[5,"value"],dp4[6,"value"],dp4[7,"value"],
+dp4[8,"value"],dp4[9,"value"],dp4[10,"value"])
+
+RtBasedonTwoPlotsForReport(dat,dp5[2,"lable"],dp5[3,"value"],dp5[4,"value"],dp5[5,"value"],dp5[6,"value"],dp5[7,"value"],
+dp5[8,"value"],dp5[9,"value"],dp5[10,"value"],dp5[11,"value"],dp5[12,"value"],dp5[13,"value"],dp5[14,"value"],dp5[15,"value"],
+dp5[16,"value"])
+
+RtBasedonAppTraceForReport(dat,dp6[2,"lable"],dp6[3,"value"],dp6[4,"value"],dp6[5,"value"],dp6[6,"value"])
+
+RtBasedonManualTraceForR(dat,dp7[2,"lable"],dp7[3,"value"],dp7[4,"value"],dp7[5,"value"],dp7[6,"value"],dp7[7,"value"])
 
 
 df <- data.frame(bucket = c("Omid Gheysar Gharamaki for the best table of the year is selected","1:11","1:11","1:11","1:11","1:11","1:11","1:11","1:11","1:11","1:11"),

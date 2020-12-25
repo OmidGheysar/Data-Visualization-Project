@@ -10,7 +10,7 @@ df <- mtcars
 ivs <- c("cyl", "disp")
 dvs <- c("mpg", "qsec")
 sth <- 100
-dB <- data.frame(lable = c("dat",
+dp3 <- data.frame(lable = c("dat",
                            "Rt",
                            "days",
                            "R",
@@ -18,18 +18,75 @@ dB <- data.frame(lable = c("dat",
                            "iso_delay_traced",
                            "iso_delay_untraced",
                            "sd_contact"),
-                 value =c(0,0,10 ,3,.7,2,1,.3))
+                 value =c(0,0,30 ,3,.7,2,1,.3))
+
+dp4 <- data.frame(lable = c("dat",
+                            "Rt",
+                            "R0",
+                            "p.trace",
+                            "p.trace_app",
+                            "p.symp",
+                            "iso_delay_traced_max",
+                            "iso_delay_untraced_sd_max",
+                            "sd_contact_rate1",
+                            "numberDay"),
+                  value =c(0,0 ,3,.5,.5,.7,2,1,.3,20))
+
+
+dp5 <- data.frame(lable = c("dat", 
+                            "Rt",
+                            "inputR012",
+                            "inputp.trace12",
+                            "inputp.trace_app12",
+                            "inputp.symp12",
+                            "inputiso_delay_traced_max12",
+                            "inputiso_delay_untraced_sd_max12",
+                            "inputsd_contact_rate112",
+                            "inputR023",
+                            "inputp.trace23",
+                            "inputp.trace_app23",
+                            "inputp.symp23",
+                            "inputiso_delay_traced_max23",
+                            "inputiso_delay_untraced_sd_max23",
+                            "inputsd_contact_rate123"),
+                  value =c(0,0,2,0,0,.8,1,5,.8, 2.5,0,0,.8,1,5,.8))
+
+dp6 <- data.frame(lable = c("dat",
+                            "Rt",
+                            "days",
+                            "R",
+                            "p.sym",
+                            "sd_contact"),
+                  value =c(0,0,31 ,3,.7,.3))
+
+
+dp7 <- data.frame(lable = c("dat",
+                            "Rt",
+                            "days",
+                            "R",
+                            "p.sym",
+                            "iso_delay_untraced",
+                            "sd_contact"),
+                  value =c(0,0,31 ,3,.7,1,.3))
+
 
 
 rmarkdown::render("paramPass.Rmd", 
-                  params = list(df = df,dB = dB, ivs = ivs, dvs = dvs, sth = sth))
+                  params = list(df = df,
+                                dp3 = dp3,
+                                dp4 = dp4,
+                                dp5 = dp5,
+                                dp6 = dp6,
+                                dp7 = dp7,
+                                ivs = ivs,
+                                dvs = dvs,
+                                sth = sth))
 
 
 
 
 
-
-
+# ==========================================================
 
 plotMaker <- function() {
   hist(rnorm(1000))
@@ -126,4 +183,4 @@ plotMaker7 <- function() {
   plot
 }
 
-
+# =======================================================================================
