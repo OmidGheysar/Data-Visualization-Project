@@ -10,8 +10,25 @@ df <- mtcars
 ivs <- c("cyl", "disp")
 dvs <- c("mpg", "qsec")
 sth <- 100
+dB <- data.frame(lable = c("dat",
+                           "Rt",
+                           "days",
+                           "R",
+                           "p.sym",
+                           "iso_delay_traced",
+                           "iso_delay_untraced",
+                           "sd_contact"),
+                 value =c(0,0,10 ,3,.7,2,1,.3))
+
+
 rmarkdown::render("paramPass.Rmd", 
-                  params = list(df = df, ivs = ivs, dvs = dvs, sth = sth))
+                  params = list(df = df,dB = dB, ivs = ivs, dvs = dvs, sth = sth))
+
+
+
+
+
+
 
 
 plotMaker <- function() {

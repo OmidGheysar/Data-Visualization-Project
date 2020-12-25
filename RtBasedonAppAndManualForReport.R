@@ -133,9 +133,9 @@ RtBasedonAppAndManualForReport <- function(dat,ouptColumn,
   
 }
 
-dat <- readRDS("Newdata.rds")
-plot <- RtBasedonAppAndManualForReport(dat,"Rt",10 ,3,.7,2,1,.3)
-plot
+# dat <- readRDS("Newdata.rds")
+# plot <- RtBasedonAppAndManualForReport(dat,"Rt",10 ,3,.7,2,1,.3)
+# plot
 
 
 

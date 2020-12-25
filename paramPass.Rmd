@@ -7,6 +7,7 @@ params:
     ivs: c("cyghfl", "gfgf")
     dvs: no
     sth: 200
+    dB: no
 ---
 
 
@@ -15,12 +16,14 @@ Histograms
   
   ```{r,echo=TRUE}
 params$sth
-params$ivs
+params$ivs[2]
 params$dvs
+
+dat <- readRDS("Newdata.rds")
 
 plotMaker1()
 plotMaker2()
-plotMaker3()
+RtBasedonAppAndManualForReport(dat,dB[2,"lable"],dB[3,"value"],dB[4,"value"],dB[5,"value"],dB[6,"value"],dB[7,"value"],dB[8,"value"])
 plotMaker4()
 plotMaker5()
 plotMaker6()
