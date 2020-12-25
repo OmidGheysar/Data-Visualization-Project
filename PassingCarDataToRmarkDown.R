@@ -69,10 +69,21 @@ dp7 <- data.frame(lable = c("dat",
                             "sd_contact"),
                   value =c(0,0,31 ,3,.7,1,.3))
 
+df <- data.frame(bucket = c("Omid Gheysar Gharamaki for the best table of the year is selected","1:11","1:11","1:11","1:11","1:11","1:11","1:11","1:11","1:11","1:11"),
+                 value = c(-0.8125594, -0.7590050, -0.7189301, -0.7188391, -0.5047816,
+                           -0.3439579, -0.4376782, -0.1300217, 0.9145718, 2.1844290,
+                           4.8374356))
+db <- data.frame(bucket = c("Omid Gheysar Gharamaki for the best","1:11","1:11","1:11",
+                            "1:11","1:11","1:11","1:11","1:11","1:11","1:11"),
+                 value = c(-0.8125594, -0.7590050, -0.7189301, -0.7188391, -0.5047816,
+                           -0.3439579, -0.4376782, -0.1300217, 0.9145718, 2.1844290,
+                           2021))    
+
 
 
 rmarkdown::render("paramPass.Rmd", 
                   params = list(df = df,
+                                db = db,
                                 dp3 = dp3,
                                 dp4 = dp4,
                                 dp5 = dp5,
@@ -81,9 +92,6 @@ rmarkdown::render("paramPass.Rmd",
                                 ivs = ivs,
                                 dvs = dvs,
                                 sth = sth))
-
-
-
 
 
 # ==========================================================
