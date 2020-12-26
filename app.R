@@ -122,7 +122,7 @@ server <- function (input, output, session){
   #Finish the function
   removeModal()
   
-
+# Page Time series ====================================================================================================
   output$plotRtTime <- renderPlotly({
     
     outputPlot<- returnPlot(dat,"Rt",
@@ -187,7 +187,36 @@ server <- function (input, output, session){
       stringsAsFactors = FALSE)
   })
   
+  # Add your code -----------------------------------------------------------------------------------------------------
+  output$report <- downloadHandler(
+    filename = "report.pdf",
+    content = function(file) {
+      tempReport <- file.path(tempdir(), "report.Rmd")
+      file.copy("report.Rmd", tempReport, overwrite = TRUE)
+      
+      source("plotProducerForReport.R")
+      dat <- readRDS("Newdata.rds")
+      filterResult<- select100Scenarios(dat,3,.5,.5,.7,2,1,.3)
+      df <- filterResult
+      # params <- as.data.frame(params)
+      
+      # # Set up parameters to pass to Rmd document
+      # params <- list(n = input$slider)
+      
+      # Knit the document, passing in the `params` list, and eval it in a
+      # child of the global environment (this isolates the code in the document
+      # from the code in this app).
+      rmarkdown::render(tempReport, output_file = file,
+                        params = list(day = df$day,Rt_Q_05 = df$Rt_Q_05, Rt_Q_25 = df$Rt_Q_25, Rt_Q_50=df$Rt_Q_50, Rt_Q_75 = df$Rt_Q_75,Rt_Q_95 = df$Rt_Q_95,
+                                      n.active_Q_05 = df$n.active_Q_05, n.active_Q_25 = df$n.active_Q_25, n.active_Q_50=df$n.active_Q_50, n.active_Q_75 = df$n.active_Q_75,n.active_Q_95 = df$n.active_Q_95),
+                        envir = new.env(parent = globalenv())
+      )
+    }
+  )
   
+  # -------------------------------------------------------------------------------------------------------------------
+
+# page time series two senarios ===================================================================================
   output$plotTwoScenarios1 <- renderPlotly({
     
     RtBasedonTwoPlots(dat, "Rt",
@@ -296,7 +325,7 @@ server <- function (input, output, session){
   
   v <- reactiveValues(data = NULL)
   
-
+# page contact tracing with only app =======================================================================
   output$plotRt_Only_App1 <- renderPlotly({
     
     myPlot <- RtBasedonAppTrace(dat,"Rt",
@@ -351,7 +380,7 @@ server <- function (input, output, session){
   })
   
   
-  
+  # page contact tracing with manual method only ============================================================ 
   output$plotRt_Only_Manual1 <- renderPlotly({
     
     myPlot <- RtBasedonManualTrace(dat,"Rt",
@@ -407,7 +436,7 @@ server <- function (input, output, session){
   })
   
   
-  
+  # contact tracing with both manual and app tracing ====================================================== 
   output$plotRt_App_Manual1 <- renderPlotly({
     
     myPlot <- RtBasedonAppAndManual(dat,"Rt",

@@ -5,6 +5,7 @@ uploadRequiredLibraries <- function(){
   # install.packages("shinydashboard")
   # install.packages("shinyWidgets")
   # install.packages("plyr")
+  # install.packages("ggtext")
   library(shinyWidgets)
   library(plotly)
   library(shiny)
@@ -13,6 +14,8 @@ uploadRequiredLibraries <- function(){
   library(dplyr)    # alternatively, this also loads %>%
   library("tidyverse")
   library(shinydashboard)
+  library(babynames)
+  library(ggtext)
   source("data manipulation.R")
   source("PlotMaker.R")
   source("SidebaryLayout.R")
@@ -25,5 +28,11 @@ uploadRequiredLibraries <- function(){
   source("slidebar1For2.R")
   source("TwoSenarioInOnePage.R")
   source("returnPlotTowScenarions.R")
+  
+  source("plotProducerForReport.R")
+  source("RtBasedonAppAndManualForReport.R")
+  source("RtBasedonTwoPlotsForReport.R")
+  source("RtBasedonAppTraceForReport.R")
+  source("RtBasedonManualTraceForReport.R")
  # dat <- readRDS("05_22.rds")
 }

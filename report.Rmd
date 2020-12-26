@@ -2,28 +2,28 @@
 title: "Dynamic report"
 output: pdf_document
 params:
-  n: NA
+  day: no
+  Rt_Q_05: no
+  Rt_Q_25: no
+  Rt_Q_50: no
+  Rt_Q_75: no
+  Rt_Q_95: no
+  n.active_Q_05: no
+  n.active_Q_25: no
+  n.active_Q_50: no
+  n.active_Q_75: no
+  n.active_Q_95: no 
   
 ---
+  
 
-```{r eval = FALSE, echo = FALSE}
-# For PDF output, change the header to have "output: pdf_document".
-#
-# Note that due to an issue in rmarkdown, the default value of a parameter in
-# the header cannot be `NULL`, so I used a default of `NA` for the default value
-# of `n`.
-```
 
 
 ```{r}
-# The `params` object is available in the document.
-params$n
+
+df <- (data.frame(day = params$day,Rt_Q_05=params$Rt_Q_05,Rt_Q_25= params$Rt_Q_25,Rt_Q_50=params$Rt_Q_50,Rt_Q_75=params$Rt_Q_75,Rt_Q_95=params$Rt_Q_95))
+plotProducerForReport(df,"Rt",10)
+
+db <- (data.frame(day = params$day,n.active_Q_05=params$n.active_Q_05,n.active_Q_25= params$n.active_Q_25,n.active_Q_50=params$n.active_Q_50,n.active_Q_75=params$n.active_Q_75,n.active_Q_95=params$n.active_Q_95))
+plotProducerForReport(db,"n.active",10)
 ```
-
-A plot of `params$n` random points.
-
-```{r}
-plot(rnorm(params$n), rnorm(params$n))
-
-```
-

@@ -1,4 +1,4 @@
-RtBasedonManualTraceForR <- function(dat,ouptColumn,
+RtBasedonManualTraceForReport <- function(dat,ouptColumn,
                                  days,
                                  R,
                                  p.sym,

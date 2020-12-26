@@ -5,9 +5,6 @@ output: pdf_document
 params:
     df: no
     db: no
-    ivs: c("cyghfl", "gfgf")
-    dvs: no
-    sth: 200
     dp3: no
     dp4: no
     dp5: no
@@ -20,14 +17,7 @@ Histograms
 -------------------------------------
   
   ```{r,echo=TRUE}
-params$sth
-params$ivs[2]
-params$dvs
 
-dat <- readRDS("Newdata.rds")
-
-plotMaker1()
-plotMaker2()
 
 RtBasedonAppAndManualForReport(dat,dp3[2,"lable"],dp3[3,"value"],dp3[4,"value"],dp3[5,"value"],dp3[6,"value"],dp3[7,"value"],dp3[8,"value"])
 
@@ -41,7 +31,7 @@ dp5[16,"value"])
 
 RtBasedonAppTraceForReport(dat,dp6[2,"lable"],dp6[3,"value"],dp6[4,"value"],dp6[5,"value"],dp6[6,"value"])
 
-RtBasedonManualTraceForR(dat,dp7[2,"lable"],dp7[3,"value"],dp7[4,"value"],dp7[5,"value"],dp7[6,"value"],dp7[7,"value"])
+RtBasedonManualTraceForReport(dat,dp7[2,"lable"],dp7[3,"value"],dp7[4,"value"],dp7[5,"value"],dp7[6,"value"],dp7[7,"value"])
 
 
                        

@@ -1,24 +1,58 @@
+library(shinyWidgets)
+library(plotly)
+library(shiny)
+library("ggplot2")
+library(magrittr) # needs to be run every time you start R and want to use %>%
+library(dplyr)    # alternatively, this also loads %>%
+library("tidyverse")
+library(shinydashboard)
+library(babynames)
+library(ggtext)
 
-plotProducerForReport <- function(dat,
-                       ouptColumn,
-                       R0,
-                       p.trace,
-                       p.trace_app,
-                       p.symp,
-                       iso_delay_traced_max,
-                       iso_delay_untraced_sd_max,
-                       sd_contact_rate1,
-                       numberDay) {
+select100Scenarios <- function(dat,
+                               R,
+                               p.tr,
+                               p.trace_ap,
+                               p.sym,
+                               iso_delay_traced,
+                               iso_delay_untraced,
+                               sd_contact) {
   
-  output<- select100Scenarios(dat,
-                              R0,
-                              p.trace,
-                              p.trace_app,
-                              p.symp,
-                              iso_delay_traced_max,
-                              iso_delay_untraced_sd_max,
-                              sd_contact_rate1)
+  scenarios100<-dat %>% filter(R0==R &
+                                 p.trace==p.tr&
+                                 p.trace_app==p.trace_ap&
+                                 p.symp== p.sym&
+                                 iso_delay_traced_max==iso_delay_traced&
+                                 iso_delay_untraced_sd_max==iso_delay_untraced&
+                                 sd_contact_rate1==sd_contact)
+  return(scenarios100)
+}
+
+
+
+
+
+
+
+dat <- readRDS("Newdata.rds")
+
+
+df<- select100Scenarios(dat,3,.5,.5,.7,2,1,.3)
+
+day<-df$day
+Rt_Q_05 <- df$Rt_Q_05
+Rt_Q_25 <- df$Rt_Q_25
+Rt_Q_50 <- df$Rt_Q_50
+Rt_Q_75<- df$Rt_Q_75
+Rt_Q_95<- df$Rt_Q_95
+filterResult <- (data.frame(day,Rt_Q_05,Rt_Q_25,Rt_Q_50,Rt_Q_75,Rt_Q_95))
+
+plotProducerForReport <- function(filterResult,
+                                  ouptColumn,
+                                  numberDay) {
   
+  
+  output <- filterResult
   # dat <- readRDS("Newdata.rds")
   # # output<- select100Scenarios(dat, 2,0,0,.7,2,1,.3)
   # output<- select100Scenarios(dat, 2.5,.5,.5,.7,2,1,.3)
@@ -111,7 +145,7 @@ plotProducerForReport <- function(dat,
       title = "Isolated Cases"
     )
   }
-
+  
   p <- p + labs(y="", x="", 
                 color="")
   
@@ -119,9 +153,16 @@ plotProducerForReport <- function(dat,
 }
 
 
-# myPlot<- plotProducer(dat,"Rt" ,3,.5,.5,.7,2,1,.3,20)
-# myPlot
+library(magrittr) # needs to be run every time you start R and want to use %>%
+library(dplyr)    # alternatively, this also loads %>%
+library("tidyverse")
 
+
+
+
+
+myPlot<- plotProducerForReport(filterResult,"Rt",7)
+myPlot
 
 
 

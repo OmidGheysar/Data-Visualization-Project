@@ -2,6 +2,7 @@ library(babynames)
 library(ggtext)
 
 
+
 data(mtcars)
 mtcars$am <- factor(mtcars$am, levels=c(0,1), labels=c("Manual", "Automatic"))
 df <- mtcars
@@ -30,7 +31,7 @@ dp4 <- data.frame(lable = c("dat",
                             "iso_delay_untraced_sd_max",
                             "sd_contact_rate1",
                             "numberDay"),
-                  value =c(0,0 ,3,.5,.5,.7,2,1,.3,20))
+                  value =c(0,0 ,3,.5,.5,.7,2,1,.3,10))
 
 
 dp5 <- data.frame(lable = c("dat", 
@@ -79,19 +80,21 @@ db <- data.frame(bucket = c("Omid Gheysar Gharamaki for the best","1:11","1:11",
                            -0.3439579, -0.4376782, -0.1300217, 0.9145718, 2.1844290,
                            2021))    
 
+WirteInRmarkDown <- function(){
+  rmarkdown::render("paramPass.Rmd", 
+                    params = list(df = df,
+                                  db = db,
+                                  dp3 = dp3,
+                                  dp4 = dp4,
+                                  dp5 = dp5,
+                                  dp6 = dp6,
+                                  dp7 = dp7,
+                                  ivs = ivs,
+                                  dvs = dvs,
+                                  sth = sth))
+}
 
 
-rmarkdown::render("paramPass.Rmd", 
-                  params = list(df = df,
-                                db = db,
-                                dp3 = dp3,
-                                dp4 = dp4,
-                                dp5 = dp5,
-                                dp6 = dp6,
-                                dp7 = dp7,
-                                ivs = ivs,
-                                dvs = dvs,
-                                sth = sth))
 
 
 # ==========================================================
