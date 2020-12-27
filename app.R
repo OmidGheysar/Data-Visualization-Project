@@ -208,7 +208,10 @@ server <- function (input, output, session){
       # from the code in this app).
       rmarkdown::render(tempReport, output_file = file,
                         params = list(day = df$day,Rt_Q_05 = df$Rt_Q_05, Rt_Q_25 = df$Rt_Q_25, Rt_Q_50=df$Rt_Q_50, Rt_Q_75 = df$Rt_Q_75,Rt_Q_95 = df$Rt_Q_95,
-                                      n.active_Q_05 = df$n.active_Q_05, n.active_Q_25 = df$n.active_Q_25, n.active_Q_50=df$n.active_Q_50, n.active_Q_75 = df$n.active_Q_75,n.active_Q_95 = df$n.active_Q_95),
+                                      n.active_Q_05 = df$n.active_Q_05, n.active_Q_25 = df$n.active_Q_25, n.active_Q_50=df$n.active_Q_50, n.active_Q_75 = df$n.active_Q_75,n.active_Q_95 = df$n.active_Q_95,
+                                      n.new_Q_05 = df$n.new_Q_05, n.new_Q_25 = df$n.new_Q_25, n.new_Q_50=df$n.new_Q_50, n.new_Q_75 = df$n.new_Q_75,n.new_Q_95 = df$n.new_Q_95,
+                                      n.total_Q_05 = df$n.total_Q_05, n.total_Q_25 = df$n.total_Q_25, n.total_Q_50=df$n.total_Q_50, n.total_Q_75 = df$n.total_Q_75,n.total_Q_95 = df$n.total_Q_95,
+                                      n.iso_Q_05 = df$n.iso_Q_05, n.iso_Q_25 = df$n.iso_Q_25, n.iso_Q_50=df$n.iso_Q_50, n.iso_Q_75 = df$n.iso_Q_75,n.iso_Q_95 = df$n.iso_Q_95),
                         envir = new.env(parent = globalenv())
       )
     }
