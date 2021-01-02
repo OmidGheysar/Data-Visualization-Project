@@ -1,6 +1,0 @@
----
-title:  simple shiny doc
-author: Omid Gheysar Gharamaleki
-output: html_document
-runtime: shiny
----
