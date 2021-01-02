@@ -73,7 +73,7 @@ UiDesign <- function() {
     
     
     # Add new code ------------------------------------------------------------------------
-    downloadButton("report", "Generate PDF Report"),
+    downloadButton("reportForTimeSeries", "Generate a report For one plots"),
     downloadButton("report1", "Generate CSV report"),
     
     # Add new code ------------------------------------------------------------------------

@@ -1,37 +1,42 @@
-RtBasedonTwoPlotsForReport <- function(dat, ouptColumn,
-                              inputR012,
-                              inputp.trace12,
-                              inputp.trace_app12,
-                              inputp.symp12,
-                              inputiso_delay_traced_max12,
-                              inputiso_delay_untraced_sd_max12,
-                              inputsd_contact_rate112,
-                              inputR023,
-                              inputp.trace23,
-                              inputp.trace_app23,
-                              inputp.symp23,
-                              inputiso_delay_traced_max23,
-                              inputiso_delay_untraced_sd_max23,
-                              inputsd_contact_rate123
+library(shinyWidgets)
+library(plotly)
+library(shiny)
+library("ggplot2")
+library(magrittr) # needs to be run every time you start R and want to use %>%
+library(dplyr)    # alternatively, this also loads %>%
+library("tidyverse")
+library(shinydashboard)
+library(babynames)
+library(ggtext)
+library(magrittr) # needs to be run every time you start R and want to use %>%
+library(dplyr)    # alternatively, this also loads %>%
+library("tidyverse")
+# 
+# scenarios1<- select100Scenarios(dat,
+#                                 inputR012,
+#                                 inputp.trace12,
+#                                 inputp.trace_app12,
+#                                 inputp.symp12,
+#                                 inputiso_delay_traced_max12,
+#                                 inputiso_delay_untraced_sd_max12,
+#                                 inputsd_contact_rate112)
+# 
+# scenarios2<- select100Scenarios(dat,
+#                                 inputR023,
+#                                 inputp.trace23,
+#                                 inputp.trace_app23,
+#                                 inputp.symp23,
+#                                 inputiso_delay_traced_max23,
+#                                 inputiso_delay_untraced_sd_max23,
+#                                 inputsd_contact_rate123)
+
+
+RtBasedonTwoPlotsForReport <- function( ouptColumn,
+                                       scenarios1,
+                                       scenarios2
 ) {
   
-  scenarios1<- select100Scenarios(dat,
-                                  inputR012,
-                                  inputp.trace12,
-                                  inputp.trace_app12,
-                                  inputp.symp12,
-                                  inputiso_delay_traced_max12,
-                                  inputiso_delay_untraced_sd_max12,
-                                  inputsd_contact_rate112)
-  
-  scenarios2<- select100Scenarios(dat,
-                                  inputR023,
-                                  inputp.trace23,
-                                  inputp.trace_app23,
-                                  inputp.symp23,
-                                  inputiso_delay_traced_max23,
-                                  inputiso_delay_untraced_sd_max23,
-                                  inputsd_contact_rate123)
+
   
   # dat <- readRDS("Newdata.rds")
   # scenarios1<- select100Scenarios(dat,2,0,0,.8,1,5,.8)
@@ -147,8 +152,8 @@ RtBasedonTwoPlotsForReport <- function(dat, ouptColumn,
   
 }
 
-# myPlot<- RtBasedonTwoPlotsForReport(dat,"Rt",2,0,0,.8,1,5,.8, 3,0,0,.8,1,5,.8)
+# scenarios1<- select100Scenarios(dat,2,0,0,.8,1,5,.8)
+# 
+# scenarios2<- select100Scenarios(dat,3,0,0,.8,1,5,.8)
+# myPlot<- RtBasedonTwoPlotsForReport("Rt",scenarios1, scenarios2)
 # myPlot
-
-
-

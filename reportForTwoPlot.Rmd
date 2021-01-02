@@ -1,0 +1,109 @@
+---
+title: "Dynamic report"
+output: pdf_document
+params:
+  values1: no
+  titles1: no
+  values2: no
+  titles2: no    
+  day: no
+  Rt_Q_05_1: no
+  Rt_Q_25_1: no
+  Rt_Q_50_1: no
+  Rt_Q_75_1: no
+  Rt_Q_95_1: no
+  n.active_Q_05_1: no
+  n.active_Q_25_1: no
+  n.active_Q_50_1: no
+  n.active_Q_75_1: no
+  n.active_Q_95_1: no 
+  n.new_Q_05_1: no
+  n.new_Q_25_1: no
+  n.new_Q_50_1: no
+  n.new_Q_75_1: no
+  n.new_Q_95_1: no
+  n.total_Q_05_1: no
+  n.total_Q_25_1: no
+  n.total_Q_50_1: no
+  n.total_Q_75_1: no
+  n.total_Q_95_1: no 
+  n.iso_Q_05_1: no
+  n.iso_Q_25_1: no
+  n.iso_Q_50_1: no
+  n.iso_Q_75_1: no
+  n.iso_Q_95_1: no 
+  Rt_Q_05_2: no
+  Rt_Q_25_2: no
+  Rt_Q_50_2: no
+  Rt_Q_75_2: no
+  Rt_Q_95_2: no  
+  n.active_Q_05_2: no
+  n.active_Q_25_2: no
+  n.active_Q_50_2: no
+  n.active_Q_75_2: no
+  n.active_Q_95_2: no
+  n.new_Q_05_2: no
+  n.new_Q_25_2: no
+  n.new_Q_50_2: no
+  n.new_Q_75_2: no
+  n.new_Q_95_2: no
+  n.total_Q_05_2: no
+  n.total_Q_25_2: no
+  n.total_Q_50_2: no
+  n.total_Q_75_2: no
+  n.total_Q_95_2: no  
+  n.iso_Q_05_2: no
+  n.iso_Q_25_2: no
+  n.iso_Q_50_2: no
+  n.iso_Q_75_2: no
+  n.iso_Q_95_2: no   
+---
+  
+  
+  
+  
+```{r}
+
+params$day
+params$Rt_Q_25_1
+df1 <- (data.frame(day = params$day,Rt_Q_05=params$Rt_Q_05_1,Rt_Q_25= params$Rt_Q_25_1,Rt_Q_50=params$Rt_Q_50_1,Rt_Q_75=params$Rt_Q_75_1,Rt_Q_95=params$Rt_Q_95_1))
+df2 <- (data.frame(day = params$day,Rt_Q_05=params$Rt_Q_05_2,Rt_Q_25= params$Rt_Q_25_2,Rt_Q_50=params$Rt_Q_50_2,Rt_Q_75=params$Rt_Q_75_2,Rt_Q_95=params$Rt_Q_95_2))
+RtBasedonTwoPlotsForReport("Rt",df1,df2)
+
+db1 <- (data.frame(day = params$day,n.active_Q_05=params$n.active_Q_05_1,n.active_Q_25= params$n.active_Q_25_1,n.active_Q_50=params$n.active_Q_50_1,n.active_Q_75=params$n.active_Q_75_1,n.active_Q_95=params$n.active_Q_95_1))
+db2 <- (data.frame(day = params$day,n.active_Q_05=params$n.active_Q_05_2,n.active_Q_25= params$n.active_Q_25_2,n.active_Q_50=params$n.active_Q_50_2,n.active_Q_75=params$n.active_Q_75_2,n.active_Q_95=params$n.active_Q_95_2))
+RtBasedonTwoPlotsForReport("n.active",db1,db2)
+
+dc1 <- (data.frame(day = params$day,n.new_Q_05=params$n.new_Q_05_1,n.new_Q_25= params$n.new_Q_25_1,n.new_Q_50=params$n.new_Q_50_1,n.new_Q_75=params$n.new_Q_75_1,n.new_Q_95=params$n.new_Q_95_1))
+dc2 <- (data.frame(day = params$day,n.new_Q_05=params$n.new_Q_05_2,n.new_Q_25= params$n.new_Q_25_2,n.new_Q_50=params$n.new_Q_50_2,n.new_Q_75=params$n.new_Q_75_2,n.new_Q_95=params$n.new_Q_95_2))
+RtBasedonTwoPlotsForReport("n.new",dc1,dc2)
+
+dm1 <- (data.frame(day = params$day,n.total_Q_05=params$n.total_Q_05_1,n.total_Q_25= params$n.total_Q_25_1,n.total_Q_50=params$n.total_Q_50_1,n.total_Q_75=params$n.total_Q_75_1,n.total_Q_95=params$n.total_Q_95_1))
+dm2 <- (data.frame(day = params$day,n.total_Q_05=params$n.total_Q_05_2,n.total_Q_25= params$n.total_Q_25_2,n.total_Q_50=params$n.total_Q_50_2,n.total_Q_75=params$n.total_Q_75_2,n.total_Q_95=params$n.total_Q_95_2))
+RtBasedonTwoPlotsForReport("n.total",dm1,dm2)
+
+dn1 <- (data.frame(day = params$day,n.iso_Q_05=params$n.iso_Q_05_1,n.iso_Q_25= params$n.iso_Q_25_1,n.iso_Q_50=params$n.iso_Q_50_1,n.iso_Q_75=params$n.iso_Q_75_1,n.iso_Q_95=params$n.iso_Q_95_1))
+dn2 <- (data.frame(day = params$day,n.iso_Q_05=params$n.iso_Q_05_2,n.iso_Q_25= params$n.iso_Q_25_2,n.iso_Q_50=params$n.iso_Q_50_2,n.iso_Q_75=params$n.iso_Q_75_2,n.iso_Q_95=params$n.iso_Q_95_2))
+RtBasedonTwoPlotsForReport("n.iso",dn1,dn2)
+
+dt1 <- data.frame(titles1 = params$titles1,
+                 value1 = params$values1) 
+
+dt2 <- data.frame(titles2 = params$titles2,
+                 value2 = params$values2) 
+
+
+```
+
+
+```{r sample, echo=FALSE}
+library(knitr)
+library(kableExtra)
+t1 <- dt1
+t2 <- dt2
+```
+## as list
+```{r}
+kable(list(t1, t2))
+```
+

@@ -1,25 +1,39 @@
-RtBasedonAppTraceForReport <- function(dat,ouptColumn,
-                              days,
-                              R,
-                              p.sym,
-                              sd_contact){
+library(shinyWidgets)
+library(plotly)
+library(shiny)
+library("ggplot2")
+library(magrittr) # needs to be run every time you start R and want to use %>%
+library(dplyr)    # alternatively, this also loads %>%
+library("tidyverse")
+library(shinydashboard)
+library(babynames)
+library(ggtext)
+library(magrittr) # needs to be run every time you start R and want to use %>%
+library(dplyr)    # alternatively, this also loads %>%
+library("tidyverse")
+
+
+
+select64000Scenarios <- function(dat,
+                                 days,
+                                 R,
+                                 p.sym,
+                                 sd_contact) {
   
+  scenarios<-dat %>% filter(R0==R &
+                              p.trace==0&
+                              p.symp== p.sym&
+                              # why is this ?????????
+                              iso_delay_traced_max==2&
+                              sd_contact_rate1==sd_contact) %>% filter(day==days) 
+  return(scenarios)
+}
+
+
+RtBasedonAppTraceForReport <- function(myResult,
+                                       ouptColumn){
   
-  select64000Scenarios <- function(dat,
-                                   days,
-                                   R,
-                                   p.sym,
-                                   sd_contact) {
-    
-    scenarios<-dat %>% filter(R0==R &
-                                p.trace==0&
-                                p.symp== p.sym&
-                                # why is this ?????????
-                                iso_delay_traced_max==2&
-                                sd_contact_rate1==sd_contact) %>% filter(day==days) %>%  
-      select(p.trace_app,iso_delay_untraced_sd_max,"day":"n.iso_Q_95") 
-    return(scenarios)
-  }
+
   
   aes_x <- "p.trace_app"
   
@@ -28,12 +42,8 @@ RtBasedonAppTraceForReport <- function(dat,ouptColumn,
   Q_50 <-  paste(ouptColumn, "Q_50", sep="_")
   Q_75 <-  paste(ouptColumn, "Q_75", sep="_")
   
-  results<- select64000Scenarios(dat, 
-                                 days, 
-                                 R,
-                                 p.sym,
-                                 sd_contact)
-
+  results<- myResult
+  
   paired.cols <- RColorBrewer::brewer.pal(12, "Paired")
   
   
@@ -84,10 +94,10 @@ RtBasedonAppTraceForReport <- function(dat,ouptColumn,
   return(p) 
   
 }
-# source("uploadRequiredLibraries.R")
-# uploadRequiredLibraries()
-# dat <- readRDS("Newdata.rds")
-# p<- RtBasedonAppTraceForReport(dat,"Rt",31 ,2,.7,.3)
-# p
+
+dat <- readRDS("Newdata.rds")
+myResult <- select64000Scenarios(dat,31 ,2,.7,.3)
+p<- RtBasedonAppTraceForReport(myResult, "Rt")
+p
 
 

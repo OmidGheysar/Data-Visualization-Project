@@ -1,0 +1,63 @@
+---
+title: "Dynamic report"
+output: pdf_document
+params:
+  values: no
+  titles: no
+  day: no
+  Rt_Q_05: no
+  Rt_Q_25: no
+  Rt_Q_50: no
+  Rt_Q_75: no
+  Rt_Q_95: no
+  n.active_Q_05: no
+  n.active_Q_25: no
+  n.active_Q_50: no
+  n.active_Q_75: no
+  n.active_Q_95: no 
+  n.new_Q_05: no
+  n.new_Q_25: no
+  n.new_Q_50: no
+  n.new_Q_75: no
+  n.new_Q_95: no
+  n.total_Q_05: no
+  n.total_Q_25: no
+  n.total_Q_50: no
+  n.total_Q_75: no
+  n.total_Q_95: no 
+  n.iso_Q_05: no
+  n.iso_Q_25: no
+  n.iso_Q_50: no
+  n.iso_Q_75: no
+  n.iso_Q_95: no   
+  
+---
+  
+
+
+
+```{r}
+
+plotMaker1()
+
+df <- (data.frame(day = params$day,Rt_Q_05=params$Rt_Q_05,Rt_Q_25= params$Rt_Q_25,Rt_Q_50=params$Rt_Q_50,Rt_Q_75=params$Rt_Q_75,Rt_Q_95=params$Rt_Q_95))
+plotProducerForReport(df,"Rt",31)
+
+db <- (data.frame(day = params$day,n.active_Q_05=params$n.active_Q_05,n.active_Q_25= params$n.active_Q_25,n.active_Q_50=params$n.active_Q_50,n.active_Q_75=params$n.active_Q_75,n.active_Q_95=params$n.active_Q_95))
+plotProducerForReport(db,"n.active",31)
+
+dc <- (data.frame(day = params$day,n.new_Q_05=params$n.new_Q_05,n.new_Q_25= params$n.new_Q_25,n.new_Q_50=params$n.new_Q_50,n.new_Q_75=params$n.new_Q_75,n.new_Q_95=params$n.new_Q_95))
+plotProducerForReport(dc,"n.new",31)
+
+dm <- (data.frame(day = params$day,n.total_Q_05=params$n.total_Q_05,n.total_Q_25= params$n.total_Q_25,n.total_Q_50=params$n.total_Q_50,n.total_Q_75=params$n.total_Q_75,n.total_Q_95=params$n.total_Q_95))
+plotProducerForReport(dm,"n.total",31)
+
+dn <- (data.frame(day = params$day,n.iso_Q_05=params$n.iso_Q_05,n.iso_Q_25= params$n.iso_Q_25,n.iso_Q_50=params$n.iso_Q_50,n.iso_Q_75=params$n.iso_Q_75,n.iso_Q_95=params$n.iso_Q_95))
+plotProducerForReport(dn,"n.iso",31)
+
+dt <- data.frame(titles = params$titles,
+                 value = params$values) 
+library(knitr)                           
+kable(dt)
+
+```

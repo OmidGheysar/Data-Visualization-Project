@@ -1,27 +1,40 @@
-RtBasedonManualTraceForReport <- function(dat,ouptColumn,
+library(shinyWidgets)
+library(plotly)
+library(shiny)
+library("ggplot2")
+library(magrittr) # needs to be run every time you start R and want to use %>%
+library(dplyr)    # alternatively, this also loads %>%
+library("tidyverse")
+library(shinydashboard)
+library(babynames)
+library(ggtext)
+library(magrittr) # needs to be run every time you start R and want to use %>%
+library(dplyr)    # alternatively, this also loads %>%
+library("tidyverse")
+
+
+select64000Scenarios <- function(dat,
                                  days,
                                  R,
                                  p.sym,
                                  iso_delay_untraced,
-                                 sd_contact){
+                                 sd_contact)  {
   
-  select64000Scenarios <- function(dat,
-                                   days,
-                                   R,
-                                   p.sym,
-                                   iso_delay_untraced,
-                                   sd_contact)  {
-    
-    scenarios64000<-dat %>% filter(R0==R &
-                                     p.trace_app==0&
-                                     p.symp== p.sym&
-                                     iso_delay_untraced_sd_max==iso_delay_untraced&
-                                     sd_contact_rate1==sd_contact) %>% 
-      select(p.trace,iso_delay_traced_max,"day":"n.iso_Q_95") %>% filter(day==days)
-    return(scenarios64000)
-  }
-  
-  
+  scenarios64000<-dat %>% filter(R0==R &
+                                   p.trace_app==0&
+                                   p.symp== p.sym&
+                                   iso_delay_untraced_sd_max==iso_delay_untraced&
+                                   sd_contact_rate1==sd_contact) %>% filter(day==days)
+
+  return(scenarios64000)
+}
+
+
+
+
+RtBasedonManualTraceForReport <- function(myResult,
+                                          ouptColumn){
+  results <- myResult
   aes_x <- "p.trace"
   # ouptColumn <- "n.new"
   Q_05  <- paste(ouptColumn, "Q_05", sep="_")
@@ -33,12 +46,7 @@ RtBasedonManualTraceForReport <- function(dat,ouptColumn,
   
   # dat <- readRDS("Newdata.rds")
   # results<- select64000Scenarios(dat,10 ,3,.7,1,.3)
-  results<- select64000Scenarios(dat, 
-                                 days, 
-                                 R,  
-                                 p.sym,
-                                 iso_delay_untraced, 
-                                 sd_contact)
+
   paired.cols <- RColorBrewer::brewer.pal(12, "Paired")
   
   outputs1 <- results %>% filter(iso_delay_traced_max==1)
@@ -74,28 +82,7 @@ RtBasedonManualTraceForReport <- function(dat,ouptColumn,
   
   p <- p+labs(y="Reproductive Number", x="",
               color="")
-  
-  # p <- p + geom_hline(yintercept=1,
-  #                     linetype='dotdash',
-  #                     alpha=0.6)
-  # if(ouptColumn=="Rt"){
-  #   annotation <- data.frame(
-  #     x= c(0.12,0.12,0.12,0.12),
-  #     y = c(.5,.42,.34,.26),
-  #     label = c("1 day","2 days","3 days","4 days")
-  #   )
-  #   
-  #   p <- p + geom_text(data=annotation, aes( x=x, y=y, label=label),                 
-  #                      color=c(paired.cols[8],paired.cols[2],paired.cols[6],paired.cols[4]), 
-  #                      size=4 , angle=0, fontface="bold" )
-  #   p <- p+annotate("point", x = .00, y = .50, colour = paired.cols[8],size = 3)
-  #   p <- p+annotate("point", x = .00, y = .42, colour = paired.cols[2],size = 3)
-  #   p <- p+annotate("point", x = .00, y = .34, colour = paired.cols[6],size = 3)
-  #   p <- p+annotate("point", x = .00, y = .26, colour = paired.cols[4],size = 3)
-  #   p <- p + geom_hline(yintercept=1,
-  #                       linetype='dotdash',
-  #                       alpha=0.6)
-  # }
+
   p <- p + labs(title="Colors show delay to isolation for traced cases (days)")
   # p <- ggplotly(p)
   x <- list(
@@ -128,6 +115,13 @@ RtBasedonManualTraceForReport <- function(dat,ouptColumn,
 }
 
 # dat <- readRDS("Newdata.rds")
-# plot<- RtBasedonManualTrace(dat,"Rt",10 ,3,.7,1,.3)
+# filterResults<- select64000Scenarios(dat,2 ,3,.7,1,.3)
+# # 
+# plot<- RtBasedonManualTraceForReport(filterResults,"Rt")
 # plot
+
+
+
+
+
 

@@ -1,0 +1,61 @@
+---
+title: "Dynamic report"
+output: pdf_document
+params:
+  values: no
+  titles: no  
+  iso_delay_untraced_sd_max: no
+  p.trace_app: no
+  Rt_Q_05: no
+  Rt_Q_25: no
+  Rt_Q_50: no
+  Rt_Q_75: no
+  Rt_Q_95: no
+  n.active_Q_05: no
+  n.active_Q_25: no
+  n.active_Q_50: no
+  n.active_Q_75: no
+  n.active_Q_95: no 
+  n.new_Q_05: no
+  n.new_Q_25: no
+  n.new_Q_50: no
+  n.new_Q_75: no
+  n.new_Q_95: no
+  n.total_Q_05: no
+  n.total_Q_25: no
+  n.total_Q_50: no
+  n.total_Q_75: no
+  n.total_Q_95: no 
+  n.iso_Q_05: no
+  n.iso_Q_25: no
+  n.iso_Q_50: no
+  n.iso_Q_75: no
+  n.iso_Q_95: no   
+  
+---
+  
+
+
+
+```{r}
+
+df <- (data.frame(iso_delay_untraced_sd_max = params$iso_delay_untraced_sd_max,p.trace_app = params$p.trace_app,Rt_Q_05=params$Rt_Q_05,Rt_Q_25= params$Rt_Q_25,Rt_Q_50=params$Rt_Q_50,Rt_Q_75=params$Rt_Q_75,Rt_Q_95=params$Rt_Q_95))
+RtBasedonAppTraceForReport(df,"Rt")
+
+db <- (data.frame(iso_delay_untraced_sd_max = params$iso_delay_untraced_sd_max,p.trace_app = params$p.trace_app,n.active_Q_05=params$n.active_Q_05,n.active_Q_25= params$n.active_Q_25,n.active_Q_50=params$n.active_Q_50,n.active_Q_75=params$n.active_Q_75,n.active_Q_95=params$n.active_Q_95))
+RtBasedonAppTraceForReport(db,"n.active")
+
+dc <- (data.frame(iso_delay_untraced_sd_max = params$iso_delay_untraced_sd_max,p.trace_app = params$p.trace_app,n.new_Q_05=params$n.new_Q_05,n.new_Q_25= params$n.new_Q_25,n.new_Q_50=params$n.new_Q_50,n.new_Q_75=params$n.new_Q_75,n.new_Q_95=params$n.new_Q_95))
+RtBasedonAppTraceForReport(dc,"n.new")
+
+dm <- (data.frame(iso_delay_untraced_sd_max = params$iso_delay_untraced_sd_max,p.trace_app = params$p.trace_app,n.total_Q_05=params$n.total_Q_05,n.total_Q_25= params$n.total_Q_25,n.total_Q_50=params$n.total_Q_50,n.total_Q_75=params$n.total_Q_75,n.total_Q_95=params$n.total_Q_95))
+RtBasedonAppTraceForReport(dm,"n.total")
+
+dn <- (data.frame(iso_delay_untraced_sd_max = params$iso_delay_untraced_sd_max,p.trace_app = params$p.trace_app,n.iso_Q_05=params$n.iso_Q_05,n.iso_Q_25= params$n.iso_Q_25,n.iso_Q_50=params$n.iso_Q_50,n.iso_Q_75=params$n.iso_Q_75,n.iso_Q_95=params$n.iso_Q_95))
+RtBasedonAppTraceForReport(dn,"n.iso")
+
+dt <- data.frame(titles = params$titles,
+                 value = params$values) 
+library(knitr)                           
+kable(dt)
+```

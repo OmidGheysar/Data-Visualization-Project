@@ -193,7 +193,9 @@ UiRt_App_Manual <- function(){
                  tabPanel("Isolated cases")
       ),
       h4(code("Impact of Manual and digital contact tracing for 
-                Reproductive Number of covid-19"))
+                Reproductive Number of covid-19")),
+      downloadButton("reportForAppAndManualTrace", "Generate a report For App and Manual Trace")
+      
     ),
   )
   

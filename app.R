@@ -188,36 +188,36 @@ server <- function (input, output, session){
   })
   
   # Add your code -----------------------------------------------------------------------------------------------------
-  output$report <- downloadHandler(
+  output$reportForTimeSeries <- downloadHandler(
     filename = "report.pdf",
     content = function(file) {
-      tempReport <- file.path(tempdir(), "report.Rmd")
-      file.copy("report.Rmd", tempReport, overwrite = TRUE)
+      tempReport <- file.path(tempdir(), "reportFotTimeSeries.Rmd")
+      file.copy("reportFotTimeSeries.Rmd", tempReport, overwrite = TRUE)
       
-      source("plotProducerForReport.R")
+      source("RtBasedOnplotProducerForReport.R")
       dat <- readRDS("Newdata.rds")
       filterResult<- select100Scenarios(dat,3,.5,.5,.7,2,1,.3)
       df <- filterResult
-      # params <- as.data.frame(params)
       
-      # # Set up parameters to pass to Rmd document
-      # params <- list(n = input$slider)
+      dt <- data.frame(titles = c("Omid Gheysar Gharamaki for the ","1:11","1:11","1:11",
+                                  "1:11","1:11","1:11","1:11","1:11","1:11","1:11"),
+                       values = c(-0.8125594, -0.7590050, -0.7189301, -0.7188391, -0.5047816,
+                                  -0.3439579, -0.4376782, -0.1300217, 0.9145718, 2.1844290,
+                                  2021)) 
       
-      # Knit the document, passing in the `params` list, and eval it in a
-      # child of the global environment (this isolates the code in the document
-      # from the code in this app).
       rmarkdown::render(tempReport, output_file = file,
                         params = list(day = df$day,Rt_Q_05 = df$Rt_Q_05, Rt_Q_25 = df$Rt_Q_25, Rt_Q_50=df$Rt_Q_50, Rt_Q_75 = df$Rt_Q_75,Rt_Q_95 = df$Rt_Q_95,
                                       n.active_Q_05 = df$n.active_Q_05, n.active_Q_25 = df$n.active_Q_25, n.active_Q_50=df$n.active_Q_50, n.active_Q_75 = df$n.active_Q_75,n.active_Q_95 = df$n.active_Q_95,
                                       n.new_Q_05 = df$n.new_Q_05, n.new_Q_25 = df$n.new_Q_25, n.new_Q_50=df$n.new_Q_50, n.new_Q_75 = df$n.new_Q_75,n.new_Q_95 = df$n.new_Q_95,
                                       n.total_Q_05 = df$n.total_Q_05, n.total_Q_25 = df$n.total_Q_25, n.total_Q_50=df$n.total_Q_50, n.total_Q_75 = df$n.total_Q_75,n.total_Q_95 = df$n.total_Q_95,
-                                      n.iso_Q_05 = df$n.iso_Q_05, n.iso_Q_25 = df$n.iso_Q_25, n.iso_Q_50=df$n.iso_Q_50, n.iso_Q_75 = df$n.iso_Q_75,n.iso_Q_95 = df$n.iso_Q_95),
+                                      n.iso_Q_05 = df$n.iso_Q_05, n.iso_Q_25 = df$n.iso_Q_25, n.iso_Q_50=df$n.iso_Q_50, n.iso_Q_75 = df$n.iso_Q_75,n.iso_Q_95 = df$n.iso_Q_95,
+                                      titles = dt$titles,values = dt$values),
                         envir = new.env(parent = globalenv())
       )
     }
   )
   
-  # -------------------------------------------------------------------------------------------------------------------
+  # ------------------------------------------------------
 
 # page time series two senarios ===================================================================================
   output$plotTwoScenarios1 <- renderPlotly({
@@ -326,7 +326,65 @@ server <- function (input, output, session){
   })
   
   
+  
+  
+  
+  #===================================================================================================== 
+  output$reportForTwoPlots <- downloadHandler(
+    # For PDF output, change this to "report.pdf"
+    filename = "report.pdf",
+    content = function(file) {
+      # Copy the report file to a temporary directory before processing it, in
+      # case we don't have write permissions to the current working dir (which
+      # can happen when deployed).
+      tempReport <- file.path(tempdir(), "reportForTwoPlot.Rmd")
+      file.copy("reportForTwoPlot.Rmd", tempReport, overwrite = TRUE)
+      
+      source("RtBasedonTwoPlotsForReport.R")
+      dat <- readRDS("Newdata.rds")
+      scenarios1<- select100Scenarios(dat,2.5,0,0,.8,1,5,.8)
+      scenarios2<- select100Scenarios(dat,3,0,0,.8,1,5,.8)
+      df1 <- scenarios1
+      df2 <- scenarios2
+      # params <- as.data.frame(params)
+      
+      dt1 <- data.frame(titles1 = c("Omid Gheysar Gharamaki for the ","1:11","1:11","1:11",
+                                    "1:11","1:11","1:11","1:11","1:11","1:11","1:11"),
+                        values1 = c(-0.8125594, -0.7590050, -0.7189301, -0.7188391, -0.5047816,
+                                    -0.3439579, -0.4376782, -0.1300217, 0.9145718, 2.1844290,
+                                    2021)) 
+      
+      dt2 <- data.frame(titles2 = c("Omid Gheysar Gharamaki for the ","2","2","2",
+                                    "2","2","2","2","2","1:11","1:11"),
+                        values2 = c(-0.8125594, -0.7590050, -0.7189301, -0.7188391, -0.5047816,
+                                    -0.3439579, -0.4376782, -0.1300217, 0.9145718, 2.1844290,
+                                    2021)) 
+      # Knit the document, passing in the `params` list, and eval it in a
+      # child of the global environment (this isolates the code in the document
+      # from the code in this app).
+      rmarkdown::render(tempReport, output_file = file,
+                        params = list(day = df1$day,Rt_Q_05_1 = df1$Rt_Q_05, Rt_Q_25_1 = df1$Rt_Q_25, Rt_Q_50_1=df1$Rt_Q_50, Rt_Q_75_1 = df1$Rt_Q_75,Rt_Q_95_1 = df1$Rt_Q_95,
+                                      n.active_Q_05_1 = df1$n.active_Q_05, n.active_Q_25_1 = df1$n.active_Q_25, n.active_Q_50_1=df1$n.active_Q_50, n.active_Q_75_1 = df1$n.active_Q_75,n.active_Q_95_1 = df1$n.active_Q_95,
+                                      n.new_Q_05_1 = df1$n.new_Q_05, n.new_Q_25_1 = df1$n.new_Q_25, n.new_Q_50_1=df1$n.new_Q_50, n.new_Q_75_1 = df1$n.new_Q_75,n.new_Q_95_1 = df1$n.new_Q_95,
+                                      n.total_Q_05_1 = df1$n.total_Q_05, n.total_Q_25_1 = df1$n.total_Q_25, n.total_Q_50_1=df1$n.total_Q_50, n.total_Q_75_1 = df1$n.total_Q_75,n.total_Q_95_1 = df1$n.total_Q_95,
+                                      n.iso_Q_05_1 = df1$n.iso_Q_05, n.iso_Q_25_1 = df1$n.iso_Q_25, n.iso_Q_50_1=df1$n.iso_Q_50, n.iso_Q_75_1 = df1$n.iso_Q_75,n.iso_Q_95_1 = df1$n.iso_Q_95,
+                                      Rt_Q_05_2 = df2$Rt_Q_05, Rt_Q_25_2 = df2$Rt_Q_25, Rt_Q_50_2=df2$Rt_Q_50, Rt_Q_75_2 = df2$Rt_Q_75,Rt_Q_95_2 = df2$Rt_Q_95,
+                                      n.active_Q_05_2 = df2$n.active_Q_05, n.active_Q_25_2 = df2$n.active_Q_25, n.active_Q_50_2=df2$n.active_Q_50, n.active_Q_75_2 = df2$n.active_Q_75,n.active_Q_95_2 = df2$n.active_Q_95,
+                                      n.new_Q_05_2 = df2$n.new_Q_05, n.new_Q_25_2 = df2$n.new_Q_25, n.new_Q_50_2=df2$n.new_Q_50, n.new_Q_75_2 = df2$n.new_Q_75,n.new_Q_95_2 = df2$n.new_Q_95,
+                                      n.total_Q_05_2 = df2$n.total_Q_05, n.total_Q_25_2 = df2$n.total_Q_25, n.total_Q_50_2=df2$n.total_Q_50, n.total_Q_75_2 = df2$n.total_Q_75,n.total_Q_95_2 = df2$n.total_Q_95,
+                                      n.iso_Q_05_2 = df2$n.iso_Q_05, n.iso_Q_25_2 = df2$n.iso_Q_25, n.iso_Q_50_2=df2$n.iso_Q_50, n.iso_Q_75_2 = df2$n.iso_Q_75,n.iso_Q_95_2 = df2$n.iso_Q_95,
+                                      titles1 = dt1$titles1,values1 = dt1$values1,titles2 = dt2$titles2,values2 = dt2$values2
+                        ),
+                        envir = new.env(parent = globalenv())
+      )
+    }
+  )
+  
+  # ---------------------------------------------------------------------------------------------------
+  
+  
   v <- reactiveValues(data = NULL)
+  
   
 # page contact tracing with only app =======================================================================
   output$plotRt_Only_App1 <- renderPlotly({
@@ -381,6 +439,42 @@ server <- function (input, output, session){
                              100)),
       stringsAsFactors = FALSE)
   })
+  
+  # Add your code -----------------------------------------------------------------------------------------------------
+  output$reportForAppTrace <- downloadHandler(
+    filename = "report.pdf",
+    content = function(file) {
+      tempReport <- file.path(tempdir(), "reportForApp.Rmd")
+      file.copy("reportForApp.Rmd", tempReport, overwrite = TRUE)
+      
+      source("RtBasedonAppTraceForReport.R")
+      dat <- readRDS("Newdata.rds")
+      myResult <- select64000Scenarios(dat,31 ,2,.7,.3)
+      df <- myResult
+      # params <- as.data.frame(params)
+      
+      dt <- data.frame(titles = c("Omid Gheysar Gharamaki for the ","1:11","1:11","1:11",
+                                  "1:11","1:11","1:11","1:11","1:11","1:11","1:11"),
+                       values = c(-0.8125594, -0.7590050, -0.7189301, -0.7188391, -0.5047816,
+                                  -0.3439579, -0.4376782, -0.1300217, 0.9145718, 2.1844290,
+                                  2021)) 
+      
+      # Knit the document, passing in the `params` list, and eval it in a
+      # child of the global environment (this isolates the code in the document
+      # from the code in this app).
+      rmarkdown::render(tempReport, output_file = file,
+                        params = list(iso_delay_untraced_sd_max = df$iso_delay_untraced_sd_max,p.trace_app = df$p.trace_app,Rt_Q_05 = df$Rt_Q_05, Rt_Q_25 = df$Rt_Q_25, Rt_Q_50=df$Rt_Q_50, Rt_Q_75 = df$Rt_Q_75,Rt_Q_95 = df$Rt_Q_95,
+                                      n.active_Q_05 = df$n.active_Q_05, n.active_Q_25 = df$n.active_Q_25, n.active_Q_50=df$n.active_Q_50, n.active_Q_75 = df$n.active_Q_75,n.active_Q_95 = df$n.active_Q_95,
+                                      n.new_Q_05 = df$n.new_Q_05, n.new_Q_25 = df$n.new_Q_25, n.new_Q_50=df$n.new_Q_50, n.new_Q_75 = df$n.new_Q_75,n.new_Q_95 = df$n.new_Q_95,
+                                      n.total_Q_05 = df$n.total_Q_05, n.total_Q_25 = df$n.total_Q_25, n.total_Q_50=df$n.total_Q_50, n.total_Q_75 = df$n.total_Q_75,n.total_Q_95 = df$n.total_Q_95,
+                                      n.iso_Q_05 = df$n.iso_Q_05, n.iso_Q_25 = df$n.iso_Q_25, n.iso_Q_50=df$n.iso_Q_50, n.iso_Q_75 = df$n.iso_Q_75,n.iso_Q_95 = df$n.iso_Q_95,
+                                      titles = dt$titles,values = dt$values),
+                        envir = new.env(parent = globalenv())
+      )
+    }
+  )
+  
+  # -------------------------------------------------------------------------------------------------------------------
   
   
   # page contact tracing with manual method only ============================================================ 
@@ -438,6 +532,41 @@ server <- function (input, output, session){
       stringsAsFactors = FALSE)
   })
   
+  # Add your code -----------------------------------------------------------------------------------------------------
+  output$reportForManualTrace <- downloadHandler(
+    filename = "report.pdf",
+    content = function(file) {
+      tempReport <- file.path(tempdir(), "reportForManual.Rmd")
+      file.copy("reportForManual.Rmd", tempReport, overwrite = TRUE)
+      
+      source("RtBasedonManualTraceForReport.R")
+      dat <- readRDS("Newdata.rds")
+      filterResult<- select64000Scenarios(dat,30 ,3,.7,1,.3)
+      df <- filterResult
+      # params <- as.data.frame(params)
+      
+      dt <- data.frame(titles = c("Omid Gheysar Gharamaki for the ","1:11","1:11","1:11",
+                                  "1:11","1:11","1:11","1:11","1:11","1:11","1:11"),
+                       values = c(-0.8125594, -0.7590050, -0.7189301, -0.7188391, -0.5047816,
+                                  -0.3439579, -0.4376782, -0.1300217, 0.9145718, 2.1844290,
+                                  2021)) 
+      
+      # Knit the document, passing in the `params` list, and eval it in a
+      # child of the global environment (this isolates the code in the document
+      # from the code in this app).
+      rmarkdown::render(tempReport, output_file = file,
+                        params = list(iso_delay_traced_max = df$iso_delay_traced_max,p.trace = df$p.trace,Rt_Q_05 = df$Rt_Q_05, Rt_Q_25 = df$Rt_Q_25, Rt_Q_50=df$Rt_Q_50, Rt_Q_75 = df$Rt_Q_75,Rt_Q_95 = df$Rt_Q_95,
+                                      n.active_Q_05 = df$n.active_Q_05, n.active_Q_25 = df$n.active_Q_25, n.active_Q_50=df$n.active_Q_50, n.active_Q_75 = df$n.active_Q_75,n.active_Q_95 = df$n.active_Q_95,
+                                      n.new_Q_05 = df$n.new_Q_05, n.new_Q_25 = df$n.new_Q_25, n.new_Q_50=df$n.new_Q_50, n.new_Q_75 = df$n.new_Q_75,n.new_Q_95 = df$n.new_Q_95,
+                                      n.total_Q_05 = df$n.total_Q_05, n.total_Q_25 = df$n.total_Q_25, n.total_Q_50=df$n.total_Q_50, n.total_Q_75 = df$n.total_Q_75,n.total_Q_95 = df$n.total_Q_95,
+                                      n.iso_Q_05 = df$n.iso_Q_05, n.iso_Q_25 = df$n.iso_Q_25, n.iso_Q_50=df$n.iso_Q_50, n.iso_Q_75 = df$n.iso_Q_75,n.iso_Q_95 = df$n.iso_Q_95,
+                                      titles = dt$titles,values = dt$values),
+                        envir = new.env(parent = globalenv())
+      )
+    }
+  )
+  
+  # -------------------------------------------------------------------------------------------------------------------
   
   # contact tracing with both manual and app tracing ====================================================== 
   output$plotRt_App_Manual1 <- renderPlotly({
@@ -497,6 +626,42 @@ server <- function (input, output, session){
                              100)),
       stringsAsFactors = FALSE)
   })
+  
+  # Add your code -----------------------------------------------------------------------------------------------------
+  output$reportForAppAndManualTrace <- downloadHandler(
+    filename = "report.pdf",
+    content = function(file) {
+      tempReport <- file.path(tempdir(), "reportForAppAndManual.Rmd")
+      file.copy("reportForAppAndManual.Rmd", tempReport, overwrite = TRUE)
+      
+      source("RtBasedonAppAndManualForReport.R")
+      dat <- readRDS("Newdata.rds")
+      myResult <- select64000Scenarios(dat,10 ,3,.7,2,1,.3)
+      df <- myResult
+      # params <- as.data.frame(params)
+      
+      dt <- data.frame(titles = c("Omid Gheysar Gharamaki for the ","1:11","1:11","1:11",
+                                  "1:11","1:11","1:11","1:11","1:11","1:11","1:11"),
+                       values = c(-0.8125594, -0.7590050, -0.7189301, -0.7188391, -0.5047816,
+                                  -0.3439579, -0.4376782, -0.1300217, 0.9145718, 2.1844290,
+                                  2021)) 
+      
+      # Knit the document, passing in the `params` list, and eval it in a
+      # child of the global environment (this isolates the code in the document
+      # from the code in this app).
+      rmarkdown::render(tempReport, output_file = file,
+                        params = list(p.trace = df$p.trace,p.trace_app = df$p.trace_app,Rt_Q_05 = df$Rt_Q_05, Rt_Q_25 = df$Rt_Q_25, Rt_Q_50=df$Rt_Q_50, Rt_Q_75 = df$Rt_Q_75,Rt_Q_95 = df$Rt_Q_95,
+                                      n.active_Q_05 = df$n.active_Q_05, n.active_Q_25 = df$n.active_Q_25, n.active_Q_50=df$n.active_Q_50, n.active_Q_75 = df$n.active_Q_75,n.active_Q_95 = df$n.active_Q_95,
+                                      n.new_Q_05 = df$n.new_Q_05, n.new_Q_25 = df$n.new_Q_25, n.new_Q_50=df$n.new_Q_50, n.new_Q_75 = df$n.new_Q_75,n.new_Q_95 = df$n.new_Q_95,
+                                      n.total_Q_05 = df$n.total_Q_05, n.total_Q_25 = df$n.total_Q_25, n.total_Q_50=df$n.total_Q_50, n.total_Q_75 = df$n.total_Q_75,n.total_Q_95 = df$n.total_Q_95,
+                                      n.iso_Q_05 = df$n.iso_Q_05, n.iso_Q_25 = df$n.iso_Q_25, n.iso_Q_50=df$n.iso_Q_50, n.iso_Q_75 = df$n.iso_Q_75,n.iso_Q_95 = df$n.iso_Q_95,
+                                      titles = dt$titles,values = dt$values),
+                        envir = new.env(parent = globalenv())
+      )
+    }
+  )
+  
+  # -------------------------------------------------------------------------------------------------------------------
   
 }
 
