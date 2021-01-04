@@ -85,7 +85,7 @@ returnPlot <- function(dat,
    #    p <- p + labs(x="Day", y="Number of active cases")
    # }
    
-   
+   p <- p + scale_x_continuous(breaks=seq(0, 31, 1)) 
    
    if(ouptColumn=="Rt"){
       p <- p + geom_hline(yintercept=1,
