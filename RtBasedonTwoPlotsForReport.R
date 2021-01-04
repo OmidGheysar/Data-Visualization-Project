@@ -11,7 +11,7 @@ library(ggtext)
 library(magrittr) # needs to be run every time you start R and want to use %>%
 library(dplyr)    # alternatively, this also loads %>%
 library("tidyverse")
-# 
+# it has already been called in the time series section 
 # scenarios1<- select100Scenarios(dat,
 #                                 inputR012,
 #                                 inputp.trace12,

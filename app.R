@@ -195,8 +195,16 @@ server <- function (input, output, session){
       file.copy("reportFotTimeSeries.Rmd", tempReport, overwrite = TRUE)
       
       source("RtBasedOnplotProducerForReport.R")
-      dat <- readRDS("Newdata.rds")
-      filterResult<- select100Scenarios(dat,3,.5,.5,.7,2,1,.3)
+      # dat <- readRDS("Newdata.rds")
+      # filterResult<- select100Scenarios(dat,3,.5,.5,.7,2,1,.3)
+      filterResult<- select100Scenarios(dat,
+                                        input$R0,
+                                        input$p.trace,
+                                        input$p.trace_app,
+                                        input$p.symp,
+                                        input$iso_delay_traced_max,
+                                        input$iso_delay_untraced_sd_max,
+                                        input$sd_contact_rate1) 
       df <- filterResult
       
       dt <- data.frame(titles = c("Omid Gheysar Gharamaki for the ","1:11","1:11","1:11",
@@ -325,10 +333,6 @@ server <- function (input, output, session){
     
   })
   
-  
-  
-  
-  
   #===================================================================================================== 
   output$reportForTwoPlots <- downloadHandler(
     # For PDF output, change this to "report.pdf"
@@ -341,9 +345,25 @@ server <- function (input, output, session){
       file.copy("reportForTwoPlot.Rmd", tempReport, overwrite = TRUE)
       
       source("RtBasedonTwoPlotsForReport.R")
-      dat <- readRDS("Newdata.rds")
-      scenarios1<- select100Scenarios(dat,2.5,0,0,.8,1,5,.8)
-      scenarios2<- select100Scenarios(dat,3,0,0,.8,1,5,.8)
+      # dat <- readRDS("Newdata.rds")
+      # scenarios1<- select100Scenarios(dat,2.5,0,0,.8,1,5,.8)
+      scenarios1<- select100Scenarios(dat,
+                                      input$R012,
+                                      input$p.trace12,
+                                      input$p.trace_app12,
+                                      input$p.symp12,
+                                      input$iso_delay_traced_max12,
+                                      input$iso_delay_untraced_sd_max12,
+                                      input$sd_contact_rate112)
+      # scenarios2<- select100Scenarios(dat,3,0,0,.8,1,5,.8)
+      scenarios2<- select100Scenarios(dat,
+                                      input$R023,
+                                      input$p.trace23,
+                                      input$p.trace_app23,
+                                      input$p.symp23,
+                                      input$iso_delay_traced_max23,
+                                      input$iso_delay_untraced_sd_max23,
+                                      input$sd_contact_rate123)
       df1 <- scenarios1
       df2 <- scenarios2
       # params <- as.data.frame(params)
@@ -448,8 +468,13 @@ server <- function (input, output, session){
       file.copy("reportForApp.Rmd", tempReport, overwrite = TRUE)
       
       source("RtBasedonAppTraceForReport.R")
-      dat <- readRDS("Newdata.rds")
-      myResult <- select64000Scenarios(dat,31 ,2,.7,.3)
+      # dat <- readRDS("Newdata.rds")
+      # myResult <- select64000Scenarios(dat,31 ,2,.7,.3)
+      myResult <- select64000Scenarios(dat,
+                                       input$daysforApp,
+                                       input$R0forApp,
+                                       input$p.symforApp,
+                                       input$sd_contactforApp)
       df <- myResult
       # params <- as.data.frame(params)
       
@@ -540,8 +565,14 @@ server <- function (input, output, session){
       file.copy("reportForManual.Rmd", tempReport, overwrite = TRUE)
       
       source("RtBasedonManualTraceForReport.R")
-      dat <- readRDS("Newdata.rds")
-      filterResult<- select64000Scenarios(dat,30 ,3,.7,1,.3)
+      # dat <- readRDS("Newdata.rds")
+      # filterResult<- select64000Scenarios(dat,30 ,3,.7,1,.3)
+      filterResult<- select64000Scenarios(dat,
+                                          input$daysforManual,
+                                          input$R0forManual,
+                                          input$p.symforManual,
+                                          input$iso_delay_untracedforManual,
+                                          input$sd_contactforManual)
       df <- filterResult
       # params <- as.data.frame(params)
       
@@ -635,8 +666,15 @@ server <- function (input, output, session){
       file.copy("reportForAppAndManual.Rmd", tempReport, overwrite = TRUE)
       
       source("RtBasedonAppAndManualForReport.R")
-      dat <- readRDS("Newdata.rds")
-      myResult <- select64000Scenarios(dat,10 ,3,.7,2,1,.3)
+      # dat <- readRDS("Newdata.rds")
+      # myResult <- select64000Scenarios(dat,10 ,3,.7,2,1,.3)
+      myResult <- select64000Scenarios(dat,
+                                       input$daysforAppManual,
+                                       input$R0forAppManual,
+                                       input$p.symforAppManual,
+                                       input$iso_delay_tracecedforAppManual,
+                                       input$iso_delay_untracedforAppManaual,
+                                       input$sd_contactforAppManual)
       df <- myResult
       # params <- as.data.frame(params)
       
