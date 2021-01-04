@@ -165,7 +165,7 @@ server <- function (input, output, session){
   
   
   output$TableTime <- renderTable({
-    data.frame(
+    dtTimeSeries <- data.frame(
       Name = c("R0 ",
                "Fraction of cases that are symptomatic",
                "Delay to isolation for untraced & distancing cases",
@@ -206,12 +206,27 @@ server <- function (input, output, session){
                                         input$iso_delay_untraced_sd_max,
                                         input$sd_contact_rate1) 
       df <- filterResult
-      
-      dt <- data.frame(titles = c("Omid Gheysar Gharamaki for the ","1:11","1:11","1:11",
-                                  "1:11","1:11","1:11","1:11","1:11","1:11","1:11"),
-                       values = c(-0.8125594, -0.7590050, -0.7189301, -0.7188391, -0.5047816,
-                                  -0.3439579, -0.4376782, -0.1300217, 0.9145718, 2.1844290,
-                                  2021)) 
+      dtTimeSeries <- data.frame(
+        Name = c("R0 ",
+                 "Fraction of cases that are symptomatic",
+                 "Delay to isolation for untraced & distancing cases",
+                 "Simulation days",
+                 "Delay to isolation for traced cases (days)",
+                 "Fraction of people using contact tracing app",
+                 "Fraction of cases manually traced",
+                 "Contact rate (proportion of normal)",
+                 "Initial number of infected individuals"),
+        Value = as.character(c(input$R0,
+                               input$p.symp,
+                               input$iso_delay_untraced_sd_max,
+                               input$day,
+                               input$iso_delay_traced_max,
+                               input$p.trace_app,
+                               input$p.trace,
+                               input$sd_contact_rate1,
+                               100)),
+        stringsAsFactors = FALSE)
+ 
       
       rmarkdown::render(tempReport, output_file = file,
                         params = list(day = df$day,Rt_Q_05 = df$Rt_Q_05, Rt_Q_25 = df$Rt_Q_25, Rt_Q_50=df$Rt_Q_50, Rt_Q_75 = df$Rt_Q_75,Rt_Q_95 = df$Rt_Q_95,
@@ -219,7 +234,7 @@ server <- function (input, output, session){
                                       n.new_Q_05 = df$n.new_Q_05, n.new_Q_25 = df$n.new_Q_25, n.new_Q_50=df$n.new_Q_50, n.new_Q_75 = df$n.new_Q_75,n.new_Q_95 = df$n.new_Q_95,
                                       n.total_Q_05 = df$n.total_Q_05, n.total_Q_25 = df$n.total_Q_25, n.total_Q_50=df$n.total_Q_50, n.total_Q_75 = df$n.total_Q_75,n.total_Q_95 = df$n.total_Q_95,
                                       n.iso_Q_05 = df$n.iso_Q_05, n.iso_Q_25 = df$n.iso_Q_25, n.iso_Q_50=df$n.iso_Q_50, n.iso_Q_75 = df$n.iso_Q_75,n.iso_Q_95 = df$n.iso_Q_95,
-                                      titles = dt$titles,values = dt$values),
+                                      titles = dtTimeSeries$Name,values = dtTimeSeries$Value),
                         envir = new.env(parent = globalenv())
       )
     }
@@ -250,7 +265,7 @@ server <- function (input, output, session){
   })
   
   output$T1 <- renderTable({
-    data.frame(
+    dtTwoPlot1 <- data.frame(
       Name = c("R0 ",
                "Fraction of cases that are symptomatic",
                "Delay to isolation for untraced & distancing cases",
@@ -273,7 +288,7 @@ server <- function (input, output, session){
   })
   
   output$T2 <- renderTable({
-    data.frame(
+    dtTwoPlot2 <-data.frame(
       Name = c("R0 ",
                "Fraction of cases that are symptomatic",
                "Delay to isolation for untraced & distancing cases",
@@ -368,17 +383,48 @@ server <- function (input, output, session){
       df2 <- scenarios2
       # params <- as.data.frame(params)
       
-      dt1 <- data.frame(titles1 = c("Omid Gheysar Gharamaki for the ","1:11","1:11","1:11",
-                                    "1:11","1:11","1:11","1:11","1:11","1:11","1:11"),
-                        values1 = c(-0.8125594, -0.7590050, -0.7189301, -0.7188391, -0.5047816,
-                                    -0.3439579, -0.4376782, -0.1300217, 0.9145718, 2.1844290,
-                                    2021)) 
       
-      dt2 <- data.frame(titles2 = c("Omid Gheysar Gharamaki for the ","2","2","2",
-                                    "2","2","2","2","2","1:11","1:11"),
-                        values2 = c(-0.8125594, -0.7590050, -0.7189301, -0.7188391, -0.5047816,
-                                    -0.3439579, -0.4376782, -0.1300217, 0.9145718, 2.1844290,
-                                    2021)) 
+      dtTwoPlots1 <- data.frame(
+        Name = c("R0 ",
+                 "Fraction of cases that are symptomatic",
+                 "Delay to isolation for untraced & distancing cases",
+                 "Simulation days",
+                 "Delay to isolation for traced cases (days)",
+                 "Fraction of people using contact tracing app",
+                 "Fraction of cases manually traced",
+                 "Contact rate (proportion of normal)",
+                 "Initial number of infected individuals"),
+        Value = as.character(c(input$R012,
+                               input$p.symp12,
+                               input$iso_delay_untraced_sd_max12,
+                               31,
+                               input$iso_delay_traced_max12,
+                               input$p.trace_app12,
+                               input$p.trace12,
+                               input$sd_contact_rate112,
+                               100)),
+        stringsAsFactors = FALSE)
+      
+      dtTwoPlots2 <-data.frame(
+        Name = c("R0 ",
+                 "Fraction of cases that are symptomatic",
+                 "Delay to isolation for untraced & distancing cases",
+                 "Simulation days",
+                 "Delay to isolation for traced cases (days)",
+                 "Fraction of people using contact tracing app",
+                 "Fraction of cases manually traced",
+                 "Contact rate (proportion of normal)",
+                 "Initial number of infected individuals"),
+        Value = as.character(c(input$R023,
+                               input$p.symp23,
+                               input$iso_delay_untraced_sd_max23,
+                               31,
+                               input$iso_delay_traced_max23,
+                               input$p.trace_app23,
+                               input$p.trace23,
+                               input$sd_contact_rate123,
+                               100)),
+        stringsAsFactors = FALSE) 
       # Knit the document, passing in the `params` list, and eval it in a
       # child of the global environment (this isolates the code in the document
       # from the code in this app).
@@ -393,7 +439,7 @@ server <- function (input, output, session){
                                       n.new_Q_05_2 = df2$n.new_Q_05, n.new_Q_25_2 = df2$n.new_Q_25, n.new_Q_50_2=df2$n.new_Q_50, n.new_Q_75_2 = df2$n.new_Q_75,n.new_Q_95_2 = df2$n.new_Q_95,
                                       n.total_Q_05_2 = df2$n.total_Q_05, n.total_Q_25_2 = df2$n.total_Q_25, n.total_Q_50_2=df2$n.total_Q_50, n.total_Q_75_2 = df2$n.total_Q_75,n.total_Q_95_2 = df2$n.total_Q_95,
                                       n.iso_Q_05_2 = df2$n.iso_Q_05, n.iso_Q_25_2 = df2$n.iso_Q_25, n.iso_Q_50_2=df2$n.iso_Q_50, n.iso_Q_75_2 = df2$n.iso_Q_75,n.iso_Q_95_2 = df2$n.iso_Q_95,
-                                      titles1 = dt1$titles1,values1 = dt1$values1,titles2 = dt2$titles2,values2 = dt2$values2
+                                      titles1 = dtTwoPlots1$Name,values1 = dtTwoPlots1$Value,titles2 = dtTwoPlots2$Name,values2 = dtTwoPlots2$Value
                         ),
                         envir = new.env(parent = globalenv())
       )
@@ -478,11 +524,17 @@ server <- function (input, output, session){
       df <- myResult
       # params <- as.data.frame(params)
       
-      dt <- data.frame(titles = c("Omid Gheysar Gharamaki for the ","1:11","1:11","1:11",
-                                  "1:11","1:11","1:11","1:11","1:11","1:11","1:11"),
-                       values = c(-0.8125594, -0.7590050, -0.7189301, -0.7188391, -0.5047816,
-                                  -0.3439579, -0.4376782, -0.1300217, 0.9145718, 2.1844290,
-                                  2021)) 
+      dt <- data.frame(Name = c("R0 ",
+                                "Fraction of cases that are symptomatic",
+                                "simulation days",
+                                "Contact rate (proportion of normal)",
+                                "Initial number of infected individuals"),
+                       Value = as.character(c(input$R0forApp,
+                                              input$p.symforApp,
+                                              input$daysforApp,
+                                              input$sd_contactforApp,
+                                              100)),
+                       stringsAsFactors = FALSE) 
       
       # Knit the document, passing in the `params` list, and eval it in a
       # child of the global environment (this isolates the code in the document
@@ -493,7 +545,7 @@ server <- function (input, output, session){
                                       n.new_Q_05 = df$n.new_Q_05, n.new_Q_25 = df$n.new_Q_25, n.new_Q_50=df$n.new_Q_50, n.new_Q_75 = df$n.new_Q_75,n.new_Q_95 = df$n.new_Q_95,
                                       n.total_Q_05 = df$n.total_Q_05, n.total_Q_25 = df$n.total_Q_25, n.total_Q_50=df$n.total_Q_50, n.total_Q_75 = df$n.total_Q_75,n.total_Q_95 = df$n.total_Q_95,
                                       n.iso_Q_05 = df$n.iso_Q_05, n.iso_Q_25 = df$n.iso_Q_25, n.iso_Q_50=df$n.iso_Q_50, n.iso_Q_75 = df$n.iso_Q_75,n.iso_Q_95 = df$n.iso_Q_95,
-                                      titles = dt$titles,values = dt$values),
+                                      titles = dt$Name,values = dt$Value),
                         envir = new.env(parent = globalenv())
       )
     }
@@ -576,11 +628,19 @@ server <- function (input, output, session){
       df <- filterResult
       # params <- as.data.frame(params)
       
-      dt <- data.frame(titles = c("Omid Gheysar Gharamaki for the ","1:11","1:11","1:11",
-                                  "1:11","1:11","1:11","1:11","1:11","1:11","1:11"),
-                       values = c(-0.8125594, -0.7590050, -0.7189301, -0.7188391, -0.5047816,
-                                  -0.3439579, -0.4376782, -0.1300217, 0.9145718, 2.1844290,
-                                  2021)) 
+      dt <- data.frame(Name = c("R0 ",
+                                "Fraction of cases that are symptomatic",
+                                "Delay to isolation for untraced & distancing cases",
+                                "Simulation days",
+                                "Contact rate (proportion of normal)",
+                                "Initial number of infected individuals"),
+                       Value = as.character(c(input$R0forManual,
+                                              input$p.symforManual,
+                                              input$iso_delay_untracedforManual,
+                                              input$daysforManual,
+                                              input$sd_contactforManual,
+                                              100)),
+                       stringsAsFactors = FALSE)
       
       # Knit the document, passing in the `params` list, and eval it in a
       # child of the global environment (this isolates the code in the document
@@ -591,7 +651,7 @@ server <- function (input, output, session){
                                       n.new_Q_05 = df$n.new_Q_05, n.new_Q_25 = df$n.new_Q_25, n.new_Q_50=df$n.new_Q_50, n.new_Q_75 = df$n.new_Q_75,n.new_Q_95 = df$n.new_Q_95,
                                       n.total_Q_05 = df$n.total_Q_05, n.total_Q_25 = df$n.total_Q_25, n.total_Q_50=df$n.total_Q_50, n.total_Q_75 = df$n.total_Q_75,n.total_Q_95 = df$n.total_Q_95,
                                       n.iso_Q_05 = df$n.iso_Q_05, n.iso_Q_25 = df$n.iso_Q_25, n.iso_Q_50=df$n.iso_Q_50, n.iso_Q_75 = df$n.iso_Q_75,n.iso_Q_95 = df$n.iso_Q_95,
-                                      titles = dt$titles,values = dt$values),
+                                      titles = dt$Name,values = dt$Value),
                         envir = new.env(parent = globalenv())
       )
     }
@@ -678,11 +738,21 @@ server <- function (input, output, session){
       df <- myResult
       # params <- as.data.frame(params)
       
-      dt <- data.frame(titles = c("Omid Gheysar Gharamaki for the ","1:11","1:11","1:11",
-                                  "1:11","1:11","1:11","1:11","1:11","1:11","1:11"),
-                       values = c(-0.8125594, -0.7590050, -0.7189301, -0.7188391, -0.5047816,
-                                  -0.3439579, -0.4376782, -0.1300217, 0.9145718, 2.1844290,
-                                  2021)) 
+      dt <- data.frame(Name = c("R0 ",
+                                "Fraction of cases that are symptomatic",
+                                "Delay to isolation for untraced & distancing cases",
+                                "Simulation days",
+                                "Delay to isolation for traced cases (days)",
+                                "Contact rate (proportion of normal)",
+                                "Initial number of infected individuals"),
+                       Value = as.character(c(input$R0forAppManual,
+                                              input$p.symforAppManual,
+                                              input$iso_delay_untracedforAppManaual,
+                                              input$daysforAppManual,
+                                              input$iso_delay_tracecedforAppManual,
+                                              input$sd_contactforAppManual,
+                                              100)),
+                       stringsAsFactors = FALSE) 
       
       # Knit the document, passing in the `params` list, and eval it in a
       # child of the global environment (this isolates the code in the document
@@ -693,7 +763,7 @@ server <- function (input, output, session){
                                       n.new_Q_05 = df$n.new_Q_05, n.new_Q_25 = df$n.new_Q_25, n.new_Q_50=df$n.new_Q_50, n.new_Q_75 = df$n.new_Q_75,n.new_Q_95 = df$n.new_Q_95,
                                       n.total_Q_05 = df$n.total_Q_05, n.total_Q_25 = df$n.total_Q_25, n.total_Q_50=df$n.total_Q_50, n.total_Q_75 = df$n.total_Q_75,n.total_Q_95 = df$n.total_Q_95,
                                       n.iso_Q_05 = df$n.iso_Q_05, n.iso_Q_25 = df$n.iso_Q_25, n.iso_Q_50=df$n.iso_Q_50, n.iso_Q_75 = df$n.iso_Q_75,n.iso_Q_95 = df$n.iso_Q_95,
-                                      titles = dt$titles,values = dt$values),
+                                      titles = dt$Name,values = dt$Value),
                         envir = new.env(parent = globalenv())
       )
     }

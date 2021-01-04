@@ -87,13 +87,13 @@ dn2 <- (data.frame(day = params$day,n.iso_Q_05=params$n.iso_Q_05_2,n.iso_Q_25= p
 RtBasedonTwoPlotsForReport("n.iso",dn1,dn2)
 
 dt1 <- data.frame(titles1 = params$titles1,
-                 value1 = params$values1) 
+                  value1 = params$values1) 
 
 dt2 <- data.frame(titles2 = params$titles2,
-                 value2 = params$values2) 
-
+                  value2 = params$values2)
 
 ```
+
 
 
 ```{r sample, echo=FALSE}
