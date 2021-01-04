@@ -19,7 +19,7 @@ slidebar1For2 <- function() {
                 min = 1, max = 4,
                 value = 2, step = 1),
     
-    selectInput("selection12", "Select something", choices = c("Descision Making Parameters", "All Parameters")),
+    selectInput("selection12", "Select something", choices = c("Decision Making Parameters", "All Parameters")),
     conditionalPanel(
       "input.selection12 == 'All Parameters'",
 
@@ -63,7 +63,7 @@ slidebar1For3 <- function() {
                 min = 1, max = 4,
                 value = 2, step = 1),
     
-    selectInput("selection23", "Select something", choices = c("Descision Making Parameters", "All Parameters")),
+    selectInput("selection23", "Select something", choices = c("Decision Making Parameters", "All Parameters")),
     conditionalPanel(
       "input.selection23 == 'All Parameters'",
       sliderInput("R023", "R0",

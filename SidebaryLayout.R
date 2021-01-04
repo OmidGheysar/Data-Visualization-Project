@@ -31,7 +31,7 @@ UiDesign <- function() {
       
       
       
-      selectInput("selectionMainTime", "Select something", choices = c("Descision Making Parameters", "All Parameters")),
+      selectInput("selectionMainTime", "Select something", choices = c("Decision Making Parameters", "All Parameters")),
       conditionalPanel(
         "input.selectionMainTime == 'All Parameters'",
         sliderInput("R0", "R0",

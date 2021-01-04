@@ -141,7 +141,7 @@ UiRt_Only_Manual <- function(){
       sliderInput("iso_delay_untracedforManual",
                   "Delay to isolation for untraced & distancing cases",
                   min = 1,  max = 5, value = 1, step = 4),
-      selectInput("selection", "Select something", choices = c("Descision Making Parameters", "All Parameters")),
+      selectInput("selection", "Select something", choices = c("Decision Making Parameters", "All Parameters")),
       conditionalPanel(
         "input.selection == 'All Parameters'",
         sliderInput("R0forManual",

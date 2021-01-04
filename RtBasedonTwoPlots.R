@@ -131,6 +131,7 @@ RtBasedonTwoPlots <- function(dat, ouptColumn,
       title = "Isolated Cases"
     )
   }
+  p <- p + scale_x_continuous(breaks=seq(0, 31, 1))
   p <- p+theme_bw()
   p <- p + labs(y="", x="", 
                 color="")

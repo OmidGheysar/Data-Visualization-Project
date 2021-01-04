@@ -115,7 +115,7 @@ UiRt_Only_App <- function(){
                                       Contact rate (proportion of normal)",
                                     choices=c(0.3, 0.6, 0.8),
                                     selected=0.3, grid = T),
-      selectInput("selectionApp", "Select something", choices = c("Descision Making Parameters", "All Parameters")),
+      selectInput("selectionApp", "Select something", choices = c("Decision Making Parameters", "All Parameters")),
       conditionalPanel(
         "input.selectionApp == 'All Parameters'",
         sliderInput("R0forApp",

@@ -149,7 +149,7 @@ UiRt_App_Manual <- function(){
                   "Delay to isolation for traced cases (days)",
                   min = 1,  max = 4, value = 1, step = 1),
       
-      selectInput("selectionAppManual", "Select something", choices = c("Descision Making Parameters", "All Parameters")),
+      selectInput("selectionAppManual", "Select something", choices = c("Decision Making Parameters", "All Parameters")),
       conditionalPanel(
         "input.selectionAppManual == 'All Parameters'",
         sliderInput("R0forAppManual",
