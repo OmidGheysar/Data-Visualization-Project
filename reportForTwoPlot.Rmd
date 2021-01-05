@@ -59,17 +59,29 @@ params:
   n.iso_Q_95_2: no   
 ---
   
-  
-  
-  
-```{r}
+```{r sample, echo=FALSE}
+library(knitr)
+library(kableExtra)
+dt1 <- data.frame(titles1 = params$titles1,
+                 value1 = params$values1) 
 
-params$day
-params$Rt_Q_25_1
+dt2 <- data.frame(titles2 = params$titles2,
+                 value2 = params$values2) 
+kable(dt1)
+kable(dt2)
+```
+
+\newpage  
+  
+```{r, echo=FALSE,warning=FALSE}
+
 df1 <- (data.frame(day = params$day,Rt_Q_05=params$Rt_Q_05_1,Rt_Q_25= params$Rt_Q_25_1,Rt_Q_50=params$Rt_Q_50_1,Rt_Q_75=params$Rt_Q_75_1,Rt_Q_95=params$Rt_Q_95_1))
 df2 <- (data.frame(day = params$day,Rt_Q_05=params$Rt_Q_05_2,Rt_Q_25= params$Rt_Q_25_2,Rt_Q_50=params$Rt_Q_50_2,Rt_Q_75=params$Rt_Q_75_2,Rt_Q_95=params$Rt_Q_95_2))
 RtBasedonTwoPlotsForReport("Rt",df1,df2)
+``` 
+Here is some information provided for the user 
 
+``` {r, echo = FALSE,warning = FALSE}
 db1 <- (data.frame(day = params$day,n.active_Q_05=params$n.active_Q_05_1,n.active_Q_25= params$n.active_Q_25_1,n.active_Q_50=params$n.active_Q_50_1,n.active_Q_75=params$n.active_Q_75_1,n.active_Q_95=params$n.active_Q_95_1))
 db2 <- (data.frame(day = params$day,n.active_Q_05=params$n.active_Q_05_2,n.active_Q_25= params$n.active_Q_25_2,n.active_Q_50=params$n.active_Q_50_2,n.active_Q_75=params$n.active_Q_75_2,n.active_Q_95=params$n.active_Q_95_2))
 RtBasedonTwoPlotsForReport("n.active",db1,db2)
@@ -86,24 +98,8 @@ dn1 <- (data.frame(day = params$day,n.iso_Q_05=params$n.iso_Q_05_1,n.iso_Q_25= p
 dn2 <- (data.frame(day = params$day,n.iso_Q_05=params$n.iso_Q_05_2,n.iso_Q_25= params$n.iso_Q_25_2,n.iso_Q_50=params$n.iso_Q_50_2,n.iso_Q_75=params$n.iso_Q_75_2,n.iso_Q_95=params$n.iso_Q_95_2))
 RtBasedonTwoPlotsForReport("n.iso",dn1,dn2)
 
-dt1 <- data.frame(titles1 = params$titles1,
-                  value1 = params$values1) 
-
-dt2 <- data.frame(titles2 = params$titles2,
-                  value2 = params$values2)
-
 ```
 
 
 
-```{r sample, echo=FALSE}
-library(knitr)
-library(kableExtra)
-t1 <- dt1
-t2 <- dt2
-```
-## as list
-```{r}
-kable(list(t1, t2))
-```
 

@@ -82,9 +82,7 @@ RtBasedonAppAndManualForReport <- function(myResult,ouptColumn){
   
   
   # ===========================================
-  
-  p <- p + labs(y="", x="", 
-                color="")
+
 
   p <- p + labs(title="Colors show the level of app tracing")
   # p <- ggplotly(p)
@@ -113,6 +111,22 @@ RtBasedonAppAndManualForReport <- function(myResult,ouptColumn){
       title = "Isolated Cases"
     )
   }
+  
+  
+  p <- p+labs(
+    title = "<span style='color:#FF7F00'>0%</span>, 
+    <span style='color:#1F78B4'>25%</span>,
+    <span style='color:#E31A1C'>50%</span>,
+    <span style='color:#33A02C'>75%</span>, and
+    <span style='color:#FB9A99'>100%</span>,
+    of app trace"
+  ) +
+    theme(
+      plot.title = element_markdown()
+    )
+  
+  p <- p + labs(y=y, x="Fraction of cases manualy traced", 
+                color="")
   
   return(p)
   

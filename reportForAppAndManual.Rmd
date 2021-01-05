@@ -34,10 +34,17 @@ params:
   
 ---
   
+```{r, echo=FALSE}
+dt <- data.frame(titles = params$titles,
+                 value = params$values) 
+library(knitr)                           
+kable(dt)
+```
+\newpage
 
 
 
-```{r}
+```{r,echo=FALSE, warning=FALSE}
 
 df <- (data.frame(p.trace = params$p.trace,p.trace_app = params$p.trace_app,Rt_Q_05=params$Rt_Q_05,Rt_Q_25= params$Rt_Q_25,Rt_Q_50=params$Rt_Q_50,Rt_Q_75=params$Rt_Q_75,Rt_Q_95=params$Rt_Q_95))
 RtBasedonAppAndManualForReport(df,"Rt")
@@ -54,8 +61,5 @@ RtBasedonAppAndManualForReport(dm,"n.total")
 dn <- (data.frame(p.trace = params$p.trace,p.trace_app = params$p.trace_app,n.iso_Q_05=params$n.iso_Q_05,n.iso_Q_25= params$n.iso_Q_25,n.iso_Q_50=params$n.iso_Q_50,n.iso_Q_75=params$n.iso_Q_75,n.iso_Q_95=params$n.iso_Q_95))
 RtBasedonAppAndManualForReport(dn,"n.iso")
 
-dt <- data.frame(titles = params$titles,
-                 value = params$values) 
-library(knitr)                           
-kable(dt)
+
 ```

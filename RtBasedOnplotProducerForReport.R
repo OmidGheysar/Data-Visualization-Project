@@ -12,29 +12,6 @@ library(magrittr) # needs to be run every time you start R and want to use %>%
 library(dplyr)    # alternatively, this also loads %>%
 library("tidyverse")
 
-
-plotMaker1 <- function() {
-  
-  p <- ggplot(mtcars, aes(x = wt, y = mpg)) +
-    geom_point() + geom_smooth()+   
-    theme_minimal() 
-  # xlab("x axises") +
-  # ylab("y axises") +
-  # # theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), axis.line = element_line(colour = "grey"))+ 
-  # labs(title = "#python and #rstats: Comparing 1,000 random tweets")
-  
-  
-  p+labs(
-    title = "<span style='color:#ff8c00'>#python</span> and 
-    <span style='color:#346299'>#rstats</span>: Comparing 1,000 random tweets"
-  ) +
-    theme(
-      plot.title = element_markdown()
-    )
-  
-  
-}
-
 select100Scenarios <- function(dat,
                                R,
                                p.tr,
@@ -171,10 +148,11 @@ plotProducerForReport <- function(filterResult,
       title = "Isolated Cases"
     )
   }
-  
-  p <- p + labs(y="", x="", 
+  p <- p + scale_x_continuous(breaks=seq(0, 31, 1))
+  p <- p + labs(y=y, x="Day", 
                 color="")
   
+  # p <- p+theme_minimal() 
   p
 }
 

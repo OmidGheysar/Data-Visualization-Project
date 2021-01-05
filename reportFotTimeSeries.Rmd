@@ -32,13 +32,15 @@ params:
   n.iso_Q_95: no   
   
 ---
-  
+```{r,echo=FALSE, warning=FALSE}  
+dt <- data.frame(titles = params$titles,
+                 value = params$values) 
+library(knitr)                           
+kable(dt)
+```
+\newpage
 
-
-
-```{r}
-
-plotMaker1()
+```{r,echo=FALSE, warning=FALSE}
 
 df <- (data.frame(day = params$day,Rt_Q_05=params$Rt_Q_05,Rt_Q_25= params$Rt_Q_25,Rt_Q_50=params$Rt_Q_50,Rt_Q_75=params$Rt_Q_75,Rt_Q_95=params$Rt_Q_95))
 plotProducerForReport(df,"Rt",31)
@@ -55,9 +57,6 @@ plotProducerForReport(dm,"n.total",31)
 dn <- (data.frame(day = params$day,n.iso_Q_05=params$n.iso_Q_05,n.iso_Q_25= params$n.iso_Q_25,n.iso_Q_50=params$n.iso_Q_50,n.iso_Q_75=params$n.iso_Q_75,n.iso_Q_95=params$n.iso_Q_95))
 plotProducerForReport(dn,"n.iso",31)
 
-dt <- data.frame(parameter = params$titles,
-                 value = params$values) 
-library(knitr)                           
-kable(dt)
+
 
 ```

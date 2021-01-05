@@ -11,7 +11,7 @@ library(ggtext)
 library(magrittr) # needs to be run every time you start R and want to use %>%
 library(dplyr)    # alternatively, this also loads %>%
 library("tidyverse")
-# it has already been called in the time series section 
+# 
 # scenarios1<- select100Scenarios(dat,
 #                                 inputR012,
 #                                 inputp.trace12,
@@ -137,7 +137,8 @@ RtBasedonTwoPlotsForReport <- function( ouptColumn,
     )
   }
   
-  p <- p + labs(y="", x="", 
+  p <- p + scale_x_continuous(breaks=seq(0, 31, 1))
+  p <- p + labs(y=y, x="Day", 
                 color="")
   # p <- p + labs(title="Colors show the level of app tracing")
   # p <- ggplotly(p)

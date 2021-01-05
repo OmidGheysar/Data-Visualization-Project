@@ -91,13 +91,25 @@ RtBasedonAppTraceForReport <- function(myResult,
     )
   }
   
+  p <- p + labs(y=y, x="Fraction of people using contact tracing app", 
+                color="")
+  
+  p <- p+labs(
+    title = "<span style='color:#FF7F00'>1 day delay</span>, 
+    <span style='color:#1F78B4'>5 days delay</span> 
+    of contact tracing app"
+  ) +
+    theme(
+      plot.title = element_markdown()
+    )
+  
   return(p) 
   
 }
 
-dat <- readRDS("Newdata.rds")
-myResult <- select64000Scenarios(dat,31 ,2,.7,.3)
-p<- RtBasedonAppTraceForReport(myResult, "Rt")
-p
+# dat <- readRDS("Newdata.rds")
+# myResult <- select64000Scenarios(dat,31 ,2,.7,.3)
+# p<- RtBasedonAppTraceForReport(myResult, "Rt")
+# p
 
 

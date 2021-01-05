@@ -110,6 +110,18 @@ RtBasedonManualTraceForReport <- function(myResult,
     )
   }
   
+  p <- p + labs(y=y, x="Fraction of cases manualy traced", 
+                color="")
+  
+  p <- p+labs(
+    title = "<span style='color:#FF7F00'>1 day delay</span>, 
+    <span style='color:#1F78B4'>2 days dealy</span>,
+    <span style='color:#E31A1C'>3 days delay</span>, and
+    <span style='color:#33A02C'>4 days delay</span> of manual trace"
+  ) +
+    theme(
+      plot.title = element_markdown()
+    )
   return(p)
   
 }

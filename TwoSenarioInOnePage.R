@@ -25,7 +25,7 @@ ui <- fluidPage(
     
            h4(code("Compare the Reproductive Number of two scenarios 
                    based on their simulation parameters")),
-           downloadButton("reportForTwoPlots", "Generate a report For two plots"),
+           downloadButton("reportForTwoPlots", "Generate a report For two senarios"),
     
     
 
