@@ -16,6 +16,12 @@ UiDesign <- function() {
             font-family: "Arial";
           }')
       )),
+      setSliderColor(c("", "#ffa700", "", "", "", "", "", "",
+                       "", "", "", "", "", "#ffa700", "#ffa700", "#ffa700",
+                       "#ffa700", "#ffa700", "#ffa700", "", "", "", "", ""), 
+                     c(1, 2, 3, 4, 5, 6, 7, 8,
+                       9,10,11,12,13,14,15,16,
+                       17,18,19,20,21,22,23,24)),
       
       sliderInput("p.trace", "Fraction of cases manually traced",
                   min = 0, max = 1,
@@ -28,8 +34,7 @@ UiDesign <- function() {
       sliderInput("iso_delay_traced_max", "Delay to isolation for traced cases (days)",
                   min = 1, max = 4,
                   value = 2, step = 1),
-      
-      
+
       
       selectInput("selectionMainTime", "Select something", choices = c("Decision Making Parameters", "All Parameters")),
       conditionalPanel(
